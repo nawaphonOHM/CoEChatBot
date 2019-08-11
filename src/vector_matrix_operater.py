@@ -49,4 +49,40 @@ def decoded_string(arrays_of_token, reference):
 
     return new_returned_array
 
+def binary_matrix(grouped_of_vector, reference):
+    if type(grouped_of_vector) is not list:
+        raise TypeError(
+                    "Expected grouped_of_vector as list but got as {0}"
+                    .format(type(grouped_of_vector)
+                )
+            )
+    if type(reference) is not BagsOfWords:
+        raise TypeError(
+                "Expected reference as BagsOfWords but got as {0}"
+                .format(type(reference))
+            )
+
+    LENGTH = len(grouped_of_vector[0])
+    grouped_of_binary_array = []
+    USELESS_TOKEN = reference.getToken("PAD")
+
+    for vector in grouped_of_vector:
+        if(len(vector) != LENGTH):
+            raise ValueError("grouped_of_vector has an unequal vector's length")
+
+        binary_array = []
+        for dimention in vector:
+            if dimention is USELESS_TOKEN:
+                binary_array.append(0)
+            else:
+                binary_array.append(1)
+
+        grouped_of_binary_array.append(binary_array)
+
+    return grouped_of_binary_array
+
+def 
+
+
+
     
