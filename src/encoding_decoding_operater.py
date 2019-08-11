@@ -31,5 +31,12 @@ def decoded_string(arrays_of_token, reference):
                 "Expected reference as BagsOfWords but got as {0}"
                 .format(type(reference))
             )
+    
+    new_returned_array = []
+
+    for token in arrays_of_token:
+        new_returned_array.append(reference.getWord(token))
+
+    return new_returned_array
 
     
