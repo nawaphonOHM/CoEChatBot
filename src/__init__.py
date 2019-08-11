@@ -1,1 +1,1 @@
-import src.BagsOfWords
+from src.BagsOfWords import BagsOfWords
