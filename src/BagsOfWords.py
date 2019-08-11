@@ -36,7 +36,6 @@ class BagsOfWords:
                 )
 
         if id is None:
-
             while self.next_token in self.bag:
                 self.next_token = self.next_token + 1
 
