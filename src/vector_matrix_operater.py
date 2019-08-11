@@ -81,7 +81,21 @@ def binary_matrix(grouped_of_vector, reference):
 
     return grouped_of_binary_array
 
-def 
+def length_maxtrix(grouped_of_vector):
+    if type(grouped_of_vector) is not list:
+        raise TypeError(
+                    "Expected grouped_of_vector as list but got as {0}"
+                    .format(type(grouped_of_vector))
+                )
+                
+    length_maxtrix = []
+    
+    for vector in grouped_of_vector:
+        counter = 0
+        for dimension in vector:
+            if dimension is not 0:
+                counter = counter + 1
+        length_maxtrix.append(counter)
 
 
 
