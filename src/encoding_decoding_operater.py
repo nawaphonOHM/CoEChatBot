@@ -1,10 +1,11 @@
 from src.BagsOfWords import BagsOfWords
+import itertools
 
-def encoded_string(arrays_of_char, reference):
-    if type(arrays_of_char) is not list:
+def encoded_string(cons, reference):
+    if type(cons) is not list:
         raise TypeError(
-                "Expected arrays_of_char as list but got as {0}"
-                .format(type(arrays_of_char))
+                "Expected cons as list but got as {0}"
+                .format(type(cons))
             )
     if type(reference) is not BagsOfWords:
         raise TypeError(
@@ -12,12 +13,21 @@ def encoded_string(arrays_of_char, reference):
                 .format(type(reference))
             )
     
-    new_returned_array = []
+    grouped_of_vector = []
 
-    for char in arrays_of_char:
-        new_returned_array.append(reference.getToken(char))
+    for con in cons:
+        vector = []
+        for word in con:
+            vector.append(reference.getToken(word))
+            grouped_of_vector.append(vector)
+    
+            grouped_of_vector = list(
+                itertools.zip_longest(*grouped_of_vector, 
+                fillvalue=reference.getToken("PAD")
+            )
+        )
 
-    return new_returned_array
+    return grouped_of_vector
 
 
 def decoded_string(arrays_of_token, reference):
