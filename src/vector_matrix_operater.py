@@ -40,53 +40,59 @@ def decoded_string(vector, reference):
 
     return cons
 
-def binary_matrix(grouped_of_vector, reference):
-    if type(grouped_of_vector) is not list:
-        raise TypeError(
-                    "Expected grouped_of_vector as list but got as {0}"
-                    .format(type(grouped_of_vector)
+def binary_matrix(vector, reference, excluded_token):
+    if type(vector) is not list:
+        raise TypeError(\
+                    "Expected vector as list but got as {0}"
+                    .format(type(vector)
                 )
             )
     if type(reference) is not BagsOfWords:
-        raise TypeError(
+        raise TypeError(\
                 "Expected reference as BagsOfWords but got as {0}"
                 .format(type(reference))
             )
+    if type(excluded_token) is not str:
+        raise TypeError(\
+                "Expected excluded_token as str but got as {0}"
+                .format(type(excluded_token))
+            )
+    if excluded_token not in reference:
+        raise TypeError(\
+                "Unknown this excluded_token. \
+                You probably refered incorrectly reference \
+                or excluded_token typo"
+            )
 
-    LENGTH = len(grouped_of_vector[0])
-    grouped_of_binary_array = []
-    USELESS_TOKEN = reference.getToken("PAD")
+    binary_vector = []
+    excluded_token_id = reference[excluded_token]
 
-    for vector in grouped_of_vector:
-        if(len(vector) != LENGTH):
-            raise ValueError("grouped_of_vector has an unequal vector's length")
+    for dimension in vector:
+        if dimension is excluded_token_id:
+            binary_vector.append(0)
+        else:
+            binary_vector.append(1)
 
-        binary_array = []
-        for dimention in vector:
-            if dimention is USELESS_TOKEN:
-                binary_array.append(0)
-            else:
-                binary_array.append(1)
+    return binary_vector
 
-        grouped_of_binary_array.append(binary_array)
-
-    return grouped_of_binary_array
-
-def length_maxtrix(grouped_of_vector):
-    if type(grouped_of_vector) is not list:
+def counting(vector, exclude_token_id):
+    if type(vector) is not list:
         raise TypeError(
-                    "Expected grouped_of_vector as list but got as {0}"
-                    .format(type(grouped_of_vector))
-                )
-                
-    length_maxtrix = []
+                "Expected vector as list but got as {0}"
+                .format(type(vector))
+            )
+    if type(exclude_token_id) is not int:
+        raise TypeError(\
+                "Expected exclude_token_id as int but got as {0}"\
+                .format(type(exclude_token_id))
+            )
+    count = 0
     
-    for vector in grouped_of_vector:
-        counter = 0
-        for dimension in vector:
-            if dimension is not 0:
-                counter = counter + 1
-        length_maxtrix.append(counter)
+    for dimension in vector:
+        if dimension is not exclude_token_id:
+            count = count + 1
+    
+    return count
 
 
 
