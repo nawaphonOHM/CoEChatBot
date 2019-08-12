@@ -1,4 +1,4 @@
-from src.BagsOfWords import BagsOfWords
+from BagsOfWords import BagsOfWords
 import itertools
 
 def encoded_string(cons, reference):
@@ -59,10 +59,9 @@ def binary_matrix(vector, reference, excluded_token):
             )
 
     binary_vector = []
-    excluded_token_id = reference[excluded_token]
 
     for dimension in vector:
-        if dimension is excluded_token_id:
+        if dimension == excluded_token:
             binary_vector.append(0)
         else:
             binary_vector.append(1)
