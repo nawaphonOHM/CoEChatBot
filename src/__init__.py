@@ -1,2 +1,2 @@
-from src.BagsOfWords import BagsOfWords
-from src.vector_matrix_operater import *
+from BagsOfWords import BagsOfWords
+from vector_matrix_operater import *

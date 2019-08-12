@@ -1,5 +1,5 @@
-from src import BagsOfWords
-from src import vector_matrix_operater
+from BagsOfWords import BagsOfWords
+import vector_matrix_operater
 
 bag = BagsOfWords()
 
