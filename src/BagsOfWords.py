@@ -23,6 +23,9 @@ class BagsOfWords:
         
     
     def getWord(self, token):
+        if token not in self.bag:
+            raise TypeError("Unknown this token.")
+
         return self.bag[token]
 
     def addWord(self, word, id=None):
@@ -43,5 +46,7 @@ class BagsOfWords:
             self.bag[id] = word
     
     def getToken(self, word):
+        if word not in self.bag_reverse:
+            raise TypeError("Unknown this word")
         return self.bag_reverse[word]
 
