@@ -13,28 +13,19 @@ def encoded_string(cons, reference):
                 .format(type(reference))
             )
     
-    grouped_of_vector = []
+    vector = []
 
     for con in cons:
-        vector = []
-        for word in con:
-            vector.append(reference.getToken(word))
-            grouped_of_vector.append(vector)
-    
-            grouped_of_vector = list(
-                itertools.zip_longest(*grouped_of_vector, 
-                fillvalue=reference.getToken("PAD")
-            )
-        )
+        vector.append(reference.getToken(con))
 
-    return grouped_of_vector
+    return vector
 
 
-def decoded_string(arrays_of_token, reference):
-    if type(arrays_of_token) is not list:
+def decoded_string(vector, reference):
+    if type(vector) is not list:
         raise TypeError(
-                "Expected arrays_of_token as list but got as {0}"
-                .format(type(arrays_of_token))
+                "Expected vector as list but got as {0}"
+                .format(type(vector))
             )
     if type(reference) is not BagsOfWords:
         raise TypeError(\
@@ -42,12 +33,12 @@ def decoded_string(arrays_of_token, reference):
                 .format(type(reference))
             )
     
-    new_returned_array = []
+    cons = []
 
-    for token in arrays_of_token:
-        new_returned_array.append(reference.getWord(token))
+    for dimension in vector:
+        cons.append(reference.getWord(dimension))
 
-    return new_returned_array
+    return cons
 
 def binary_matrix(grouped_of_vector, reference):
     if type(grouped_of_vector) is not list:
