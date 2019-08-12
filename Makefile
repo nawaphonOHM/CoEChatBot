@@ -1,5 +1,5 @@
 install:
 	@if [$($PYTHONPATH) = ""];\
 	then\
-		export PYTHONPATH=${PWD};\
+		export PYTHONPATH="./src";\
 	fi
