@@ -4,22 +4,28 @@ class BagsOfWords:
     bag = None
     bag_reverse = None
     next_token = 0
+    max_token = 0
 
     def __init__(self):
-        spacial_token_dir = json.load(
+        setting = json.load(
             open("./setting.json", "r", encoding="utf-8")
         )
         self.bag = {}
         self.bag_reverse = {}
 
-        tokens = spacial_token_dir["spacial_token"]
+        tokens = setting["spacial_token"]
 
         for word in tokens.keys():
             self.addWord(word, id=tokens[word])
+        
+        self.max_token = setting["max_token"]
 
         
     
     def getWord(self, token):
+        if token not in self.bag:
+            raise TypeError("Unknown this token.")
+
         return self.bag[token]
 
     def addWord(self, word, id=None):
@@ -40,5 +46,7 @@ class BagsOfWords:
             self.bag[id] = word
     
     def getToken(self, word):
+        if word not in self.bag_reverse:
+            raise TypeError("Unknown this word")
         return self.bag_reverse[word]
 
