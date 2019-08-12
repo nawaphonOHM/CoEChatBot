@@ -5,3 +5,4 @@ A Senior Project Computer Engineer Bachelor
 * 0.x.x.x => เพิ่มและทดสอบการทำงานของ Piplines
     * 0.1.x.x => เพิ่ม setting json
     * 0.2.x.x => เพิ่ม BagsOfWord
+    * 0.3.x.x => เพิ่ม operater function
