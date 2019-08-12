@@ -57,12 +57,6 @@ def binary_matrix(vector, reference, excluded_token):
                 "Expected excluded_token as str but got as {0}"
                 .format(type(excluded_token))
             )
-    if excluded_token not in reference:
-        raise TypeError(\
-                "Unknown this excluded_token. \
-                You probably refered incorrectly reference \
-                or excluded_token typo"
-            )
 
     binary_vector = []
     excluded_token_id = reference[excluded_token]
