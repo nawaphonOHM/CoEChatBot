@@ -1,1 +1,1 @@
-from .classes.BagsOfWords import BagsOfWords
+import classes
