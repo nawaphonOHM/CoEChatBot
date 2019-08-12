@@ -1,4 +1,4 @@
-from BagsOfWords import BagsOfWords
+from classes import BagsOfWords
 import itertools
 
 def encoded_string(cons, reference):
