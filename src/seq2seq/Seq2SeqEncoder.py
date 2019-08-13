@@ -10,6 +10,11 @@ class Seq2SeqEncoder(neural_network_tools.Module):
                     "Expected hidden_size type as int but got as {0}"\
                     .format(type(hidden_size))
                 )
+        if hidden_size < 1:
+            raise ValueError(\
+                    "hidden_size must be more than 0 but got {0}"\
+                    .format(hidden_size)
+                )
         if type(embedding) is not Embedding:
             raise TypeError(\
                     "Expected embedding type as Embedding but got as {0}"\
@@ -20,7 +25,7 @@ class Seq2SeqEncoder(neural_network_tools.Module):
                     "Expected n_layers type as int but got as {0}"
                     .format(type(n_layers))
                 )
-        if n_layers <= 0:
+        if n_layers < 1:
             raise ValueError(\
                     "n_layers must more than 0 but got {0}"
                     .format(n_layers)
