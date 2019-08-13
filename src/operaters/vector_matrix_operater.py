@@ -13,10 +13,7 @@ def encoded_string(cons, reference):
                 .format(type(reference))
             )
     
-    vector = []
-
-    for con in cons:
-        vector.append(reference.getToken(con))
+    vector = [reference.getToken(con) for con in cons]
 
     return vector
 
