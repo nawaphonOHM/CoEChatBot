@@ -11,3 +11,4 @@ src/operaters/__pycache__/vector_matrix_operater.cpython-36.pyc
 src/seq2seq/__pycache__/Seq2SeqEncoder.cpython-36.pyc
 src/seq2seq/__pycache__/__init__.cpython-36.pyc
 src/seq2seq/__pycache__/Attentions.cpython-36.pyc
+src/seq2seq/__pycache__/Seq2SeqDecoder.cpython-36.pyc
