@@ -18,7 +18,7 @@ class BagsOfWords:
         for word in tokens.keys():
             self.addWord(word, id=tokens[word])
         
-        self.max_token = setting["max_token"]
+        self.max_token = setting["max_sentence"]
 
         
     
