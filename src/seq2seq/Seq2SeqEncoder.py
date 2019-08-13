@@ -54,24 +54,24 @@ class Seq2SeqEncoder(neural_network_tools.Module):
                 bidirectional=True
             )
 
-    # Override Method.
+    # Overwrite Method.
     def forward(\
             self, 
-            input_tensor, 
-            input_length_vector, 
-            hidden_tensor=None
+            input_seq, 
+            input_lengths, 
+            hidden=None
         ):
-            if type(input_tensor) is not Tensor:
+            if type(input_seq) is not Tensor:
                 raise TypeError(\
-                        "Expected input_tensor type as Tensor but got as {0}"\
-                        .format(type(input_tensor))
+                        "Expected input_seq type as Tensor but got as {0}"\
+                        .format(type(input_seq))
                     )
-            if type(input_length_vector) is not int:
+            if type(input_lengths) is not int:
                 raise TypeError(\
                         "Expected input_length_vector as int but got as {0}"\
-                        .format(type(input_length_vector))
+                        .format(type(input_lengths))
                     )
-            typed_hidden_tensor = type(hidden_tensor)
+            typed_hidden_tensor = type(hidden)
             if typed_hidden_tensor is not None and \
                 typed_hidden_tensor is not Tensor:
                     raise TypeError(\
@@ -79,15 +79,15 @@ class Seq2SeqEncoder(neural_network_tools.Module):
                             .format(typed_hidden_tensor)
                         )
             
-            embedded_tensor = self.embedding(input_tensor)
+            embedded_tensor = self.embedding(input_seq)
             packed_embedded_tensor = \
                 neural_network_tools.utils.rnn.pack_padded_sequence(\
                     embedded_tensor, 
-                    input_length_vector
+                    input_lengths
                 )
             output_tensor, hiddden_tensor = self.gru(\
                     packed_embedded_tensor, 
-                    hidden_tensor
+                    hidden
                 )
 
             output_tensor, _ = \
