@@ -6,3 +6,5 @@ A Senior Project Computer Engineer Bachelor
     * 0.1.x.x => เพิ่ม setting json
     * 0.2.x.x => เพิ่ม BagsOfWord
     * 0.3.x.x => เพิ่ม operater function
+    * 0.4.x.x => เพิ่ม seq2seq encoder
+    * 0.5.x.x => เพิ่ม seq2seq decoder
