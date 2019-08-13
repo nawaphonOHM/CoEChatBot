@@ -7,4 +7,5 @@ A Senior Project Computer Engineer Bachelor
     * 0.2.x.x => เพิ่ม BagsOfWord
     * 0.3.x.x => เพิ่ม operater function
     * 0.4.x.x => เพิ่ม seq2seq encoder
-    * 0.5.x.x => เพิ่ม seq2seq decoder
+    * 0.5.x.x => เพิ่ม Attentions
+    * 0.6.x.x => เพิ่ม seq2seq decoder
