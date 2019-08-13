@@ -1,13 +1,14 @@
-import torch.nn as neural_network_tools
-import torch.tensor as Tensor
 import torch
+import torch.nn as neural_network_tools
+import torch.nn.functional as convolution_functions
+import torch.tensor as Tensor
 
 class Attentions(neural_network_tools.Module):
     def __init__(self, method, hidden_size):
-        if method is not str:
+        if type(method) is not str:
             raise TypeError(\
                     "Expected method as str but got as {0}"\
-                        .format(method)
+                        .format(type(method))
                 )
         
         allowness_methods = ["dot", "general", "concat"]
@@ -99,4 +100,25 @@ class Attentions(neural_network_tools.Module):
         return torch.sum(self.v * energy, dim=2)
 
     #Overwrite method
-    def forward(self, hidden)
+    def forward(self, hidden, encoder_outputs):
+        if type(hidden) is not Tensor:
+            raise TypeError(\
+                    "Expected hidden as Tensor but got as {0}"
+                    .format(type(hidden))
+                )
+        if type(encoder_outputs) is not Tensor:
+            raise TypeError(\
+                    "Expected encoder_outputs as Tensor but got as {0}"
+                    .format(type(encoder_outputs))
+                )
+        
+        if self.method is "general":
+            attention_energies = self.general_score(hidden, encoder_outputs)
+        elif self.method is "concat":
+            attention_energies = self.concat_score(hidden, encoder_outputs)
+        elif self.method is "dot":
+            attention_energies = self.dot_score(hidden, encoder_outputs)
+        
+        attention_energies = attention_energies.t()
+        return convolution_functions.softmax(\
+            attention_energies, dim=1).unsqueeze(1)
