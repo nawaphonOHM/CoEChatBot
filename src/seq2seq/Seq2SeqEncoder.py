@@ -83,12 +83,13 @@ class Seq2SeqEncoder(neural_network_tools.Module):
                     packed_embedded_tensor, 
                     hidden_tensor
                 )
-            
-            length_tensor = None
-            output_tensor, length_tensor = \
+
+            output_tensor, _ = \
                 neural_network_tools.utils.rnn.pad_packed_sequence(output_tensor)
 
-            output_tensor = output_tensor[:, :, :self.hidden_size] + output_tensor[:, :, self.hidden_size:]
+            output_tensor = \
+                output_tensor[:, :, :self.hidden_size] + \
+                output_tensor[:, :, self.hidden_size:]
 
             return output_tensor, hiddden_tensor
 
