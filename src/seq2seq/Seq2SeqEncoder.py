@@ -1,17 +1,18 @@
 import torch.nn as neural_network_tools
 import torch.tensor as Tensor
+from torch.nn import Embedding
 
 class Seq2SeqEncoder(neural_network_tools.Module):
 
     def __init__(self, hidden_size, embedding, n_layers=1, dropout=0):
-        if type(hidden_size) is not Tensor:
+        if type(hidden_size) is not int:
             raise TypeError(\
-                    "Expected hidden_size type as Tensor's torch but got as {0}"\
+                    "Expected hidden_size type as int but got as {0}"\
                     .format(type(hidden_size))
                 )
-        if type(embedding) is not Tensor:
+        if type(embedding) is not Embedding:
             raise TypeError(\
-                    "Expected embedding type as Tensor's torch but got as {0}"\
+                    "Expected embedding type as Embedding but got as {0}"\
                     .format(type(embedding))
                 )
         if type(n_layers) is not int:
@@ -24,14 +25,14 @@ class Seq2SeqEncoder(neural_network_tools.Module):
                     "n_layers must more than 0 but got {0}"
                     .format(n_layers)
                 )
-        if type(dropout) is not int:
+        if type(dropout) is not float:
             raise TypeError(\
                     "Expected dropout type as int but got as {0}"\
                     .format(type(dropout))
                 )
-        if dropout < 0:
+        if dropout < 0 or dropout > 1:
             raise ValueError(\
-                    "dropout must be positive number but got {0}"\
+                    "dropout must be range [0.0, 1.0] but got {0}"\
                     .format(dropout)
                 )
         
