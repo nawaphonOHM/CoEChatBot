@@ -45,7 +45,7 @@ class Seq2SeqDecoder(neural_network_tools.Module):
                         "an output_size must be more than 0 but got {0}"
                         .format(output_size)
                     )
-            if n_layers is not int:
+            if type(n_layers) is not int:
                 raise TypeError(\
                         "Expected n_layers as int but got as {0}"
                         .format(type(n_layers))
