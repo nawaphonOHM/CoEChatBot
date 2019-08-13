@@ -1,28 +1,38 @@
 from seq2seq.Seq2SeqEncoder import Seq2SeqEncoder
 import torch.nn as neural_network_tools
+from seq2seq.Seq2SeqDecoder import Seq2SeqDecoder
 
 
 
 hidden_size = 3
 num_words = 3
 encoder_n_layer = 3
+decoder_n_layers = 3
 dropout = 0.4
 embedding = neural_network_tools.Embedding(num_words, hidden_size)
+attentions_model = ["dot", "general", "concat"]
 
 # Test an initial Seq2SeqEncoder instance.
-seq = Seq2SeqEncoder(\
+seqEn = Seq2SeqEncoder(\
         hidden_size, 
         embedding, 
         encoder_n_layer, 
         dropout
     )
-seq.to("cpu")
 
 print("This is a Seq2SeqEncoder ->", end=" ")
-print(seq)
+print(seqEn)
 
-print("This is the seq2seqEncoder.train() -> ", end="")
+# Test an initial Seq2SeqDecoder instance.
+for mode in attentions_model:
+    seqDe = Seq2SeqDecoder(\
+        attentions_model[0], 
+        embedding, 
+        hidden_size, 
+        decoder_n_layers, 
+        num_words, 
+        dropout
+    )
+    print("This is a Seq2SeqDecoder " + attentions_model[0] + " mode " + "->", end=" ")
+    print(seqDe)
 
-seq.train()
-
-print(seq)
