@@ -1,4 +1,4 @@
-from BagsOfWords import BagsOfWords
+from classes.BagsOfWords import BagsOfWords
 import itertools
 
 def encoded_string(cons, reference):
@@ -13,10 +13,7 @@ def encoded_string(cons, reference):
                 .format(type(reference))
             )
     
-    vector = []
-
-    for con in cons:
-        vector.append(reference.getToken(con))
+    vector = [reference.getToken(con) for con in cons]
 
     return vector
 
@@ -32,11 +29,8 @@ def decoded_string(vector, reference):
                 "Expected reference as BagsOfWords but got as {0}"
                 .format(type(reference))
             )
-    
-    cons = []
 
-    for dimension in vector:
-        cons.append(reference.getWord(dimension))
+    cons = [reference.getWord(dimension) for dimension in vector]
 
     return cons
 
