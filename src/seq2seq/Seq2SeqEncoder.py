@@ -39,18 +39,12 @@ class Seq2SeqEncoder(neural_network_tools.Module):
         self.n_layers = n_layers
         self.hidden_size = hidden_size
         self.embedding = embedding
-
-        real_dropout = 0
-        if n_layers == 1:
-            real_dropout = 0
-        else:
-            real_dropout = dropout
         
         self.gru = neural_network_tools.GRU(\
                 hidden_size, 
                 hidden_size, 
                 n_layers, 
-                dropout=real_dropout, 
+                dropout=(0 if n_layers == 1 else dropout), 
                 bidirectional=True
             )
 
