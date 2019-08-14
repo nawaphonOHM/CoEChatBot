@@ -26,13 +26,13 @@ print(seqEn)
 # Test an initial Seq2SeqDecoder instance.
 for mode in attentions_model:
     seqDe = Seq2SeqDecoder(\
-        attentions_model[0], 
+        mode, 
         embedding, 
         hidden_size, 
         decoder_n_layers, 
         num_words, 
         dropout
     )
-    print("This is a Seq2SeqDecoder " + attentions_model[0] + " mode " + "->", end=" ")
+    print("This is a Seq2SeqDecoder " + mode + " mode " + "->", end=" ")
     print(seqDe)
 
