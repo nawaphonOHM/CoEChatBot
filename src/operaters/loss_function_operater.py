@@ -29,7 +29,7 @@ def mask_negative_log_likelihood_loss(\
             )
     used_devices = ["cpu", "gpu"]
     if used_device not in used_devices:
-        error_message = "Unknown device. Only accepted is "
+        error_message = "Unknown device. Only accepted "
         for device in used_devices:
             error_message = error_message + device + " "
         raise ValueError(error_message)
