@@ -1,4 +1,4 @@
-from classes.BagsOfWords import BagsOfWords
+from src.classes.BagsOfWords import BagsOfWords
 
 bags = BagsOfWords()
 
