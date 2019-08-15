@@ -1,4 +1,4 @@
-from operaters.loss_function_operater import mask_negative_log_likelihood_loss
+from src.operaters.loss_function_operater import mask_negative_log_likelihood_loss
 import torch
 import random
 
