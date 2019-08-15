@@ -1,4 +1,4 @@
-import src.classes
-import src.operaters
-import src.preparation
-import src.seq2seq
+from src import classes
+from src import modeling
+from src import preparation
+from src import processing
