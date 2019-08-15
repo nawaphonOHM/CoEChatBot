@@ -2,7 +2,7 @@ import torch
 import torch.nn as neural_network_tools
 import torch.tensor as Tensor
 from torch.nn import Embedding
-from seq2seq.Attentions import Attentions
+from src.seq2seq.Attentions import Attentions
 import torch.nn.functional as convolution_functions
 
 class Seq2SeqDecoder(neural_network_tools.Module):
