@@ -1,5 +1,4 @@
 import torch
-import torch.tensor as Tensor
 
 def mask_negative_log_likelihood_loss(\
         input_tensor,
@@ -7,19 +6,19 @@ def mask_negative_log_likelihood_loss(\
         mask_tensor, 
         used_device
     ):
-    if type(input_tensor) is not Tensor:
+    if type(input_tensor) is not torch.Tensor:
         raise TypeError(\
-                "Expected input_tensor as Tensor but got as {0}"
+                "Expected input_tensor as torch.Tensor but got as {0}"
                 .format(type(input_tensor))
             )
-    if type(target_tensor) is not Tensor:
+    if type(target_tensor) is not torch.Tensor:
         raise TypeError(\
-                "Expected target_tensor as Tensor but got as {0}"
+                "Expected target_tensor as torch.Tensor but got as {0}"
                 .format(type(target_tensor))
             )
-    if type(mask_tensor) is not Tensor:
+    if type(mask_tensor) is not torch.Tensor:
         raise TypeError(\
-                "Expected mask_tensor as Tensor but got as {0}"
+                "Expected mask_tensor as torch.Tensor but got as {0}"
                 .format(type(mask_tensor))
             )
     if type(used_device) is not str:
