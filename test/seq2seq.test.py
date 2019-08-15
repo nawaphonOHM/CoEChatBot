@@ -1,6 +1,6 @@
-from seq2seq.Seq2SeqEncoder import Seq2SeqEncoder
+from src.seq2seq.Seq2SeqEncoder import Seq2SeqEncoder
 import torch.nn as neural_network_tools
-from seq2seq.Seq2SeqDecoder import Seq2SeqDecoder
+from src.seq2seq.Seq2SeqDecoder import Seq2SeqDecoder
 
 
 

@@ -1,3 +1,3 @@
-from seq2seq import Attentions
-from seq2seq import Seq2SeqEncoder
-from seq2seq import Seq2SeqDecoder
+import src.seq2seq.Attentions
+import src.seq2seq.Seq2SeqEncoder
+import src.seq2seq.Seq2SeqDecoder

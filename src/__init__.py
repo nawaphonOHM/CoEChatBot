@@ -1,2 +1,4 @@
-import classes
-import operator
+import src.classes
+import src.operaters
+import src.preparation
+import src.seq2seq
