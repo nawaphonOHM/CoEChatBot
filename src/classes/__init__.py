@@ -1,2 +1,2 @@
-import src.classes.BagsOfWords
-import src.classes.PreProcessingDataModel
+from src.classes import BagsOfWords
+from src.classes import PreProcessingDataModel
