@@ -1,7 +1,7 @@
-# CoEChatBot
+## CoEChatBot
 A Senior Project Computer Engineer Bachelor
 
-# Versions Details
+## Versions Details
 * 0.x.x.x => เพิ่มและทดสอบการทำงานของ Piplines
     * 0.1.x.x => เพิ่ม setting json
     * 0.2.x.x => เพิ่ม BagsOfWord
@@ -12,3 +12,10 @@ A Senior Project Computer Engineer Bachelor
     * 0.7.x.x => เพิ่ม mark negative log likelihood error
     * 0.8.x.x => เพิ่ม train method
     * 0.9.x.x => เพิ่ม train iteration
+
+## Scopes
+# การฝึกงาน
+-------------------------------------------------------------------------------
+> **นักศึกษา:** สวัสดีครับ
+> **เจ้าหน้าที่** สวัสดีครับ ต้องการสอบถามเรื่องอะไรครับ 
+-------------------------------------------------------------------------------
