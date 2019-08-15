@@ -11,3 +11,4 @@ A Senior Project Computer Engineer Bachelor
     * 0.6.x.x => เพิ่ม seq2seq decoder
     * 0.7.x.x => เพิ่ม mark negative log likelihood error
     * 0.8.x.x => เพิ่ม train method
+    * 0.9.x.x => เพิ่ม train iteration
