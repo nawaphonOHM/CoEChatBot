@@ -12,6 +12,7 @@ A Senior Project Computer Engineer Bachelor
     * 0.7.x.x => เพิ่ม mark negative log likelihood error
     * 0.8.x.x => เพิ่ม train method
     * 0.9.x.x => เพิ่ม train iteration
+* 1.x.x.x => เพิ่ม Scope การฝึกงาน
 
 # Scopes
 ## การฝึกงาน
