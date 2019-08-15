@@ -1,2 +1,0 @@
-import src.operaters.vector_matrix_operater
-import src.operaters.loss_function_operater
