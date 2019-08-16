@@ -1,1 +1,1 @@
-import src.preparation.reader_json_file
+from src.preparation import reader_json_file

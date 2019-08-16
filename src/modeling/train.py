@@ -2,9 +2,9 @@ import torch
 import random
 import torch.nn as neural_network_tools
 from torch.tensor import Tensor
-from seq2seq.Seq2SeqEncoder import Seq2SeqEncoder
-from seq2seq.Seq2SeqDecoder import Seq2SeqDecoder
-from operaters.loss_function_operater import mask_negative_log_likelihood_loss
+from src.processing.seq2seq.Seq2SeqEncoder import Seq2SeqEncoder
+from src.processing.seq2seq.Seq2SeqDecoder import Seq2SeqDecoder
+from src.modeling.loss_function import mask_negative_log_likelihood_loss
 
 def train(\
         input_variable_tensor, 
