@@ -1,6 +1,6 @@
 [
     {
-        "intension": "ทักทาย", 
+        "intension": "เริ่มต้น", 
         "inquery_sentence": "สวัสดีครับ", 
         "response_sentence": "สวัสดีครับ ต้องการสอบถามเรื่องอะไรครับ", 
         "changed_intension": "ไม่ทราบเรื่องที่จะสอบถาม"
@@ -21,6 +21,6 @@
         "intension": "สอบถามเรื่องการฝึกงาน_เกณฑ์ของภาค", 
         "inquery_sentence": "ขอบคุณครับ", 
         "response_sentence": "ครับ ยินดีครับ", 
-        "changed_intension": "จากลา"
+        "changed_intension": "จบ"
     }
 ]
