@@ -1,5 +1,5 @@
 from src.classes.BagsOfWords import BagsOfWords as WordBag
-import src.operaters.vector_matrix_operater as matrix_operater
+import src.processing.vector_matrix as matrix_operater
 
 bag = WordBag()
 
