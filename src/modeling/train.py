@@ -143,7 +143,7 @@ def train(\
         
         if use_teacher_forcing:
             for t in range(max_target_len):
-                decoder_output_tensor, decoder_hidden_ten = \
+                decoder_output_tensor, decoder_hidden_tensor = \
                     decoder_part_module(\
                             decoder_input_tensor, 
                             decoder_hidden_tensor, 

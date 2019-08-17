@@ -37,7 +37,7 @@ class Seq2SeqDecoder(neural_network_tools.Module):
                     )
             if type(output_size) is not int:
                 raise TypeError(\
-                        "Expected output_size_tensor as output_size but got as {0}"
+                        "Expected output_size_tensor as int but got as {0}"
                         .format(type(output_size))
                     )
             if output_size < 1:

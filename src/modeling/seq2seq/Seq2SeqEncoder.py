@@ -4,7 +4,7 @@ from torch.nn import Embedding
 
 class Seq2SeqEncoder(neural_network_tools.Module):
 
-    def __init__(self, hidden_size, embedding, n_layers=1, dropout=0):
+    def __init__(self, hidden_size, embedding, n_layers=1, dropout=0.0):
         if type(hidden_size) is not int:
             raise TypeError(\
                     "Expected hidden_size type as int but got as {0}"\
@@ -32,7 +32,7 @@ class Seq2SeqEncoder(neural_network_tools.Module):
                 )
         if type(dropout) is not float:
             raise TypeError(\
-                    "Expected dropout type as int but got as {0}"\
+                    "Expected dropout type as float but got as {0}"\
                     .format(type(dropout))
                 )
         if dropout < 0 or dropout > 1:

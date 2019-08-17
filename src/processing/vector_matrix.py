@@ -55,7 +55,7 @@ def binary_matrix(vector, reference, excluded_token):
     binary_vector = []
 
     for dimension in vector:
-        binary_vector.append(dimension == excluded_token)
+        binary_vector.append(dimension != excluded_token)
 
     return binary_vector
 

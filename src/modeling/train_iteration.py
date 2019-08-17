@@ -156,7 +156,7 @@ for rounded_iteration in range(setting["iteration"]):
         )
 
     print(\
-            "\rIteration: {}; Percent complete: {:.2f}%; loss: {:.3f}"
+            "\rIteration: {}; Percent complete: {:.2f}%; loss: {}"
             .format(\
                     rounded_iteration, 
                     (rounded_iteration / setting["iteration"]) * 100, 

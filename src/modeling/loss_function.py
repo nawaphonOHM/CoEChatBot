@@ -34,7 +34,7 @@ def mask_negative_log_likelihood_loss(\
         raise ValueError(error_message)
     
     n_total = mask_tensor.sum()
-    cross_entropy = -1 * torch.log(\
+    cross_entropy = -torch.log(\
             torch.gather(input_tensor, 1, target_tensor.view(-1, 1)).squeeze(1)
         )
     meaned_loss = cross_entropy.masked_select(mask_tensor).mean()
