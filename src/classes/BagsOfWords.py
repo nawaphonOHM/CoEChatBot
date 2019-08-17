@@ -49,4 +49,10 @@ class BagsOfWords:
         if word not in self.bag_reverse:
             raise TypeError("Unknown this word")
         return self.bag_reverse[word]
+    
+    def has(self, word):
+        return word in self.bag_reverse
+
+    def length(self):
+        return len(self.bag)
 

@@ -13,7 +13,7 @@ def encoded_string(cons, reference):
                 .format(type(reference))
             )
     
-    vector = [reference.getToken(con) for con in cons]
+    vector = [reference.getToken(con) for con in cons] + [reference.getToken("EOS")]
 
     return vector
 
@@ -35,9 +35,9 @@ def decoded_string(vector, reference):
     return cons
 
 def binary_matrix(vector, reference, excluded_token):
-    if type(vector) is not list:
+    if type(vector) is not tuple:
         raise TypeError(\
-                    "Expected vector as list but got as {0}"
+                    "Expected vector as tuple but got as {0}"
                     .format(type(vector)
                 )
             )
@@ -46,19 +46,16 @@ def binary_matrix(vector, reference, excluded_token):
                 "Expected reference as BagsOfWords but got as {0}"
                 .format(type(reference))
             )
-    if type(excluded_token) is not str:
+    if type(excluded_token) is not int:
         raise TypeError(\
-                "Expected excluded_token as str but got as {0}"
+                "Expected excluded_token as int but got as {0}"
                 .format(type(excluded_token))
             )
 
     binary_vector = []
 
     for dimension in vector:
-        if dimension == excluded_token:
-            binary_vector.append(0)
-        else:
-            binary_vector.append(1)
+        binary_vector.append(dimension == excluded_token)
 
     return binary_vector
 

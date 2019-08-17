@@ -26,7 +26,7 @@ def mask_negative_log_likelihood_loss(\
                 "Expected used_device as str but got as {0}"
                 .format(type(used_device))
             )
-    used_devices = ["cpu", "gpu"]
+    used_devices = ["cpu", "cuda"]
     if used_device not in used_devices:
         error_message = "Unknown device. Only accepted "
         for device in used_devices:
@@ -34,7 +34,7 @@ def mask_negative_log_likelihood_loss(\
         raise ValueError(error_message)
     
     n_total = mask_tensor.sum()
-    cross_entropy = -torch.log(\
+    cross_entropy = -1 * torch.log(\
             torch.gather(input_tensor, 1, target_tensor.view(-1, 1)).squeeze(1)
         )
     meaned_loss = cross_entropy.masked_select(mask_tensor).mean()
