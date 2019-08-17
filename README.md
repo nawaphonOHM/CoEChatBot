@@ -13,6 +13,8 @@ A Senior Project Computer Engineer Bachelor
     * 0.8.x.x => เพิ่ม train method
     * 0.9.x.x => เพิ่ม train iteration
     * 0.10.x.x => เพิ่ม Greedy Search
+    * 0.11.x.x => เพิ่ม evaluation
+    * 0.12.x.x => เพิ่ม Preparation Processes
 * 1.x.x.x => เพิ่ม Scope การฝึกงาน
 
 # Scopes

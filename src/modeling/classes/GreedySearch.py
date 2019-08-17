@@ -1,8 +1,8 @@
 import torch.nn as neural_network_tools
 import torch.tensor as Tensor
 import torch
-from src.processing.seq2seq.Seq2SeqEncoder import Seq2SeqEncoder as Seq2SeqEncoder
-from src.processing.seq2seq.Seq2SeqDecoder import Seq2SeqDecoder as Seq2SeqDecoder
+from src.modeling.seq2seq import Seq2SeqEncoder as Seq2SeqEncoder
+from src.modeling.seq2seq import Seq2SeqDecoder as Seq2SeqDecoder
 
 class GreedySearch(neural_network_tools.Module):
     used_device = None

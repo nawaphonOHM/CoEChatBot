@@ -6,5 +6,16 @@
         "SOS": 1, 
         "EOS": 2
     }, 
-    "max_sentence": 10
+    "max_sentence": 10, 
+    "batch_size": 64, 
+    "iteration": 4000, 
+    "hidden_size": 500, 
+    "encoder_n_layer": 2, 
+    "decoder_n_layer": 2, 
+    "dropout": 0.1, 
+    "attention_model": "concat", 
+    "learning_rate": 0.0001, 
+    "decoder_learning_ratio": 5, 
+    "clip": 50.0, 
+    "teacher_forcing_ratio": 1.0
 }

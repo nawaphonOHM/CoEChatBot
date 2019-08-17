@@ -1,15 +1,15 @@
 import torch
 import torch.nn as neural_network_tools
-import torch.tensor as Tensor
+import torch
 from torch.nn import Embedding
-from src.processing.seq2seq.Attentions import Attentions
+from src.modeling.seq2seq.Attentions import Attentions
 import torch.nn.functional as convolution_functions
 
 class Seq2SeqDecoder(neural_network_tools.Module):
     def __init__(\
             self, 
             attentions_model, 
-            embedding_tensor, 
+            embedding, 
             hidden_size, 
             output_size, 
             n_layers=1, 
@@ -20,10 +20,10 @@ class Seq2SeqDecoder(neural_network_tools.Module):
                         "Expected attentions_model as str but got as {0}"
                         .format(type(attentions_model))
                     )
-            if type(embedding_tensor) is not Embedding:
+            if type(embedding) is not Embedding:
                 raise TypeError(\
                         "Expected embedding_tensor as Embedding but got as {0}"
-                        .format(type(embedding_tensor))
+                        .format(type(embedding))
                     )
             if type(hidden_size) is not int:
                 raise TypeError(\
@@ -73,7 +73,7 @@ class Seq2SeqDecoder(neural_network_tools.Module):
             self.n_layers = n_layers
             self.dropout = dropout
 
-            self.embedding = embedding_tensor
+            self.embedding = embedding
             self.embedding_dropout = neural_network_tools.Dropout(dropout)
             self.gru = \
                 neural_network_tools.GRU(\
@@ -88,22 +88,17 @@ class Seq2SeqDecoder(neural_network_tools.Module):
 
     # overwrite method.
     def forward(self, input_step, last_hidden_tensor, encoder_outputs_tensor):
-        if type(input_step) is not int:
+        if type(input_step) is not torch.Tensor:
             raise TypeError(\
-                    "Expected input_step as int but got as {0}"
+                    "Expected input_step as Tensor but got as {0}"
                     .format(type(input_step))
                 )
-        if input_step < 0:
-            raise ValueError(\
-                    "an input_step must be more than 0 but got {0}"
-                    .format(input_step)
-                )
-        if type(last_hidden_tensor) is not Tensor:
+        if type(last_hidden_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected last_hidden_tensor as Tensor but got as {0}"
                     .format(type(last_hidden_tensor))
                 )
-        if type(encoder_outputs_tensor) is not Tensor:
+        if type(encoder_outputs_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected encoder_outputs_tensor as Tensor but got as {0}"
                     .format(type(encoder_outputs_tensor))
