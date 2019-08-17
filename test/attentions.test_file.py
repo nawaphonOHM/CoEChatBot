@@ -1,4 +1,4 @@
-from src.processing.seq2seq.Attentions import Attentions
+from src.modeling.seq2seq.Attentions import Attentions
 
 methods = ["dot", "general", "concat"]
 

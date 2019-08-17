@@ -1,7 +1,7 @@
 import torch
 import torch.nn as neural_network_tools
 import torch.nn.functional as convolution_functions
-import torch.tensor as Tensor
+import torch
 
 class Attentions(neural_network_tools.Module):
     def __init__(self, method, hidden_size):
@@ -34,13 +34,13 @@ class Attentions(neural_network_tools.Module):
         super(Attentions, self).__init__()
         self.method = method
         self.hidden_size = hidden_size
-        if self.method is "general":
+        if self.method == "general":
             self.attn = \
                 neural_network_tools.Linear(\
                     self.hidden_size, 
                     hidden_size
                 )
-        elif self.method is "concat":
+        elif self.method == "concat":
             self.attn = \
                 neural_network_tools.Linear(\
                         self.hidden_size * 2, 
@@ -51,12 +51,12 @@ class Attentions(neural_network_tools.Module):
                 )
     
     def dot_score(self, hidden_tensor, encoder_output_tensor):
-        if type(hidden_tensor) is not Tensor:
+        if type(hidden_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected hidden_tensor as Tensor but got as {0}"
                     .format(type(hidden_tensor))
                 )
-        if type(encoder_output_tensor) is not Tensor:
+        if type(encoder_output_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected encoder_output_tensor as Tensor but got as {0}"
                     .format(type(encoder_output_tensor))
@@ -65,12 +65,12 @@ class Attentions(neural_network_tools.Module):
         return torch.sum(hidden_tensor * encoder_output_tensor, dim=2)
 
     def general_score(self, hidden_tensor, encoder_output_tensor):
-        if type(hidden_tensor) is not Tensor:
+        if type(hidden_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected hidden_tensor as Tensor but got as {0}"
                     .format(type(hidden_tensor))
                 )
-        if type(encoder_output_tensor) is not Tensor:
+        if type(encoder_output_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Ecpected encoder_output_tensor as Tensor but got as {0}"
                     .format(type(encoder_output_tensor))
@@ -80,12 +80,12 @@ class Attentions(neural_network_tools.Module):
         return torch.sum(hidden_tensor * energy, dim=2)
 
     def concat_score(self, hidden_tensor, encoder_output_tensor):
-        if type(hidden_tensor) is not Tensor:
+        if type(hidden_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected hidden_tensor as Tensor but got as {0}"
                     .format(type(hidden_tensor))
                 )
-        if type(encoder_output_tensor) is not Tensor:
+        if type(encoder_output_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected encoder_output_tensor as Tensor but got as {0}"
                     .format(type(encoder_output_tensor))
@@ -101,22 +101,22 @@ class Attentions(neural_network_tools.Module):
 
     #Overwrite method
     def forward(self, hidden, encoder_outputs):
-        if type(hidden) is not Tensor:
+        if type(hidden) is not torch.Tensor:
             raise TypeError(\
                     "Expected hidden as Tensor but got as {0}"
                     .format(type(hidden))
                 )
-        if type(encoder_outputs) is not Tensor:
+        if type(encoder_outputs) is not torch.Tensor:
             raise TypeError(\
                     "Expected encoder_outputs as Tensor but got as {0}"
                     .format(type(encoder_outputs))
                 )
-        
-        if self.method is "general":
+
+        if self.method == "general":
             attention_energies = self.general_score(hidden, encoder_outputs)
-        elif self.method is "concat":
+        elif self.method == "concat":
             attention_energies = self.concat_score(hidden, encoder_outputs)
-        elif self.method is "dot":
+        elif self.method == "dot":
             attention_energies = self.dot_score(hidden, encoder_outputs)
         
         attention_energies = attention_energies.t()

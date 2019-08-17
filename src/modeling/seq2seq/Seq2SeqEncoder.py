@@ -1,5 +1,5 @@
 import torch.nn as neural_network_tools
-import torch.tensor as Tensor
+import torch
 from torch.nn import Embedding
 
 class Seq2SeqEncoder(neural_network_tools.Module):
@@ -61,22 +61,20 @@ class Seq2SeqEncoder(neural_network_tools.Module):
             input_lengths, 
             hidden=None
         ):
-            if type(input_seq) is not Tensor:
+            if type(input_seq) is not torch.Tensor:
                 raise TypeError(\
                         "Expected input_seq type as Tensor but got as {0}"\
                         .format(type(input_seq))
                     )
-            if type(input_lengths) is not int:
+            if type(input_lengths) is not torch.Tensor:
                 raise TypeError(\
-                        "Expected input_length_vector as int but got as {0}"\
+                        "Expected input_length_vector as Tensor but got as {0}"\
                         .format(type(input_lengths))
                     )
-            typed_hidden_tensor = type(hidden)
-            if typed_hidden_tensor is not None and \
-                typed_hidden_tensor is not Tensor:
+            if type(hidden) is not type(None) and type(hidden) is not Embedding:
                     raise TypeError(\
-                            "Expected hidden_tensor as Tensor or None but got as {0}"
-                            .format(typed_hidden_tensor)
+                            "Expected hidden_tensor as Embedding but got as {0}"
+                            .format(hidden)
                         )
             
             embedded_tensor = self.embedding(input_seq)

@@ -1,10 +1,12 @@
 import torch
 import random
 import torch.nn as neural_network_tools
-from torch.tensor import Tensor
-from src.processing.seq2seq.Seq2SeqEncoder import Seq2SeqEncoder
-from src.processing.seq2seq.Seq2SeqDecoder import Seq2SeqDecoder
+from src.modeling.seq2seq.Seq2SeqEncoder import Seq2SeqEncoder
+from src.modeling.seq2seq.Seq2SeqDecoder import Seq2SeqDecoder
 from src.modeling.loss_function import mask_negative_log_likelihood_loss
+from torch import optim as optimization
+from torch.nn import Embedding as Embedding
+from torch.optim import Adam as Adam
 
 def train(\
         input_variable_tensor, 
@@ -19,26 +21,26 @@ def train(\
         decoder_optimizer, 
         batch_size, 
         clip, 
-        max_length, 
         START_SENTENCE_TOKEN, 
-        teacher_forcing_ratio
+        teacher_forcing_ratio, 
+        used_device
     ):
-        if type(input_variable_tensor) is not Tensor:
+        if type(input_variable_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected input_variable_tensor as Tensor but got as {0}"
                     .format(type(input_variable_tensor))
                 )
-        if type(lengths_vector) is not Tensor:
+        if type(lengths_vector) is not torch.Tensor:
             raise TypeError(\
                     "Expected lengths_vector as Tensor but got as {0}"
                     .format(type(lengths_vector))
                 )
-        if type(target_variable_tensor) is not Tensor:
+        if type(target_variable_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected target_variable_tensor as Tensor but got as {0}"
                     .format(type(target_variable_tensor))
                 )
-        if type(mask_tensor) is not Tensor:
+        if type(mask_tensor) is not torch.Tensor:
             raise TypeError(\
                     "Expected mask_tensor as Tensor but got as {0}"
                     .format(type(mask_tensor))
@@ -51,7 +53,7 @@ def train(\
         if max_target_len < 1:
             raise ValueError(\
                     "a max_target_len must be more than 0 but got {0}"
-                    .format(max_length)
+                    .format(max_target_len)
                 )
         if type(encoder_part_module) is not Seq2SeqEncoder:
             raise TypeError(\
@@ -62,6 +64,21 @@ def train(\
             raise TypeError(\
                     "Expected decoder_part_module as Seq2SeqEncoder but got as {0}"
                     .format(type(decoder_part_module))
+                )
+        if type(embedding_tensor) is not Embedding:
+            raise TypeError(\
+                    "Expected embedding_tensor as Embedding but got as {0}"
+                    .format(type(embedding_tensor))
+                )
+        if type(encoder_optimizer) is not Adam:
+            raise TypeError(\
+                    "Expected encoder_optimizer as Adam but got as {0}"
+                    .format(type(encoder_optimizer))
+                )
+        if type(decoder_optimizer) is not Adam:
+            raise TypeError(\
+                    "Expected decoder_optimizer as Adam but got as {0}"
+                    .format(type(decoder_optimizer))
                 )
         if type(batch_size) is not int:
             raise TypeError(\
@@ -78,21 +95,6 @@ def train(\
                     "Expected clip as float but got as {0}"
                     .format(type(clip))
                 )
-        if clip < 0 or clip > 1:
-            raise ValueError(\
-                    "a clip value must be [0.0, 1.0] but got {0}"
-                    .format(clip)
-                )
-        if type(max_length) is not int:
-            raise TypeError(\
-                    "Expected max_length as int but got as {0}"
-                    .format(type(max_length))
-                )
-        if max_length < 1:
-            raise ValueError(\
-                    "a max_length must be more than 0 but got {0}"
-                    .format(max_length)
-                )
         if type(START_SENTENCE_TOKEN) is not int:
             raise TypeError(\
                     "Expected START_SENTENCE_TOKEN as int but got as {0}"
@@ -108,13 +110,15 @@ def train(\
                     "a teacher_forcing_ratio must be [0.0, 1.0] but got {0}"
                     .format(teacher_forcing_ratio)
                 )
+        if type(used_device) is not str:
+            raise TypeError(\
+                    "Expected used_device as str but got as {0}"
+                    .format(type(used_device))
+                )
 
         loss = 0
         print_losses = []
         n_totals = 0
-
-        used_device = \
-            torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         encoder_optimizer.zero_grad()
         decoder_optimizer.zero_grad()
