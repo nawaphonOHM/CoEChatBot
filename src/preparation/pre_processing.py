@@ -24,6 +24,7 @@ for pair in raw_input:
     type_pairing = pair["intension"]
     response_sentence = ""
     query_sentence = ""
+    bag.addIntentionType(type_pairing)
 
     cleaned_word_inquery = pair["inquery_sentence"]
     cleaned_word_inquery = \
@@ -47,9 +48,10 @@ for pair in raw_input:
             [type_pairing, query_sentence.strip(), response_sentence.strip()]
         )
 
+bag.sort_em()
+
 with open(os.path.join(work_directory, "data/processed/bag_of_word_.bin"), "wb")\
      as bag_saved_file:
         pickle.dump(bag, bag_saved_file, protocol=pickle.DEFAULT_PROTOCOL)
 
 cleaned_data.close()
-    

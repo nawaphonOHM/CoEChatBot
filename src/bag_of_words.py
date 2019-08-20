@@ -3,8 +3,9 @@ import json
 class BagsOfWords:
     word_token = {}
     token_word = {}
-    amount = 0
+    amount_word = 0
     next_token = 0
+    intention_classes = []
 
     def getWord(self, token):
         if type(token) is not int:
@@ -37,4 +38,19 @@ class BagsOfWords:
         if word not in self.word_token:
             raise ValueError("Unknown this word {0}.".format(word))
         return self.word_token[word]
+
+    def length(self):
+        return self.amount_word
+
+    def addIntentionType(self, intention):
+        if type(intention) is not str:
+            raise TypeError(\
+                    "Expected intention as str but got as {0}"
+                    .format(type(intention))
+                )
+        if intention not in self.intention_classes:
+            self.intention_classes.append(intention)
+
+    def sort_em(self):
+        self.intention_classes.sort()
 
