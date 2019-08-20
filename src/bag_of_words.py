@@ -23,9 +23,10 @@ class BagsOfWords:
                     "Expected word as str but got as {0}"
                     .format(type(word))
                 )
-        self.word_token[word] = self.next_token
-        self.token_word[self.next_token] = word
-        self.next_token += 1
+        if word not in self.word_token:
+            self.word_token[word] = self.next_token
+            self.token_word[self.next_token] = word
+            self.next_token += 1
     
     def getToken(self, word):
         if type(word) is not str:
