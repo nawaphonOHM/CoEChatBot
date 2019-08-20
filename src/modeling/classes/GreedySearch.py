@@ -1,20 +1,19 @@
 import torch.nn as neural_network_tools
-import torch.tensor as Tensor
 import torch
-from src.modeling.seq2seq import Seq2SeqEncoder as Seq2SeqEncoder
-from src.modeling.seq2seq import Seq2SeqDecoder as Seq2SeqDecoder
+from src.modeling.seq2seq import Seq2SeqEncoder
+from src.modeling.seq2seq import Seq2SeqDecoder
 
 class GreedySearch(neural_network_tools.Module):
     used_device = None
     SOS_TOKEN = None
 
     def __init__(self, encoder_part, decoder_part, used_device, SOS_TOKEN):
-        if type(encoder_part) is not Seq2SeqEncoder:
+        if type(encoder_part) is not Seq2SeqEncoder.Seq2SeqEncoder:
             raise TypeError(\
                     "Expected encoder_part as Seq2SeqEncoder but got as {0}"
                     .format(type(encoder_part))
                 )
-        if type(decoder_part) is not Seq2SeqDecoder:
+        if type(decoder_part) is not Seq2SeqDecoder.Seq2SeqDecoder:
             raise TypeError(\
                     "Expected decoder_part as Seq2SeqDecoder but got as {0}"
                     .format(type(decoder_part))
@@ -47,12 +46,12 @@ class GreedySearch(neural_network_tools.Module):
     # Overwrite Method
 
     def forward(self, input_vector, input_length, max_length):
-        if type(input_vector) is not Tensor:
+        if type(input_vector) is not torch.Tensor:
             raise TypeError(\
                     "Expected input_vector as Tensor but got as {0}"
                     .format(type(input_vector))
                 )
-        if type(input_length) is not Tensor:
+        if type(input_length) is not torch.Tensor:
             raise TypeError(\
                     "Expected input_length as Tensor but got as {0}"
                     .format(type(input_length))
@@ -76,7 +75,7 @@ class GreedySearch(neural_network_tools.Module):
             torch.ones(1, 1, device=self.used_device, dtype=torch.long) * \
                 self.SOS_TOKEN
         all_tokens = torch.zeros([0], device=self.used_device, dtype=torch.long)
-        all_scores = torch.zeors([0], device=self.used_device)
+        all_scores = torch.zeros([0], device=self.used_device)
 
         for _ in range(max_length):
             decoder_output_tensor, decoder_hidden_tensor = \

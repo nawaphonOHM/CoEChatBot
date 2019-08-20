@@ -7,15 +7,15 @@
         "EOS": 2
     }, 
     "max_sentence": 10, 
-    "batch_size": 64, 
-    "iteration": 4000, 
-    "hidden_size": 500, 
-    "encoder_n_layer": 2, 
-    "decoder_n_layer": 2, 
-    "dropout": 0.1, 
+    "batch_size": 5, 
+    "iteration": 1000, 
+    "hidden_size": 100, 
+    "encoder_n_layer": 1, 
+    "decoder_n_layer": 1, 
+    "dropout": 0.2, 
     "attention_model": "concat", 
     "learning_rate": 0.0001, 
-    "decoder_learning_ratio": 5, 
+    "decoder_learning_ratio": 10, 
     "clip": 50.0, 
     "teacher_forcing_ratio": 1.0
 }
