@@ -1,6 +1,7 @@
 import os
 import json
 import csv
+import pickle
 import pythainlp.tokenize as tokenization
 import pythainlp.corpus.common as corpus
 import src.bag_of_words as bag_of_words
@@ -45,6 +46,10 @@ for pair in raw_input:
     writer.writerow(\
             [type_pairing, query_sentence.strip(), response_sentence.strip()]
         )
+
+with open(os.path.join(work_directory, "data/processed/bag_of_word_.bin"), "wb")\
+     as bag_saved_file:
+        pickle.dump(bag, bag_saved_file, protocol=pickle.DEFAULT_PROTOCOL)
 
 cleaned_data.close()
     
