@@ -47,7 +47,7 @@ class BagsOfWords:
     
     def getToken(self, word):
         if word not in self.bag_reverse:
-            raise TypeError("Unknown this word {0}".format(word))
+            raise KeyError("Unknown this word {0}".format(word))
         return self.bag_reverse[word]
     
     def has(self, word):

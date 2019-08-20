@@ -7,6 +7,7 @@ from src.modeling.seq2seq import Seq2SeqDecoder as Seq2SeqDecoder
 from src.modeling.classes import GreedySearch as GreedySearch
 from src.modeling.evaluation import *
 import pythainlp
+import re
 
 
 model = torch.load("model/CoEChatBot.tar")
@@ -50,10 +51,10 @@ searcher = GreedySearch(\
         bag_of_word.getToken("SOS")
     )
 
-
 input_sentence = ""
+state = "{เริ่มต้น}"
 
-while True:
+while state != "{จบ}":
     input_sentence = input("นักศึกษา: ")
     input_sentence = \
         pythainlp.tokenize.word_tokenize(\
@@ -61,17 +62,29 @@ while True:
             engine="newmm", 
             keep_whitespace=False
         )
-    input_sentence = input_sentence + ["{เริ่มต้น}"]
+    input_sentence = input_sentence + [state]
+    old_state = state
+    try:
+        output_words = \
+            evaluate(\
+                    searcher, 
+                    bag_of_word, 
+                    input_sentence, 
+                    setting["max_sentence"], 
+                    used_device
+                )
+        output_sentence = ""
+        for i in range(len(output_words)):
+            if re.match("^\{.+\}$", output_words[i]):
+                state = output_words[i]
+            elif output_words[i] != "EOS":
+                output_sentence = output_sentence + output_words[i]
+    except KeyError:
+        output_sentence = "ขอโทษนะครับผมไม่เข้าใจประโยคกำลังเรียนรู้อยู่ครับ"
+        state = old_state
 
-    output_words = \
-        evaluate(\
-                searcher, 
-                bag_of_word, 
-                input_sentence, 
-                setting["max_sentence"], 
-                used_device
-            )
-    output_words[:] = [x for x in output_words]
+    print("<ในใจเจ้าหน้าที่> -> " + state)
+    print("เจ้าหน้าที่: " + output_sentence)
 
 
 

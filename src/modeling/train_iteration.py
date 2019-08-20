@@ -80,6 +80,11 @@ for _ in range(setting["iteration"]):
     batches_output.append([padded_output, mask_vectors, max_output_length])
 # -----------------------------------------------------------------------------------
 
+with open("./test/preprocess_encoder_part.txt", "w") as write_file:
+    write_file.write("encoder_input_vector: " + str(batches_input[0][0]))
+    write_file.write("length_input_vector: " + str(batches_input[0][1]))
+
+
 # Building Embedding, Seq2SeqEncoder, Seq2SeqDecoer
 embedding_tensor = neural_network_tools.Embedding(\
         bag.length(), 
