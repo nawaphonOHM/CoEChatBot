@@ -1,26 +1,26 @@
 [
     {
-        "intension": "ทักทาย", 
+        "intension": "การทักทาย", 
         "inquery_sentence": "สวัสดีครับ", 
         "response_sentence": "สวัสดีครับ ต้องการสอบถามเรื่องอะไรครับ", 
-        "changed_intension": "ไม่ทราบเรื่องที่จะสอบถาม"
+        "intension_set": ""
     }, 
     {
-        "intension": "ไม่ทราบเรื่องที่จะสอบถาม", 
+        "intension": "การสอบถาม", 
         "inquery_sentence": "อยากสอบถามการฝึกงานหน่อยครับ", 
         "response_sentence": "ต้องการสอบถามอะไรของการฝึกงานเหรอครับ", 
-        "changed_intension": "เรื่องการฝึกงาน"
+        "intension_set": ""
     }, 
     {
-        "intension": "เรื่องการฝึกงาน", 
+        "intension": "การฝึกงาน", 
         "inquery_sentence": "เกณฑ์ของภาควิชาเป็นอย่างไรบ้างครับ", 
         "response_sentence": "ต้องผ่านรายวิชาของภาคเป็นจำนวน 80% ของทั้งหมดก่อนครับ", 
-        "changed_intension": "เรื่องการฝึกงาน_เกณฑ์ของภาค"
+        "intension_set": ""
     }, 
     {
-        "intension": "เรื่องการฝึกงาน_เกณฑ์ของภาค", 
+        "intension": "การจากลา", 
         "inquery_sentence": "ขอบคุณครับ", 
         "response_sentence": "ครับ ยินดีครับ", 
-        "changed_intension": "จากลา"
+        "intension_set": ""
     }
 ]
