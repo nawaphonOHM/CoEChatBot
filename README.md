@@ -2,6 +2,8 @@
 A Senior Project Computer Engineer Bachelor
 
 # Versions Details
+*ยกเลิก*
+------------------------------------------------
 * 0.x.x.x => เพิ่มและทดสอบการทำงานของ Piplines
     * 0.1.x.x => เพิ่ม setting json
     * 0.2.x.x => เพิ่ม BagsOfWord
@@ -16,6 +18,7 @@ A Senior Project Computer Engineer Bachelor
     * 0.11.x.x => เพิ่ม evaluation
     * 0.12.x.x => เพิ่ม Preparation Processes
 * 1.x.x.x => เพิ่ม Scope การฝึกงาน
+------------------------------------------------------------
 
 # Scopes
 ## การฝึกงาน
