@@ -20,6 +20,8 @@ A Senior Project Computer Engineer Bachelor
 * 1.x.x.x => เพิ่ม Scope การฝึกงาน
 ------------------------------------------------------------
 
+*Default branch เริ่มต้นที่ 2.0 เนื่องจากเปลี่ยนMachine Learning Tools จาก Torch เป็น Tensorflow*
+
 # Scopes
 ## การฝึกงาน
 -------------------------------------------------------------------------------
