@@ -6,13 +6,13 @@
         "intension_set": ""
     }, 
     {
-        "intension": "การสอบถาม", 
+        "intension": "การฝึกงาน", 
         "inquery_sentence": "อยากสอบถามการฝึกงานหน่อยครับ", 
         "response_sentence": "ต้องการสอบถามอะไรของการฝึกงานเหรอครับ", 
         "intension_set": ""
     }, 
     {
-        "intension": "การฝึกงาน", 
+        "intension": "การฝึกงาน_เกณฑ์", 
         "inquery_sentence": "เกณฑ์ของภาควิชาเป็นอย่างไรบ้างครับ", 
         "response_sentence": "ต้องผ่านรายวิชาของภาคเป็นจำนวน 80% ของทั้งหมดก่อนครับ", 
         "intension_set": ""
