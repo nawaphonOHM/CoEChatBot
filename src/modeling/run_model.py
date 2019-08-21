@@ -45,5 +45,6 @@ def response(sentence):
     
     print("เจ้าหน้าที่: {0}".format(bag.getResponseSentence(named_intention)))
 
-
-response("สวัสดีครับ")
+while True:
+    query_sentence = input("นักศึกษา: ")
+    response(query_sentence)
