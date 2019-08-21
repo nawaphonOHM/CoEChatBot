@@ -76,5 +76,11 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาเซอร์กิต เหรอครับ", 
         "response_sentence": "มี อาจารย์ดำรง และ อาจารย์มนตรี ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_IntroNetwork", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาอินโทร เน็ตเวิร์ก เหรอครับ", 
+        "response_sentence": "มี อาจารย์ธัชชัย ครับ", 
+        "intension_set": ""
     }
 ]
