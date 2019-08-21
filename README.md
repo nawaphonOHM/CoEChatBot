@@ -47,7 +47,7 @@ A Senior Project Computer Engineer Bachelor
 > **นักศึกษา:** สวัสดีครับ *คู่ที่ 1* <br />
 > **เจ้าหน้าที่:** สวัสดีครับ ต้องการสอบถามเรื่องอะไรครับ *คู่ที่ 1* <br />
 > **นักศึกษา:** วิชาที่เปิดสอนครับ ของเทอม 1 ครับ *คู่ที่ 6* <br />
-> **เจ้าหน้าที่:** ก็จะมีวิชา Introcom แล้วก็ Software Lab ของปี 2, ปี 3 แล้วก็ Hardware Lab ของปี 2, ปี 3, Circuit, Intro Network, การเขียนโปรแกรมตัวที่ 1, Digital-Logic, Com-Engineer Math, Ethical, OS, Database, Wireless, Com-Architecture
+> **เจ้าหน้าที่:** ก็จะมีวิชา Introcom แล้วก็ Software Lab ของปี 2, ปี 3 แล้วก็ Hardware Lab ของปี 2, ปี 3 แล้วก็ Circuit แล้วก็ Intro Network แล้วก็ การเขียนโปรแกรมตัวที่ 1 แล้วก็ Digital-Logic แล้วก็ Com-Engineer Math แล้วก็ Ethical แล้วก็ OS แล้วก็ Database แล้วก็ Wireless แล้วก็ Com-Architecture
 แล้วก็ Project 1 ครับ *คู่ที่ 6* <br />
 > **นักศึกษา:** ขอบคุณครับ *คู่ที่ 4* <br />
 > **เจ้าหน้าที่:** ครับ ยินดีครับ *คู่ที่ 4*
