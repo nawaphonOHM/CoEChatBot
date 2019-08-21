@@ -82,5 +82,11 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาอินโทร เน็ตเวิร์ก เหรอครับ", 
         "response_sentence": "มี อาจารย์ธัชชัย ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_Programming_1", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาการเขียนโปรแกรมตัวที่ 1", 
+        "response_sentence": "มี อาจารย์สุธน และ อาจารย์ธนาธิป ครับ", 
+        "intension_set": ""
     }
 ]
