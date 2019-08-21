@@ -38,13 +38,14 @@ def response(sentence):
 
     sentence.sort(key=lambda x: x[1], reverse=True)
 
-    print(\
-            "Type: {0}; Acuracy: {1}"\
-            .format(named_intention, sentence[0][1])
-        )
-    
-    print("เจ้าหน้าที่: {0}".format(bag.getResponseSentence(named_intention)))
+    return named_intention, bag.getResponseSentence(named_intention)
 
-while True:
+
+intention = None
+response_sentence = ""
+
+while intention != "การจากลา":
+
     query_sentence = input("นักศึกษา: ")
-    response(query_sentence)
+    intention, response_sentence = response(query_sentence)
+    print("เจ้าหน้าที่: {0}".format(response_sentence))
