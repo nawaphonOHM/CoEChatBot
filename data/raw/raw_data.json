@@ -28,5 +28,11 @@
         "inquery_sentence": "อยากทราบว่าต้องลงทะเบียนทั้งหมดกี่หน่วยกิต ถึงจะสามารถลงทะเบียนวิชาฝึกงานได้เหรอครับ", 
         "response_sentence": "ต้องผ่านรายวิชาของทางภาควิชาที่เป็นของปี 1 , ปี 2 และ ปี 3 เทอม 1 จำนวน 48 หน่วยกิตก่อนครับ ถึงจะมีสิทธิ์ฝึกงานได้ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "วิชาเปิดสอน_เทอม_1", 
+        "inquery_sentence": "วิชาที่เปิดสอนครับ ของเทอม 1 ครับ", 
+        "response_sentence": "ก็จะมีวิชา Introcom แล้วก็ Software Lab ของปี 2, ปี 3 แล้วก็ Hardware Lab ของปี 2, ปี 3 แล้วก็ Circuit แล้วก็ Intro Network แล้วก็ การเขียนโปรแกรมตัวที่ 1 แล้วก็ Digital-Logic แล้วก็ Com-Engineer Math แล้วก็ Ethical แล้วก็ OS แล้วก็ Database แล้วก็ Wireless แล้วก็ Com-Architecture แล้วก็ Project 1 ครับ", 
+        "intension_set": "" 
     }
 ]

@@ -19,7 +19,7 @@ def response(sentence):
     with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "rb") \
         as model_read:
             bag = pickle.load(model_read)
-    sentence = tokenization.word_tokenize(sentence)
+    sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
     sentence = [word for word in sentence if word not in stop_word]
 
     for word in bag.getEntriedWords():
