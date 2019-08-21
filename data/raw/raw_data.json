@@ -84,7 +84,7 @@
         "intension_set": ""
     }, 
     {
-        "intension": "อาจารย์ผู้สอน_Programming_1", 
+        "intension": "อาจารย์ผู้สอน_Programming1_เทอม_1", 
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาการเขียนโปรแกรมตัวที่ 1 ของเทอม 1 เหรอครับ", 
         "response_sentence": "มี อาจารย์สุธน และ อาจารย์ธนาธิป ครับ", 
         "intension_set": ""
@@ -99,6 +99,12 @@
         "intension": "อาจารย์ผู้สอน_Math_3", 
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาคอม อินจิเนียร์ แมท เหรอครับ", 
         "response_sentence": "มี อาจารย์ธเนศ ครับ", 
+        "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_Programming1_เทอม_2", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาการเขียนโปรแกรมตัวที่ 1 ของเทอม 2 เหรอครับ", 
+        "response_sentence": "มี อาจารย์นิคม ครับ", 
         "intension_set": ""
     }
 ]
