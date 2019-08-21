@@ -106,5 +106,11 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาการเขียนโปรแกรมตัวที่ 1 ของเทอม 2 เหรอครับ", 
         "response_sentence": "มี อาจารย์นิคม ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_Programming2", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาการเขียนโปรแกรมตัวที่ 2 เหรอครับ", 
+        "response_sentence": "มี อาจารย์ธนาธิป ครับ", 
+        "intension_set": ""
     }
 ]
