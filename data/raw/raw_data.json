@@ -166,5 +166,11 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาไวร์เลส เหรอครับ", 
         "response_sentence": "มี อาจารย์เพ็ชรัตน์ ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_ComArch", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาคอมอาคิเทค เหรอครับ", 
+        "response_sentence": "มี อาจารย์วชรินทร์ อาจารย์ปัญญยศ ครับ", 
+        "intension_set": ""
     }
 ]
