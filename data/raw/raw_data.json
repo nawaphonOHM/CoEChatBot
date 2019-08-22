@@ -115,6 +115,14 @@
     }, 
     {
         "intension": "อาจารย์ผู้สอน_SoftEng", 
-        "inquery_sentence": ""
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาซอฟเอน เหรอครับ", 
+        "response_sentence": "มี อาจารย์สมชัย ครับ", 
+        "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_Stats", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาสแตท เหรอครับ", 
+        "response_sentence": "มี อาจารย์ทศพร ครับ", 
+        "intension_set": ""
     }
 ]
