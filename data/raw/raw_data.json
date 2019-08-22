@@ -160,5 +160,11 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาดาต้าเบส เหรอครับ", 
         "response_sentence": "มี อาจารย์ไพจิตร ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_Wireless", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาไวร์เลส เหรอครับ", 
+        "response_sentence": "มี อาจารย์เพ็ชรัตน์ ครับ", 
+        "intension_set": ""
     }
 ]
