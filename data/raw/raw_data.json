@@ -132,6 +132,9 @@
         "intension_set": ""
     }, 
     {
-        "intension": "อาจารย์ผู้สอน_"
+        "intension": "อาจารย์ผู้สอน_DataComu", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาดาต้า เหรอครับ", 
+        "response_sentence": "มี อาจารย์สินชัย อาจารย์เพ็ชรัตน์ ครับ", 
+        "intension_set": ""
     }
 ]
