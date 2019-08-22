@@ -63,7 +63,7 @@ def train():
     model.fit(\
         numpy.array(features), 
         numpy.array(destination_class), 
-        epochs=200, 
+        epochs=20, 
         batch_size=5, 
         verbose=1
     )

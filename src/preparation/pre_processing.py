@@ -4,6 +4,7 @@ import csv
 import pickle
 import pythainlp.tokenize as tokenization
 import pythainlp.corpus.common as corpus
+from pythainlp.spell import correct as typo_checking
 import src.bag_of_words as bag_of_words
 
 def pre_processing():
@@ -31,7 +32,7 @@ def pre_processing():
         cleaned_word_inquery = \
             tokenization.word_tokenize(cleaned_word_inquery, keep_whitespace=False)
         cleaned_word_inquery = \
-            [word for word in cleaned_word_inquery if word not in stop_word]
+            [typo_checking(word) for word in cleaned_word_inquery if word not in stop_word]
         for word in cleaned_word_inquery:
             bag.addWord(word)
             query_sentence = query_sentence + word + " "
