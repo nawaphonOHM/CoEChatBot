@@ -148,5 +148,11 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาอิติก เหรอครับ", 
         "response_sentence": "มี อาจารย์ไพจิตร อาจารย์พิชญา ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_OS", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาโอเอส เหรอครับ", 
+        "response_sentence": "มี อาจารย์แสงสุรีย์ ครับ", 
+        "intension_set": ""
     }
 ]
