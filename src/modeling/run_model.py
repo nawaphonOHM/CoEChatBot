@@ -41,11 +41,11 @@ def response(sentence):
     return named_intention, bag.getResponseSentence(named_intention)
 
 
-intention = None
-response_sentence = ""
+# intention = None
+# response_sentence = ""
 
-while intention != "การจากลา":
+# while intention != "การจากลา":
 
-    query_sentence = input("นักศึกษา: ")
-    intention, response_sentence = response(query_sentence)
-    print("เจ้าหน้าที่: {0}".format(response_sentence))
+#     query_sentence = input("นักศึกษา: ")
+#     intention, response_sentence = response(query_sentence)
+#     print("เจ้าหน้าที่: {0}".format(response_sentence))
