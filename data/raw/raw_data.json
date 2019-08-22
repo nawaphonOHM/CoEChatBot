@@ -154,5 +154,11 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาโอเอส เหรอครับ", 
         "response_sentence": "มี อาจารย์แสงสุรีย์ ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_Database", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาดาต้าเบส เหรอครับ", 
+        "response_sentence": "มี อาจารย์ไพจิตร ครับ", 
+        "intension_set": ""
     }
 ]
