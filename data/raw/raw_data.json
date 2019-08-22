@@ -124,5 +124,14 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาสแตท เหรอครับ", 
         "response_sentence": "มี อาจารย์ทศพร ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_Discrete", 
+        "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาดิสครีตแมท เหรอครับ", 
+        "response_sentence": "มี อาจารย์Andrew ครับ", 
+        "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_"
     }
 ]
