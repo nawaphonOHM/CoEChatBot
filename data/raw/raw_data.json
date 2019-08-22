@@ -112,5 +112,9 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาการเขียนโปรแกรมตัวที่ 2 เหรอครับ", 
         "response_sentence": "มี อาจารย์ธนาธิป ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "อาจารย์ผู้สอน_SoftEng", 
+        "inquery_sentence": ""
     }
 ]
