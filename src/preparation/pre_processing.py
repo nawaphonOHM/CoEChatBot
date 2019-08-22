@@ -8,6 +8,7 @@ from pythainlp.spell import correct as typo_checking
 import src.bag_of_words as bag_of_words
 
 def pre_processing():
+    print("Pre-Processing is starting")
     raw_input = None
     fomatted_data = []
     stop_word = corpus.thai_stopwords()
@@ -22,7 +23,11 @@ def pre_processing():
         as raw:
             raw_input = json.load(raw)
 
+    len_data = len(raw_input)
+    counter = 1
+
     for pair in raw_input:
+        print("\rCleanning data {0} from {1}".format(counter, len_data), end="")
         type_pairing = pair["intension"]
         response_sentence = pair["response_sentence"]
         query_sentence = ""
@@ -41,11 +46,16 @@ def pre_processing():
         writer.writerow(\
                 [type_pairing, query_sentence.strip(), pair["response_sentence"]]
             )
+        counter += 1
 
     bag.sort_em()
 
+    print("\nsaving cleaned data...", end="")
     with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "wb")\
         as bag_saved_file:
             pickle.dump(bag, bag_saved_file, protocol=pickle.HIGHEST_PROTOCOL)
 
     cleaned_data.close()
+    print("\rsaving cleaned data...done")
+
+pre_processing()

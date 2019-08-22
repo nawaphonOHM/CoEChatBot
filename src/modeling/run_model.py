@@ -6,6 +6,7 @@ import pythainlp.tokenize as tokenization
 import pythainlp.corpus.common as corpus
 import src.bag_of_words as bag_of_words
 import keras.models as keras_module_manipulation
+from pythainlp.spell import correct as typo_checking
 
 def response(sentence):
     ERROR_THRESHOLD = 0.20
@@ -20,7 +21,7 @@ def response(sentence):
         as model_read:
             bag = pickle.load(model_read)
     sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
-    sentence = [word for word in sentence if word not in stop_word]
+    sentence = [typo_checking(word) for word in sentence if word not in stop_word]
 
     for word in bag.getEntriedWords():
         hot_coding_word.append(word in sentence)
@@ -41,11 +42,11 @@ def response(sentence):
     return named_intention, bag.getResponseSentence(named_intention)
 
 
-# intention = None
-# response_sentence = ""
+intention = None
+response_sentence = ""
 
-# while intention != "การจากลา":
+while intention != "การจากลา":
 
-#     query_sentence = input("นักศึกษา: ")
-#     intention, response_sentence = response(query_sentence)
-#     print("เจ้าหน้าที่: {0}".format(response_sentence))
+    query_sentence = input("นักศึกษา: ")
+    intention, response_sentence = response(query_sentence)
+    print("เจ้าหน้าที่: {0}".format(response_sentence))
