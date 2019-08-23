@@ -5,9 +5,6 @@ import os
 import csv
 import tensorflow
 import tflearn
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout
-from keras.optimizers import SGD
 import src.bag_of_words as bag_of_words
 
 def train():
