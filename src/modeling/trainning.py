@@ -58,7 +58,7 @@ def train():
                 len(destination_class[0]), 
                 activation="softmax"
             )
-    neural_network = tflearn.regression(neural_network)
+    neural_network = tflearn.regression(neural_network, learning_rate=0.005)
     model = tflearn.DNN(neural_network)
     model.fit(\
             numpy.array(features), 
@@ -67,7 +67,7 @@ def train():
             batch_size=int(len(features[0]) * 0.2), 
             show_metric=True
         )
-    model.save("model/bag_of_word_.tflearn")
+    model.save("model/CoeChatBot.tflearn")
 
     with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "wb") \
         as model_write:
