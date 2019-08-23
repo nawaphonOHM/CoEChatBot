@@ -70,12 +70,12 @@ def train():
         verbose=1
     )
 
-    results = model.evaluate(\
-            numpy.array(features), 
-            numpy.array(destination_class), 
-            batch_size=int(len(features[0]) * 0.8)
-        )
-    print("Test accuracy: {:.2f}%".format(results[1] * 100))
+    # results = model.evaluate(\
+    #         numpy.array(features), 
+    #         numpy.array(destination_class), 
+    #         batch_size=int(len(features[0]) * 0.8)
+    #     )
+    # print("Test accuracy: {:.2f}%".format(results[1] * 100))
 
     with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "wb") \
         as model_write:

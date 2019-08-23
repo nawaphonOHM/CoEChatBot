@@ -9,7 +9,7 @@ import keras.models as keras_module_manipulation
 from pythainlp.spell import correct as typo_checking
 
 def response(sentence):
-    ERROR_THRESHOLD = 0.20
+    CONFIDENT = 0.80
 
     work_directory = os.getcwd()
     stop_word = corpus.thai_stopwords()
@@ -28,25 +28,32 @@ def response(sentence):
 
     sentence = numpy.array(hot_coding_word)
     sentence = pandas.DataFrame([sentence], dtype=float, index=["input"])
-    sentence = model.predict([sentence])[0]
+    sentence = model.predict(sentence)[0]
 
     sentence = [[class_name, probability] \
         for class_name, probability in enumerate(sentence) \
-            if probability > ERROR_THRESHOLD]
-
-    intentions = bag.getEntiredItemsIntention()
-    named_intention = intentions[sentence[0][0]]
-
-    sentence.sort(key=lambda x: x[1], reverse=True)
-
-    return named_intention, bag.getResponseSentence(named_intention)
+            if probability >= CONFIDENT]
+    
+    if len(sentence) > 0:
+        sentence.sort(key=lambda x: x[1], reverse=True)
+        intentions = bag.getEntiredItemsIntention()
+        named_intention = intentions[sentence[0][0]]
+        return [named_intention, bag.getResponseSentence(named_intention)]
+    else:
+        return None
 
 
 intention = None
 response_sentence = ""
 
 while intention != "การจากลา":
-
+    response_message = None
     query_sentence = input("นักศึกษา: ")
-    intention, response_sentence = response(query_sentence)
-    print("เจ้าหน้าที่: {0}".format(response_sentence))
+    response_message = response(query_sentence)
+    if response_message == None:
+        print("<ในใจเจ้าหน้าที่> -> [ไม่เข้าใจ]")
+        print("เจ้าหน้าที่: ขอโทษครับ ผมไม่เข้าใจที่พิมพ์มาครับ")
+    else:
+        intention, response_sentence = response_message
+        print("<ในใจเจ้าหน้าที่> -> [{0}]".format(intention))
+        print("เจ้าหน้าที่: {0}".format(response_sentence))
