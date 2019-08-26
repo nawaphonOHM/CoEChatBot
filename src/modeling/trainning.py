@@ -48,11 +48,12 @@ def train():
     destination_class = list(trainning_data[:, 1])
     
     model = Sequential()
+
     model.add(Dense(512, input_shape=(len(features[0]), ), activation='relu'))
     model.add(Dropout(0.2))
-
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.2))
+    
     model.add(Dense(len(destination_class[0]), activation='softmax'))
     
     stochastic_gradient_descent = \
