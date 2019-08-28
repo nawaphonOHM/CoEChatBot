@@ -202,5 +202,11 @@
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาซีเคียว เหรอครับ", 
         "response_sentence": "มี อาจารย์แสงสุรีย์ ครับ", 
         "intension_set": ""
+    }, 
+    {
+        "intension": "ยืนยันคำถาม_ฝึกงาน", 
+        "inquery_sentence": "ฝึกงาน", 
+        "response_sentence": "หมายถึงเรื่องการฝึกงานใช่ไหมครับ", 
+        
     }
 ]
