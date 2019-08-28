@@ -21,21 +21,8 @@ def response(sentence, state):
 
     work_directory = os.getcwd()
     stop_word = corpus.thai_stopwords()
-    
-    tensorflow.reset_default_graph()
-    neural_network = tflearn.input_data(shape=[None, len(features[0])])
-    neural_network = \
-        tflearn.fully_connected(neural_network, 512, activation="relu")
-    neural_network = \
-        tflearn.fully_connected(neural_network, 512, activation="relu")
-    neural_network = \
-        tflearn.fully_connected(\
-                neural_network, 
-                len(destination_class[0]), 
-                activation="softmax"
-            )
-    neural_network = tflearn.regression(neural_network, learning_rate=0.005)
-    model = tflearn.DNN(neural_network)
+    model = \
+        keras_module_manipulation.load_model(os.path.join(work_directory, "model/CoeChatBot.ckpt"))
     bag = None
     hot_coding_word = []
     with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "rb") \
