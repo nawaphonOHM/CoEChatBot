@@ -29,23 +29,22 @@ def pre_processing():
     for pair in raw_input:
         print("\rCleanning data {0} from {1}".format(counter, len_data), end="")
         type_pairing = pair["intension"]
-        response_sentence = pair["response_sentence"]
-        query_sentence = ""
         bag.addIntentionType(type_pairing)
-        if "intention_set" in pair.keys():
-            bag.setIntentionSet(type_pairing, pair["intention_set"])
-
-        cleaned_word_inquery = pair["inquery_sentence"]
-        cleaned_word_inquery = \
-            tokenization.word_tokenize(cleaned_word_inquery, keep_whitespace=False)
-        cleaned_word_inquery = \
-            [typo_checking(word) for word in cleaned_word_inquery if word not in stop_word]
-        for word in cleaned_word_inquery:
-            bag.addWord(word)
-            query_sentence = query_sentence + word + " "
-        bag.setResponseSentence(type_pairing, response_sentence)
-    
-        writer.writerow(\
+        if "intention_map" in pair.keys():
+            bag.setIntentionMap(type_pairing, pair["intention_map"])
+        else:
+            response_sentence = pair["response_sentence"]
+            query_sentence = ""
+            cleaned_word_inquery = pair["inquery_sentence"]
+            cleaned_word_inquery = \
+                tokenization.word_tokenize(cleaned_word_inquery, keep_whitespace=False)
+            cleaned_word_inquery = \
+                [typo_checking(word) for word in cleaned_word_inquery if word not in stop_word]
+            for word in cleaned_word_inquery:
+                bag.addWord(word)
+                query_sentence = query_sentence + word + " "
+            bag.setResponseSentence(type_pairing, response_sentence)
+            writer.writerow(\
                 [type_pairing, query_sentence.strip(), pair["response_sentence"]]
             )
         counter += 1

@@ -200,13 +200,16 @@
     {
         "intension": "อาจารย์ผู้สอน_Security", 
         "inquery_sentence": "อาจารย์ท่านไหน สอน วิชาซีเคียว เหรอครับ", 
-        "response_sentence": "มี อาจารย์แสงสุรีย์ ครับ", 
-        "intension_set": ""
+        "response_sentence": "มี อาจารย์แสงสุรีย์ ครับ"
     }, 
     {
         "intension": "ยืนยันคำถาม_ฝึกงาน", 
         "inquery_sentence": "ฝึกงาน", 
         "response_sentence": "หมายถึงเรื่องการฝึกงานใช่ไหมครับ", 
-        
+        "intension_set": "การฝึกงาน"
+    }, 
+    {
+        "intension": "ใช่ {{การฝึกงาน}}", 
+        "intention_map": "การฝึกงาน"
     }
 ]

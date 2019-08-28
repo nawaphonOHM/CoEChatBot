@@ -11,7 +11,7 @@ class Bag:
         self.intention_classes = []
         self.amount_class = 0
         self.intention_response = {}
-        self.intention_set = {}
+        self.intention_map = {}
 
 
     def getWord(self, token):
@@ -111,36 +111,36 @@ class Bag:
                 )
         self.intention_response[intention] = response_sentence
     
-    def setIntentionSet(self, class_name, intension_set_value):
+    def setIntentionMap(self, class_name, new_class_name):
         if type(class_name) is not str:
             raise TypeError(\
                 "Expected a class_name as str but got as {0}"
                 .format(type(class_name))
             )
-        if type(intension_set_value) is not str:
+        if type(new_class_name) is not str:
             raise TypeError(\
-                "Expected an intension_set_value as str but got as {0}"
-                .format(type(intension_set_value))
+                "Expected an new_class_name as str but got as {0}"
+                .format(type(new_class_name))
             )
-        self.intention_set[class_name] = intension_set_value
+        self.intention_map[class_name] = new_class_name
     
-    def getIntentionSet(self, class_name):
+    def getIntentionMap(self, class_name):
         if type(class_name) is not str:
             raise TypeError(\
                 "Expected a class_name as str but got as {0}"
                 .format(type(class_name))
             )
-        if class_name not in self.intention_set.keys():
+        if class_name not in self.intention_map.keys():
             raise TypeError(\
                     "This class_name has no intention set -> {0}"
                     .format(class_name)
                 )
-        return self.intention_set[class_name]
+        return self.intention_map[class_name]
     
-    def classNameHasIntentionSet(self, class_name):
+    def classNameHasMapAnother(self, class_name):
         if type(class_name) is not str:
             raise TypeError(\
                     "Expected a class_name as str but got as {0}"
                     .format(type(class_name))
                 )
-        return class_name in self.intention_set.keys()
+        return class_name in self.intention_map.keys()
