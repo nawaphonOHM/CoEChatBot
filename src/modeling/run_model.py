@@ -12,6 +12,7 @@ import flask_cors
 import parser
 import json
 import keras
+import re
 
 from pythainlp.spell import correct as typo_checking
 from flask_restful import request
@@ -50,12 +51,21 @@ def response(sentence, state):
         if state != None:
             class_name = class_name + " {{" + state + "}}"
 
+        if bag.classNameHasIntentionSet(class_name):
+            response_data.append(True)
+            response_data.append(bag.getIntentionSet(class_name))
+        elif bag.classNameHasMapAnother(class_name):
+            response_data.append(False)
+            response_data.append(bag.getIntentionMap(class_name))
+        else:
+            response_data.append(None)
+            response_data.append(None)
+        
+        while re.match(".*\{\{.*\}\}", class_name):
+            class_name = bag.getIntentionMap(class_name)
+
         response_data.append(bag.getResponseSentence(class_name))
-        response_data.append(\
-                bag.getIntentionSet(class_name) \
-                    if bag.classNameHasIntentionSet(class_name) 
-                    else None
-            )
+
         return response_data
     else:
         return None
@@ -66,17 +76,20 @@ class ChatWithBot(flask_restful.Resource):
         data_message = json.loads(request.data)
         response_json = {}
 
-        if not data_message["sender"]:
-            return response_json
         try:
+            if not data_message["sender"] or len(data_message) == 0:
+                raise ValueError()
             response_message = response(data_message["msg"], data_message["state"])
             
             if response_message == None:
                 response_json["msg"] = "ขอโทษครับ ผมไม่เข้าใจที่พิมพ์มาครับ"
                 response_json["state"] = None
-            else:
-                response_json["msg"] = response_message[0]
+            elif response_message[0] == True:
                 response_json["state"] = response_message[1]
+                response_json["msg"] = response_message[2]
+            elif response_message[0] == False:
+                response_json["state"] = None
+                response_json["meg"] = response_message[2]
             response_json["sender"] = False
         except ValueError:
             response_json["msg"] = None
