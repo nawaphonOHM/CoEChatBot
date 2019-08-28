@@ -3,8 +3,9 @@ import numpy
 import pickle
 import os
 import csv
-import tensorflow
-import tflearn
+from keras.models import Sequential
+from keras.layers import Dense, Activation, Dropout
+from keras.optimizers import SGD
 import src.bag_of_words as bag_of_words
 
 def train():
@@ -83,6 +84,8 @@ def train():
                 model_write, 
                 protocol=pickle.HIGHEST_PROTOCOL
             )
+    
+    model.save(os.path.join(work_directory, "model/CoeChatBot.ckpt"))
     processed_data.close()
 
 train()
