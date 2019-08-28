@@ -25,15 +25,21 @@ def pre_processing():
 
     len_data = len(raw_input)
     counter = 1
+    write_to_csv = False
 
     for pair in raw_input:
         print("\rCleanning data {0} from {1}".format(counter, len_data), end="")
+        write_to_csv = write_to_csv and False
+        query_sentence = None
+        response_sentence = None
         type_pairing = pair["intension"]
         bag.addIntentionType(type_pairing)
         if "intention_map" in pair.keys():
             bag.setIntentionMap(type_pairing, pair["intention_map"])
-        else:
-            response_sentence = pair["response_sentence"]
+        if "intension_set" in pair.keys():
+            bag.setIntentionSet(type_pairing, pair["intension_set"])
+        if "inquery_sentence" in pair.keys():
+            write_to_csv = write_to_csv or True
             query_sentence = ""
             cleaned_word_inquery = pair["inquery_sentence"]
             cleaned_word_inquery = \
@@ -43,10 +49,23 @@ def pre_processing():
             for word in cleaned_word_inquery:
                 bag.addWord(word)
                 query_sentence = query_sentence + word + " "
+            query_sentence.strip()
+
+        if "response_sentence" in pair.keys():
+            response_sentence = pair["response_sentence"]
             bag.setResponseSentence(type_pairing, response_sentence)
-            writer.writerow(\
-                [type_pairing, query_sentence.strip(), pair["response_sentence"]]
+        
+        if write_to_csv:
+            print(" Writing [{0}, {1}]".format(
+                    query_sentence, response_sentence
+                ), end=""
             )
+            writer.writerow(\
+                [type_pairing, query_sentence.strip(), response_sentence]
+            )
+            print(" Done", end="")
+        else:
+            print("\nIgnore writing pair: {0}".format(pair))
         counter += 1
 
     bag.sort_em()
