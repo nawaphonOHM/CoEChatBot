@@ -45,29 +45,37 @@ def train():
     trainning_data = numpy.array(trainning_data)
     features = list(trainning_data[:, 0])
     destination_class = list(trainning_data[:, 1])
+    
+    model = Sequential()
 
-    tensorflow.reset_default_graph()
-    neural_network = tflearn.input_data(shape=[None, len(features[0])])
-    neural_network = \
-        tflearn.fully_connected(neural_network, 512, activation="relu")
-    neural_network = \
-        tflearn.fully_connected(neural_network, 512, activation="relu")
-    neural_network = \
-        tflearn.fully_connected(\
-                neural_network, 
-                len(destination_class[0]), 
-                activation="softmax"
-            )
-    neural_network = tflearn.regression(neural_network, learning_rate=0.005)
-    model = tflearn.DNN(neural_network)
+    model.add(Dense(512, input_shape=(len(features[0]), ), activation='relu'))
+    model.add(Dropout(0.2))
+    model.add(Dense(512, activation='relu'))
+    model.add(Dropout(0.2))
+    
+    model.add(Dense(len(destination_class[0]), activation='softmax'))
+    
+    stochastic_gradient_descent = \
+        SGD(lr=0.005, decay=0.0, momentum=0.8, nesterov=True)
+    model.compile(\
+        loss='categorical_crossentropy', 
+        optimizer=stochastic_gradient_descent, 
+        metrics=['accuracy']
+    )
     model.fit(\
-            numpy.array(features), 
-            numpy.array(destination_class), 
-            n_epoch=1024, 
-            batch_size=int(len(features[0]) * 0.2), 
-            show_metric=True
-        )
-    model.save("model/CoeChatBot.tflearn")
+        numpy.array(features), 
+        numpy.array(destination_class), 
+        epochs=1024, 
+        batch_size=int(len(features[0]) * 0.2), 
+        verbose=1
+    )
+
+    # results = model.evaluate(\
+    #         numpy.array(features), 
+    #         numpy.array(destination_class), 
+    #         batch_size=int(len(features[0]) * 0.8)
+    #     )
+    # print("Test accuracy: {:.2f}%".format(results[1] * 100))
 
     with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "wb") \
         as model_write:

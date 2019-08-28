@@ -11,6 +11,7 @@ class Bag:
         self.intention_classes = []
         self.amount_class = 0
         self.intention_response = {}
+        self.intention_set = {}
 
 
     def getWord(self, token):
@@ -72,12 +73,22 @@ class Bag:
         return self.amount_class
 
     def getEntiredItemsIntention(self):
-        return self.intention_classes
+        return self.intention_classes.copy()
+
+    def getIntention(self, id):
+        if type(id) is not int:
+            raise TypeError(
+                    "Expected id as int but got as {0}"
+                    .format(type(id))
+                )
+        return self.intention_classes[id]
 
     def getResponseSentence(self, intention):
+        if type(intention) is int:
+            return self.intention_response[self.intention_classes[intention]]
         if type(intention) is not str:
             raise TypeError(\
-                    "Expected an intention as str but got as {0}"
+                    "Expected an intention as str or int but got as {0}"
                     .format(type(intention))
                 )
         if intention not in self.intention_classes:
@@ -99,3 +110,37 @@ class Bag:
                     .format(type(response_sentence))
                 )
         self.intention_response[intention] = response_sentence
+    
+    def setIntentionSet(self, class_name, intension_set_value):
+        if type(class_name) is not str:
+            raise TypeError(\
+                "Expected a class_name as str but got as {0}"
+                .format(type(class_name))
+            )
+        if type(intension_set_value) is not str:
+            raise TypeError(\
+                "Expected an intension_set_value as str but got as {0}"
+                .format(type(intension_set_value))
+            )
+        self.intention_set[class_name] = intension_set_value
+    
+    def getIntentionSet(self, class_name):
+        if type(class_name) is not str:
+            raise TypeError(\
+                "Expected a class_name as str but got as {0}"
+                .format(type(class_name))
+            )
+        if class_name not in self.intention_set.keys():
+            raise TypeError(\
+                    "This class_name has no intention set -> {0}"
+                    .format(class_name)
+                )
+        return self.intention_set[class_name]
+    
+    def classNameHasIntentionSet(self, class_name):
+        if type(class_name) is not str:
+            raise TypeError(\
+                    "Expected a class_name as str but got as {0}"
+                    .format(type(class_name))
+                )
+        return class_name in self.intention_set.keys()

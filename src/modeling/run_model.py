@@ -5,12 +5,19 @@ import pandas
 import pythainlp.tokenize as tokenization
 import pythainlp.corpus.common as corpus
 import src.bag_of_words as bag_of_words
-import tflearn
-import tensorflow
-from pythainlp.spell import correct as typo_checking
+import keras.models as keras_module_manipulation
+import flask
+import flask_restful
+import flask_cors
+import parser
+import json
+import keras
 
-def response(sentence):
-    ERROR_THRESHOLD = 0.20
+from pythainlp.spell import correct as typo_checking
+from flask_restful import request
+
+def response(sentence, state):
+    CONFIDENT = 0.80
 
     work_directory = os.getcwd()
     stop_word = corpus.thai_stopwords()
@@ -42,25 +49,61 @@ def response(sentence):
 
     sentence = numpy.array(hot_coding_word)
     sentence = pandas.DataFrame([sentence], dtype=float, index=["input"])
-    sentence = model.predict([sentence])[0]
+    sentence = model.predict(sentence)[0]
 
     sentence = [[class_name, probability] \
         for class_name, probability in enumerate(sentence) \
-            if probability > ERROR_THRESHOLD]
+            if probability >= CONFIDENT]
+    
+    if len(sentence) > 0:
+        response_data = []
+        sentence.sort(key=lambda x: x[1], reverse=True)
+        class_name = bag.getIntention(sentence[0][0])
 
-    intentions = bag.getEntiredItemsIntention()
-    named_intention = intentions[sentence[0][0]]
+        if state != None:
+            class_name = class_name + " {{" + state + "}}"
 
-    sentence.sort(key=lambda x: x[1], reverse=True)
+        response_data.append(bag.getResponseSentence(class_name))
+        response_data.append(\
+                bag.getIntentionSet(class_name) \
+                    if bag.classNameHasIntentionSet(class_name) 
+                    else None
+            )
+        return response_data
+    else:
+        return None
 
-    return named_intention, bag.getResponseSentence(named_intention)
 
+class ChatWithBot(flask_restful.Resource):
+    def post(self):
+        data_message = json.loads(request.data)
+        response_json = {}
 
-intention = None
-response_sentence = ""
+        if not data_message["sender"]:
+            return response_json
+        try:
+            response_message = response(data_message["msg"], data_message["state"])
+            
+            if response_message == None:
+                response_json["msg"] = "ขอโทษครับ ผมไม่เข้าใจที่พิมพ์มาครับ"
+                response_json["state"] = None
+            else:
+                response_json["msg"] = response_message[0]
+                response_json["state"] = response_message[1]
+            response_json["sender"] = False
+        except ValueError:
+            response_json["msg"] = None
+            response_json["state"] = None
+            response_json["sender"] = None
+        finally:
+            keras.backend.clear_session()
+        
+        return response_json
 
-while intention != "การจากลา":
+app = flask.Flask(__name__)
+api = flask_restful.Api(app)
+flask_cors.CORS(app)
+api.add_resource(ChatWithBot, "/chatwithbot")
 
-    query_sentence = input("นักศึกษา: ")
-    intention, response_sentence = response(query_sentence)
-    print("เจ้าหน้าที่: {0}".format(response_sentence))
+if __name__ == "__main__":
+    app.run(port=1996)

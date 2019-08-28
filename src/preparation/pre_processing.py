@@ -32,6 +32,8 @@ def pre_processing():
         response_sentence = pair["response_sentence"]
         query_sentence = ""
         bag.addIntentionType(type_pairing)
+        if "intention_set" in pair.keys():
+            bag.setIntentionSet(type_pairing, pair["intention_set"])
 
         cleaned_word_inquery = pair["inquery_sentence"]
         cleaned_word_inquery = \
