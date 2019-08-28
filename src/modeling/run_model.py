@@ -58,7 +58,7 @@ def response(sentence, state):
             response_data.append(False)
             response_data.append(bag.getIntentionMap(class_name))
         else:
-            response_data.append(None)
+            response_data.append(False)
             response_data.append(None)
         
         while re.match(".*\{\{.*\}\}", class_name):
@@ -82,19 +82,22 @@ class ChatWithBot(flask_restful.Resource):
             response_message = response(data_message["msg"], data_message["state"])
             
             if response_message == None:
-                response_json["msg"] = "ขอโทษครับ ผมไม่เข้าใจที่พิมพ์มาครับ"
-                response_json["state"] = None
+                raise KeyError
             elif response_message[0] == True:
                 response_json["state"] = response_message[1]
                 response_json["msg"] = response_message[2]
             elif response_message[0] == False:
                 response_json["state"] = None
-                response_json["meg"] = response_message[2]
+                response_json["msg"] = response_message[2]
+
             response_json["sender"] = False
         except ValueError:
             response_json["msg"] = None
             response_json["state"] = None
             response_json["sender"] = None
+        except KeyError:
+            response_json["msg"] = "ขอโทษครับ ผมไม่เข้าใจที่พิมพ์มาครับ"
+            response_json["state"] = None
         finally:
             keras.backend.clear_session()
         
