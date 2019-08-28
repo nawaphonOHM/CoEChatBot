@@ -206,10 +206,14 @@
         "intension": "ยืนยันคำถาม_ฝึกงาน", 
         "inquery_sentence": "ฝึกงาน", 
         "response_sentence": "หมายถึงเรื่องการฝึกงานใช่ไหมครับ", 
-        "intension_set": "การฝึกงาน"
+        "intension_set": "การฝึกงานไหม"
     }, 
     {
-        "intension": "ใช่ {{การฝึกงาน}}", 
+        "intension": "ตอบตกลง {{การฝึกงานไหม}}", 
         "intention_map": "การฝึกงาน"
+    }, 
+    {
+        "intension": "ตอบตกลง", 
+        "inquery_sentence": "ใช่"
     }
 ]

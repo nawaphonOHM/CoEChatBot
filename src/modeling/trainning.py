@@ -50,9 +50,9 @@ def train():
     model = Sequential()
 
     model.add(Dense(512, input_shape=(len(features[0]), ), activation='relu'))
-    model.add(Dropout(0.2))
-    model.add(Dense(512, activation='relu'))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.1))
+    model.add(Dense(512, input_shape=(len(features[0]), ), activation='relu'))
+    model.add(Dropout(0.1))
     
     model.add(Dense(len(destination_class[0]), activation='softmax'))
     
