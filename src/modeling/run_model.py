@@ -18,7 +18,7 @@ from pythainlp.spell import correct as typo_checking
 from flask_restful import request
 
 def response(sentence, state):
-    CONFIDENT = 0.80
+    CONFIDENT = 0
 
     work_directory = os.getcwd()
     stop_word = corpus.thai_stopwords()
@@ -63,6 +63,16 @@ def response(sentence, state):
         
         while re.match(".*\{\{.*\}\}", class_name):
             class_name = bag.getIntentionMap(class_name)
+            response_data = []
+            if bag.classNameHasIntentionSet(class_name):
+                response_data.append(True)
+                response_data.append(bag.getIntentionSet(class_name))
+            elif bag.classNameHasMapAnother(class_name):
+                response_data.append(False)
+                response_data.append(bag.getIntentionMap(class_name))
+            else:
+                response_data.append(False)
+                response_data.append(None)
 
         response_data.append(bag.getResponseSentence(class_name))
 
@@ -95,7 +105,7 @@ class ChatWithBot(flask_restful.Resource):
             response_json["msg"] = None
             response_json["state"] = None
             response_json["sender"] = None
-        except KeyError:
+        except KeyError or TypeError:
             response_json["msg"] = "ขอโทษครับ ผมไม่เข้าใจที่พิมพ์มาครับ"
             response_json["state"] = None
         finally:

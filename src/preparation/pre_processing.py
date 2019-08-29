@@ -40,8 +40,8 @@ def pre_processing():
             bag.setIntentionSet(type_pairing, pair["intension_set"])
         if "inquery_sentence" in pair.keys():
             write_to_csv = write_to_csv or True
-            query_sentence = ""
             cleaned_word_inquery = pair["inquery_sentence"]
+            query_sentence = ""
             cleaned_word_inquery = \
                 tokenization.word_tokenize(cleaned_word_inquery, keep_whitespace=False)
             cleaned_word_inquery = \
