@@ -88,7 +88,7 @@ class ChatWithBot(flask_restful.Resource):
 
         try:
             if not data_message["sender"] or len(data_message) == 0:
-                raise ValueError()
+                raise AttributeError()
             response_message = response(data_message["msg"], data_message["state"])
             
             if response_message == None:
@@ -101,12 +101,12 @@ class ChatWithBot(flask_restful.Resource):
                 response_json["msg"] = response_message[2]
 
             response_json["sender"] = False
-        except ValueError:
+        except AttributeError:
             response_json["msg"] = None
             response_json["state"] = None
             response_json["sender"] = None
-        except KeyError or TypeError:
-            response_json["msg"] = "ขอโทษครับ ผมไม่เข้าใจที่พิมพ์มาครับ"
+        except:
+            response_json["msg"] = "ตอนนี้สามารถตอบเรื่องการฝึกงาน จำนวนวิชาที่เปิดในแต่ละเทอมและอาจารย์ผู้สอนของวิชานั้นๆ โปรดถามในเรื่องพวกนี้ครับ"
             response_json["state"] = None
         finally:
             keras.backend.clear_session()
