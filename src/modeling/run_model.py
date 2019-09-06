@@ -119,4 +119,4 @@ flask_cors.CORS(app)
 api.add_resource(ChatWithBot, "/chatwithbot")
 
 if __name__ == "__main__":
-    app.run(port=1996)
+    app.run(port=1996)  
