@@ -32,12 +32,12 @@ def pre_processing():
         write_to_csv = write_to_csv and False
         query_sentence = None
         response_sentence = None
-        type_pairing = pair["intension"]
+        type_pairing = pair["intention"]
         bag.addIntentionType(type_pairing)
         if "intention_map" in pair.keys():
             bag.setIntentionMap(type_pairing, pair["intention_map"])
-        if "intension_set" in pair.keys():
-            bag.setIntentionSet(type_pairing, pair["intension_set"])
+        if "intention_set" in pair.keys():
+            bag.setIntentionSet(type_pairing, pair["intention_set"])
         if "inquery_sentence" in pair.keys():
             write_to_csv = write_to_csv or True
             cleaned_word_inquery = pair["inquery_sentence"]
