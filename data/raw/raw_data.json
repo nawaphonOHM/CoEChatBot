@@ -1,16 +1,11 @@
 [
     {
         "intention": "การทักทาย", 
-        "inquery_sentence": "สวัสดีครับ", 
-        "response_sentence": "สวัสดีครับ ต้องการสอบถามเรื่องอะไรครับ", 
-        "intention_set": "ต้องการสอบถาม"
-        
+        "inquery_sentence": "สวัสดีครับ"
     }, 
     {
         "intention": "การฝึกงาน", 
-        "inquery_sentence": "อยากสอบถามการฝึกงานหน่อยครับ", 
-        "response_sentence": "ต้องการสอบถามอะไรของการฝึกงานเหรอครับ", 
-        "intention_set": "การฝึกงาน"    
+        "inquery_sentence": "อยากสอบถามการฝึกงานหน่อยครับ"    
     }, 
     {
         "intention": "การฝึกงาน_เกณฑ์", 
