@@ -12,70 +12,112 @@ def pre_processing():
     raw_input = None
     fomatted_data = []
     stop_word = corpus.thai_stopwords()
+    excluded_stop_words = None
     bag = bag_of_words.Bag()
     work_directory = os.getcwd()
     cleaned_data = \
-        open(os.path.join(work_directory, "data/processed/cleaned_data.csv"), "w")
+        open(os.path.join(work_directory, "data/processed/inquery_cleaned_data.csv"), "w")
     writer = csv.writer(cleaned_data)
-    writer.writerow(["Pair_Type", "Query_Sentence_Pattern", "Response_Sentence"])
+    writer.writerow(["Intention", "Query_Sentence_Pattern_Cleaned", "Query_Sentence_Pattern"])
 
-    with open(os.path.join(work_directory, "data/raw/raw_data.json"), "r") \
+    with open(os.path.join(work_directory, "data/raw/inquery_raw_data.json"), "r") \
+        as raw:
+            raw_input = json.load(raw)
+    with open(os.path.join(work_directory, "data/raw/excluded_stop_words.json"), "r") \
+        as excluded_stop_words_json:
+            excluded_stop_words = json.load(excluded_stop_words_json)
+
+    len_data = len(raw_input)
+    counter = 1
+    print("Being on inquert raw data")
+
+    for data_set in raw_input:
+        print(\
+            "\rCleaned data {0:.2f}% ({1} from {2})"\
+                .format((counter / len_data) * 100, counter, len_data), end="")
+        intention = data_set["intention"]
+        bag.add_intention(intention)
+
+        for sentence in data_set["inquery_sentence"]:
+            sentence_cleaned = ""
+            word_in_sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
+            cleaned_word_in_sentence = \
+                [typo_checking(word) \
+                    for word in word_in_sentence \
+                        if word not in stop_word or excluded_stop_words]
+            for word in cleaned_word_in_sentence:
+                bag.add_word(word)
+                sentence_cleaned = sentence_cleaned + word + " "
+            sentence_cleaned.strip()
+            writer.writerow(\
+                    [intention, sentence_cleaned, sentence]
+                )
+        counter += 1
+    
+    cleaned_data.close()
+
+    cleaned_data = \
+        open(os.path.join(work_directory, "data/processed/responsing_cleaned_data.csv"), 'w')
+    writer = csv.writer(cleaned_data)
+    writer.writerow(["response_classes", "intention", "state"])
+    with open(os.path.join(work_directory, "data/raw/contextual_raw_data.json"), "r") \
         as raw:
             raw_input = json.load(raw)
 
     len_data = len(raw_input)
     counter = 1
-    write_to_csv = False
+    print("\nBeing on contextual raw data")
 
-    for pair in raw_input:
-        print("\rCleanning data {0} from {1}".format(counter, len_data), end="")
-        write_to_csv = write_to_csv and False
-        query_sentence = None
-        response_sentence = None
-        type_pairing = pair["intention"]
-        bag.addIntentionType(type_pairing)
-        if "intention_map" in pair.keys():
-            bag.setIntentionMap(type_pairing, pair["intention_map"])
-        if "intention_set" in pair.keys():
-            bag.setIntentionSet(type_pairing, pair["intention_set"])
-        if "inquery_sentence" in pair.keys():
-            write_to_csv = write_to_csv or True
-            cleaned_word_inquery = pair["inquery_sentence"]
-            query_sentence = ""
-            cleaned_word_inquery = \
-                tokenization.word_tokenize(cleaned_word_inquery, keep_whitespace=False)
-            cleaned_word_inquery = \
-                [typo_checking(word) for word in cleaned_word_inquery if word not in stop_word]
-            for word in cleaned_word_inquery:
-                bag.addWord(word)
-                query_sentence = query_sentence + word + " "
-            query_sentence.strip()
-
-        if "response_sentence" in pair.keys():
-            response_sentence = pair["response_sentence"]
-            bag.setResponseSentence(type_pairing, response_sentence)
-        
-        if write_to_csv:
-            print(" Writing [{0}, {1}]".format(
-                    query_sentence, response_sentence
-                ), end=""
-            )
-            writer.writerow(\
-                [type_pairing, query_sentence.strip(), response_sentence]
-            )
-            print(" Done", end="")
-        else:
-            print("\nIgnore writing pair: {0}".format(pair))
+    for data_set in raw_input:
+        print(\
+            "\rCleaned data {0:.2f}% ({1} from {2})"\
+                .format((counter / len_data) * 100, counter, len_data), end="")
+        response_class = data_set["response_class"]
+        bag.add_response_class(response_class)
+        for contextual in data_set["intention_state"]:
+            intention, state = contextual.split(" ")
+            bag.add_intention_contextual(intention)
+            bag.add_state_contextual(state)
+            writer.writerow([response_class, intention, state])
         counter += 1
 
-    bag.sort_em()
+    cleaned_data.close()
 
-    print("\nsaving cleaned data...", end="")
+    cleaned_data = \
+        open(os.path.join(work_directory, \
+            "data/processed/responsing_details_cleaned_data.csv"), 'w')
+    writer = csv.writer(cleaned_data)
+    writer.writerow(["response_classes", "response_messages", "state_setting"])
+    with open(os.path.join(work_directory, "data/raw/response_raw_data.json")) \
+        as raw:
+            raw_input = json.load(raw)
+    
+    len_data = len(raw_input)
+    counter = 1
+    print("\nBeing on responsing raw data")
+
+    for data_set in raw_input:
+        print(\
+            "\rCleaned data {0:.2f}% ({1} from {2})"\
+                .format((counter / len_data) * 100, counter, len_data), end="")
+        response_class = data_set.pop("response_class")
+        bag.set_response_sentence(response_class, data_set)
+        intention_set = data_set["intention_set"] \
+            if data_set["intention_set"] != None else "null"
+        writer.writerow(\
+                [response_class, data_set["response_sentence"], intention_set]
+            )
+        counter += 1
+
+    cleaned_data.close()
+
+    bag.sort_items()
+
+    print("\nsaving data...", end="")
     with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "wb")\
         as bag_saved_file:
             pickle.dump(bag, bag_saved_file, protocol=pickle.HIGHEST_PROTOCOL)
 
-    cleaned_data.close()
     print("\rsaving cleaned data...done")
 
 pre_processing()
