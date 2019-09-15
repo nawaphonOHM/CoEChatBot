@@ -5,40 +5,39 @@ import os
 import csv
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
-from keras.optimizers import SGD
+from keras.optimizers import Adam
 import src.bag_of_words as bag_of_words
+import math
 
 def train():
     bag = None
     work_directory = os.getcwd()
     trainning_data = []
     testing_data = []
-    raw = None
-    processed_data = \
-        open(os.path.join(work_directory, "data/processed/cleaned_data.csv"), "r")
-    raw = csv.reader(processed_data, delimiter=",")
-    isRead = False
+    inquery = None
+    contextual = None
+    inquery_processed_data = \
+        open(os.path.join(work_directory, "data/processed/inquery_cleaned_data.csv"), "r")
+    inquery = csv.reader(inquery_processed_data, delimiter=",")
+    inquery.__next__()
 
     with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "rb") \
         as bag_file:
             bag = pickle.load(bag_file)
     
-    for table in raw:
-        if not isRead:
-            isRead |= True
-        else:
-            hot_coding_pattern = []
-            hot_coding_class = []
-            class_name_data = table[0]
-            query_data = table[1].split(" ")
+    for table in inquery:
+        hot_coding_pattern = []
+        hot_coding_class = []
+        class_name_data = table[0]
+        query_data = table[1].split(" ")
                 
-            for word in bag.getEntriedWords():
-                hot_coding_pattern.append(word in query_data)
+        for word in bag.get_entried_words():
+            hot_coding_pattern.append(word in query_data)
                 
-            for class_name in bag.getEntiredItemsIntention():
-                hot_coding_class.append(class_name == class_name_data)
+        for class_name in bag.get_entired_items_intention():
+            hot_coding_class.append(class_name == class_name_data)
             
-            trainning_data.append([hot_coding_pattern, hot_coding_class])
+        trainning_data.append([hot_coding_pattern, hot_coding_class])
 
     
         
@@ -48,35 +47,100 @@ def train():
     destination_class = list(trainning_data[:, 1])
     
     model = Sequential()
-
-    model.add(Dense(512, input_shape=(len(features[0]), ), activation='relu'))
-    model.add(Dropout(0.1))
-    model.add(Dense(512, input_shape=(len(features[0]), ), activation='relu'))
-    model.add(Dropout(0.1))
-    
+    model.add(
+            Dense(len(destination_class[0]), 
+            input_shape=(len(features[0]),), 
+            activation='relu')
+        )
+    model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(Dense(len(destination_class[0]), activation='softmax'))
-    
-    stochastic_gradient_descent = \
-        SGD(lr=0.005, decay=0.0, momentum=0.8, nesterov=True)
+
     model.compile(\
         loss='categorical_crossentropy', 
-        optimizer=stochastic_gradient_descent, 
+        optimizer=Adam(), 
         metrics=['accuracy']
     )
     model.fit(\
         numpy.array(features), 
         numpy.array(destination_class), 
         epochs=1024, 
-        batch_size=int(len(features[0]) * 0.2), 
+        batch_size=int(len(features) * 0.2), 
         verbose=1
     )
+    
+    model.save(os.path.join(work_directory, "model/CoeChatBot_processed_type_input.ckpt"))
+    inquery_processed_data.close()
 
-    # results = model.evaluate(\
-    #         numpy.array(features), 
-    #         numpy.array(destination_class), 
-    #         batch_size=int(len(features[0]) * 0.8)
-    #     )
-    # print("Test accuracy: {:.2f}%".format(results[1] * 100))
+    contextual_processed_data = \
+        open(os.path.join(work_directory, "data/processed/responsing_cleaned_data.csv"), "r")
+
+    contextual = csv.reader(contextual_processed_data, delimiter=",")
+    contextual.__next__()
+    trainning_data = []
+
+    for table in contextual:
+        class_name = table[0]
+        context = table[1]
+        context = bag.get_intention_contextual(context)
+        state = table[2]
+        state = bag.get_state_contextual(state)
+        hot_coding_pattern = []
+        hot_coding_class = []
+        length = math.ceil(\
+            math.log2(\
+                        bag.get_state_contextual_length()
+                    )
+                )
+        for _ in range(length):
+            hot_coding_pattern.append(False if state % 2 == 0 else True)
+            state = state // 2
+
+        length = math.ceil(\
+            math.log2(\
+                        bag.get_intention_contextual_length()
+                    )
+                )
+        for _ in range(length):
+            hot_coding_pattern.append(False if context % 2 == 0 else True)
+            context = context // 2
+
+        for response_class in bag.get_entired_response_classes():
+            hot_coding_class.append(class_name == response_class)
+        
+        hot_coding_pattern.reverse()
+        trainning_data.append([hot_coding_pattern, hot_coding_class])
+
+    random.shuffle(trainning_data)
+    trainning_data = numpy.array(trainning_data)
+    features = list(trainning_data[:, 0])
+    destination_class = list(trainning_data[:, 1])
+
+    model = Sequential()
+    model.add(
+            Dense(len(destination_class[0]), 
+            input_shape=(len(features[0]),), 
+            activation='relu')
+        )
+    model.add(Dense(len(destination_class[0]), activation='relu'))
+    model.add(Dense(len(destination_class[0]), activation='relu'))
+    model.add(Dense(len(destination_class[0]), activation='softmax'))
+
+    model.compile(\
+        loss='categorical_crossentropy', 
+        optimizer=Adam(), 
+        metrics=['accuracy']
+    )
+
+    model.fit(\
+        numpy.array(features), 
+        numpy.array(destination_class), 
+        epochs=1024, 
+        batch_size=int(len(features) * 0.2), 
+        verbose=1
+    )
+    
+    model.save(os.path.join(work_directory, "model/CoeChatBot_processed_response_type.ckpt"))
+    contextual_processed_data.close()
 
     with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "wb") \
         as model_write:
@@ -84,8 +148,5 @@ def train():
                 model_write, 
                 protocol=pickle.HIGHEST_PROTOCOL
             )
-    
-    model.save(os.path.join(work_directory, "model/CoeChatBot.ckpt"))
-    processed_data.close()
 
 train()
