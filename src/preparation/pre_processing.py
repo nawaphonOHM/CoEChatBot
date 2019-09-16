@@ -29,7 +29,7 @@ def pre_processing():
 
     len_data = len(raw_input)
     counter = 1
-    print("Being on inquert raw data")
+    print("Being on inquery raw data")
 
     for data_set in raw_input:
         print(\

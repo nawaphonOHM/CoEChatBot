@@ -112,8 +112,8 @@ def train():
 
     random.shuffle(trainning_data)
     trainning_data = numpy.array(trainning_data)
-    features = list(trainning_data[:, 0])
-    destination_class = list(trainning_data[:, 1])
+    features = list(trainning_data[:,0])
+    destination_class = list(trainning_data[:,1])
 
     model = Sequential()
     model.add(
