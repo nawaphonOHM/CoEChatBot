@@ -73,7 +73,6 @@ def pre_processing():
             "\rCleaned data {0:.2f}% ({1} from {2})"\
                 .format((counter / len_data) * 100, counter, len_data), end="")
         response_class = data_set["response_class"]
-        bag.add_response_class(response_class)
         for contextual in data_set["intention_state"]:
             intention, state = contextual.split(" ")
             bag.add_intention_contextual(intention)
@@ -101,6 +100,7 @@ def pre_processing():
             "\rCleaned data {0:.2f}% ({1} from {2})"\
                 .format((counter / len_data) * 100, counter, len_data), end="")
         response_class = data_set.pop("response_class")
+        bag.add_response_class(response_class)
         bag.set_response_sentence(response_class, data_set)
         intention_set = data_set["intention_set"] \
             if data_set["intention_set"] != None else "null"
@@ -110,6 +110,8 @@ def pre_processing():
         counter += 1
 
     cleaned_data.close()
+
+
 
     bag.sort_items()
 
