@@ -6,174 +6,131 @@ class Bag:
     def __init__(self):
         self.word_token = {}
         self.token_word = {}
-        self.amount_word = 0
         self.next_token = 0
         self.intention_classes = []
-        self.amount_class = 0
-        self.intention_response = {}
-        self.intention_map = {}
-        self.intention_set = {}
+        self.amount_intention_classes = 0
+        self.response_sentence = {}
+        self.amount_response_sentence = 0
+        self.response_classes = []
+        self.amount_response_classes = 0
+        self.intention_contextual = []
+        self.amount_intention_contextual = 0
+        self.state_contextual = []
+        self.amount_state_contextual = 0
 
 
-    def getWord(self, token):
-        if type(token) is not int:
-            raise TypeError(\
-                    "Expected token as int but got as {0}"
-                    .format(type(token))
-                )
+    def get_word(self, token: int) -> str:
         if token not in self.token_word:
             raise ValueError("Unknown this token {0}.".format(token))
 
         return self.token_word[token]
 
-    def addWord(self, word):
-        if type(word) is not str:
-            raise TypeError(\
-                    "Expected word as str but got as {0}"
-                    .format(type(word))
-                )
-        if not self.has(word):
+    def add_word(self, word: str) -> None:
+        if not self.has_word(word):
             self.word_token[word] = self.next_token
             self.token_word[self.next_token] = word
             self.next_token += 1
-            self.amount_word += 1
+
+    def has_intent_context(self, sentence: str) -> bool:
+        return sentence in self.intention_contextual
+
+    def add_intention_contextual(self, sentence: str) -> None:
+        if not self.has_intent_context(sentence):
+            self.intention_contextual.append(sentence)
+            self.amount_intention_contextual += 1
     
-    def getToken(self, word):
-        if type(word) is not str:
-            raise TypeError(\
-                    "Expected word as str but got as {0}"
-                    .format(type(word))
-                )
-        if not self.has(word):
+    def get_intention_contextual(self, sentence: str) -> int:
+        if not self.has_intent_context(sentence):
+            raise KeyError("None of this sentence -> {0}".format(sentence))
+        else:
+            return self.intention_contextual[sentence]
+    
+    def get_state_contextual(self, sentence: str) -> int:
+        if not self.has_state_context(sentence):
+            raise KeyError("None of this sentence -> {0}".format(sentence))
+        else:
+            return self.state_contextual[sentence]
+    
+    def get_entired_state_contextual(self) -> list:
+        return self.state_contextual
+    
+    def get_entired_intention_contextual(self) -> list:
+        return self.intention_contextual
+
+    def get_intention_contextual_length(self) -> int:
+        return self.amount_intention_contextual
+    
+    def get_state_contextual_length(self) -> int:
+        return self.amount_state_contextual
+    
+    def has_state_context(self, sentence: str) -> bool:
+        return sentence in self.state_contextual
+
+    def add_state_contextual(self, sentence: str) -> None:
+        if not self.has_state_context(sentence):
+            self.state_contextual.append(sentence)
+            self.amount_state_contextual += 1
+    
+    def get_token(self, word: str) -> int:
+        if not self.has_word(word):
             raise ValueError("Unknown this word {0}.".format(word))
         return self.word_token[word]
 
-    def length(self):
-        return self.amount_word
+    def get_entired_response_classes(self) -> list:
+        return self.response_classes
 
-    def addIntentionType(self, intention):
-        if type(intention) is not str:
-            raise TypeError(\
-                    "Expected intention as str but got as {0}"
-                    .format(type(intention))
-                )
-        if not self.hasClass(intention):
+    def length(self) -> int:
+        return self.next_token
+
+    def add_intention(self, intention: str) -> None:
+        if not self.has_intention_classes(intention):
             self.intention_classes.append(intention)
-            self.amount_class += 1
+            self.amount_intention_classes += 1
 
-    def sort_em(self):
+    def sort_items(self) -> None:
         self.intention_classes.sort()
+        self.response_classes.sort()
+        self.intention_contextual.sort()
+        self.state_contextual.sort()
+    
+    def add_response_class(self, response_class_name: str) -> None:
+        self.response_classes.append(response_class_name)
+        self.amount_response_classes += 1
+    
+    def get_response_class(self, response_id: int) -> str:
+        return self.response_classes[response_id]
 
-    def has(self, word):
+    def has_word(self, word: str) -> bool:
         return word in self.word_token
 
-    def hasClass(self, class_name):
-        return class_name in self.intention_classes
+    def has_intention_classes(self, intention_name: str) -> bool:
+        return intention_name in self.intention_classes
 
-    def getEntriedWords(self):
+    def get_entried_words(self) -> dict:
         return self.word_token.keys()
     
-    def amountOfIntention(self):
-        return self.amount_class
+    def amount_of_intention(self) -> int:
+        return self.amount_intention_classes
 
-    def getEntiredItemsIntention(self):
+    def get_entired_items_intention(self) -> set:
         return self.intention_classes.copy()
 
-    def getIntention(self, id):
-        if type(id) is not int:
-            raise TypeError(
-                    "Expected id as int but got as {0}"
-                    .format(type(id))
-                )
+    def get_intention(self, id: int) -> str:
         return self.intention_classes[id]
 
-    def getResponseSentence(self, intention):
-        if type(intention) is int:
-            return self.intention_response[self.intention_classes[intention]]
-        if type(intention) is not str:
-            raise TypeError(\
-                    "Expected an intention as str or int but got as {0}"
-                    .format(type(intention))
-                )
-        if not self.hasClass(intention):
+    def get_response_sentence(self, intention: str) -> dict:
+        if not self.has_response_sentence(intention):
             raise ValueError(\
                     "Unknown this class {0}"
                     .format(intention)
                 )
-        return self.intention_response[intention]
+        return self.response_sentence[intention]
+    
+    def has_response_sentence(self, class_name: str) -> bool:
+        return class_name in self.response_sentence
 
-    def setResponseSentence(self, intention, response_sentence):
-        if type(intention) is not str:
-            raise TypeError(\
-                    "Expected an intention as str but got as {0}"
-                    .format(type(intention))
-                )
-        if type(response_sentence) is not str:
-            raise TypeError(\
-                    "Expected a response sentence as str but got as {0}"
-                    .format(type(response_sentence))
-                )
-        self.intention_response[intention] = response_sentence
-    
-    def setIntentionMap(self, class_name_pattern, map_class_name):
-        if type(class_name_pattern) is not str:
-            raise TypeError(\
-                "Expected a class_name_pattern as str but got as {0}"
-                .format(type(class_name_pattern))
-            )
-        if type(map_class_name) is not str:
-            raise TypeError(\
-                "Expected an map_class_name as str but got as {0}"
-                .format(type(map_class_name))
-            )
-        self.intention_map[class_name_pattern] = map_class_name
-    
-    def getIntentionMap(self, class_name_pattern):
-        if type(class_name_pattern) is not str:
-            raise TypeError(\
-                "Expected a class_name_pattern as str but got as {0}"
-                .format(type(class_name_pattern))
-            )
-        if not self.classNameHasMapAnother(class_name_pattern):
-            raise TypeError(\
-                    "This class_name_pattern has no intention map -> {0}"
-                    .format(class_name_pattern)
-                )
-        return self.intention_map[class_name_pattern]
-    
-    def classNameHasMapAnother(self, class_name_pattern):
-        if type(class_name_pattern) is not str:
-            raise TypeError(\
-                    "Expected a class_name_pattern as str but got as {0}"
-                    .format(type(class_name_pattern))
-                )
-        return class_name_pattern in self.intention_map.keys()
-    
-    def classNameHasIntentionSet(self, class_name):
-        if type(class_name) is not str:
-            raise TypeError(\
-                    "Expected a class_name as str but got as {0}"
-                    .format(type(class_name))
-                )
-        return class_name in self.intention_set.keys()
-
-    def getIntentionSet(self, class_name):
-        if type(class_name) is not str:
-            raise TypeError(\
-                    "Expected a class_name as str but got as {0}"
-                    .format(type(class_name))
-                )
-        if not self.classNameHasIntentionSet(class_name):
-            raise TypeError(\
-                    "This class_name has no intention set -> {0}"
-                    .format(class_name)
-                )
-        return self.intention_set[class_name]
-
-    def setIntentionSet(self, class_name, set_class_name):
-        if type(class_name) is not str:
-            raise TypeError(\
-                    "Expected a class_name as str but got as {0}"
-                    .format(type(class_name))
-                )
-        self.intention_set[class_name] = set_class_name
+    def set_response_sentence(self, class_name: str, response_sentence: dict) -> None:
+        if self.has_response_sentence(class_name):
+            raise ValueError("Already has this name -> {0}".format(class_name))
+        self.response_sentence[class_name] = response_sentence
+        self.amount_response_sentence += 1
