@@ -17,13 +17,18 @@ import re
 from pythainlp.spell import correct as typo_checking
 from flask_restful import request
 
-def response(sentence, state):
-    CONFIDENT = 0
+def response(sentence: str, state: str) -> list:
 
     work_directory = os.getcwd()
     stop_word = corpus.thai_stopwords()
-    model = \
-        keras_module_manipulation.load_model(os.path.join(work_directory, "model/CoeChatBot.ckpt"))
+    inquery_model = \
+        keras_module_manipulation.load_model(\
+                os.path.join(work_directory, "model/CoeChatBot_processed_type_input.ckpt")
+            )
+    contextual_model = \
+        keras_module_manipulation.load_model(\
+                os.path.join(work_directory, "model/CoeChatBot_processed_response_type.ckpt")
+            )
     bag = None
     hot_coding_word = []
     with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "rb") \
@@ -32,53 +37,43 @@ def response(sentence, state):
     sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
     sentence = [typo_checking(word) for word in sentence if word not in stop_word]
 
-    for word in bag.getEntriedWords():
+    for word in bag.get_entried_words():
         hot_coding_word.append(word in sentence)
 
     sentence = numpy.array(hot_coding_word)
     sentence = pandas.DataFrame([sentence], dtype=float, index=["input"])
-    sentence = model.predict(sentence)[0]
+    sentence = inquery_model.predict(sentence)[0]
 
     sentence = [[class_name, probability] \
-        for class_name, probability in enumerate(sentence) \
-            if probability >= CONFIDENT]
+        for class_name, probability in enumerate(sentence)]
+
+    sentence.sort(key=lambda x: x[1], reverse=True)
+    input_type = bag.get_intention(sentence[0][0])
+    hot_code = []
+
+    if state == None:
+        state = "null"
     
-    if len(sentence) > 0:
-        response_data = []
-        sentence.sort(key=lambda x: x[1], reverse=True)
-        class_name = bag.getIntention(sentence[0][0])
+    for state_list in bag.get_entired_state_contextual():
+        hot_code.append(state == state_list)
+    for intention_list in bag.get_entired_intention_contextual():
+        hot_code.append(input_type == intention_list)
 
-        if state != None:
-            class_name = class_name + " {{" + state + "}}"
+    sentence = numpy.array(hot_code)
+    sentence = pandas.DataFrame([sentence], dtype=float, index=["input"])
+    sentence = contextual_model.predict(sentence)[0]
 
-        if bag.classNameHasIntentionSet(class_name):
-            response_data.append(True)
-            response_data.append(bag.getIntentionSet(class_name))
-        elif bag.classNameHasMapAnother(class_name):
-            response_data.append(False)
-            response_data.append(bag.getIntentionMap(class_name))
-        else:
-            response_data.append(False)
-            response_data.append(None)
-        
-        while re.match(".*\{\{.*\}\}", class_name):
-            class_name = bag.getIntentionMap(class_name)
-            response_data = []
-            if bag.classNameHasIntentionSet(class_name):
-                response_data.append(True)
-                response_data.append(bag.getIntentionSet(class_name))
-            elif bag.classNameHasMapAnother(class_name):
-                response_data.append(False)
-                response_data.append(bag.getIntentionMap(class_name))
-            else:
-                response_data.append(False)
-                response_data.append(None)
+    sentence = [[class_name, probability] \
+        for class_name, probability in enumerate(sentence)]
+    sentence.sort(key=lambda x: x[1], reverse=True)
 
-        response_data.append(bag.getResponseSentence(class_name))
+    response = \
+        bag.get_response_sentence(\
+                bag.get_response_class(sentence[0][0])
+            )
+    
 
-        return response_data
-    else:
-        return None
+    return [response, input_type]
 
 
 class ChatWithBot(flask_restful.Resource):
@@ -90,24 +85,22 @@ class ChatWithBot(flask_restful.Resource):
             if not data_message["sender"] or len(data_message) == 0:
                 raise AttributeError()
             response_message = response(data_message["msg"], data_message["state"])
+            state = None
             
-            if response_message == None:
-                raise KeyError
-            elif response_message[0] == True:
-                response_json["state"] = response_message[1]
-                response_json["msg"] = response_message[2]
-            elif response_message[0] == False:
-                response_json["state"] = None
-                response_json["msg"] = response_message[2]
+            if response_message[0]["intention_set"] == False:
+                state = data_message["state"]
+            else:
+                state = response_message[0]["intention_set"]
 
+            response_json["msg"] = response_message[0]["response_sentence"]
+            response_json["state"] = state
             response_json["sender"] = False
-        except AttributeError:
+            response_json["input_type"] = response_message[1]
+
+        except Exception:
             response_json["msg"] = None
             response_json["state"] = None
             response_json["sender"] = None
-        except:
-            response_json["msg"] = "ตอนนี้สามารถตอบเรื่องการฝึกงาน จำนวนวิชาที่เปิดในแต่ละเทอมและอาจารย์ผู้สอนของวิชานั้นๆ โปรดถามในเรื่องพวกนี้ครับ"
-            response_json["state"] = None
         finally:
             keras.backend.clear_session()
         

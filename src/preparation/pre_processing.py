@@ -110,9 +110,6 @@ def pre_processing():
         counter += 1
 
     cleaned_data.close()
-
-
-
     bag.sort_items()
 
     print("\nsaving data...", end="")

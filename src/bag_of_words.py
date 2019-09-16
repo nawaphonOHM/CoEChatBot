@@ -13,10 +13,10 @@ class Bag:
         self.amount_response_sentence = 0
         self.response_classes = []
         self.amount_response_classes = 0
-        self.intention_contextual = {}
-        self.next_intention_contextual = 0
-        self.state_contextual = {}
-        self.next_state_contextual = 0
+        self.intention_contextual = []
+        self.amount_intention_contextual = 0
+        self.state_contextual = []
+        self.amount_state_contextual = 0
 
 
     def get_word(self, token: int) -> str:
@@ -36,8 +36,8 @@ class Bag:
 
     def add_intention_contextual(self, sentence: str) -> None:
         if not self.has_intent_context(sentence):
-            self.intention_contextual[sentence] = self.next_intention_contextual
-            self.next_intention_contextual += 1
+            self.intention_contextual.append(sentence)
+            self.amount_intention_contextual += 1
     
     def get_intention_contextual(self, sentence: str) -> int:
         if not self.has_intent_context(sentence):
@@ -50,20 +50,26 @@ class Bag:
             raise KeyError("None of this sentence -> {0}".format(sentence))
         else:
             return self.state_contextual[sentence]
+    
+    def get_entired_state_contextual(self) -> list:
+        return self.state_contextual
+    
+    def get_entired_intention_contextual(self) -> list:
+        return self.intention_contextual
 
     def get_intention_contextual_length(self) -> int:
-        return self.next_intention_contextual
+        return self.amount_intention_contextual
     
     def get_state_contextual_length(self) -> int:
-        return self.next_state_contextual
+        return self.amount_state_contextual
     
     def has_state_context(self, sentence: str) -> bool:
         return sentence in self.state_contextual
 
     def add_state_contextual(self, sentence: str) -> None:
         if not self.has_state_context(sentence):
-            self.state_contextual[sentence] = self.next_state_contextual
-            self.next_state_contextual += 1
+            self.state_contextual.append(sentence)
+            self.amount_state_contextual += 1
     
     def get_token(self, word: str) -> int:
         if not self.has_word(word):
@@ -84,10 +90,15 @@ class Bag:
     def sort_items(self) -> None:
         self.intention_classes.sort()
         self.response_classes.sort()
+        self.intention_contextual.sort()
+        self.state_contextual.sort()
     
     def add_response_class(self, response_class_name: str) -> None:
         self.response_classes.append(response_class_name)
         self.amount_response_classes += 1
+    
+    def get_response_class(self, response_id: int) -> str:
+        return self.response_classes[response_id]
 
     def has_word(self, word: str) -> bool:
         return word in self.word_token
@@ -107,20 +118,14 @@ class Bag:
     def get_intention(self, id: int) -> str:
         return self.intention_classes[id]
 
-    def get_response_sentence(self, intention) -> str:
-        if type(intention) is int:
-            return self.response_sentence[self.intention_classes[intention]]
-        if type(intention) is not str:
-            raise TypeError(\
-                    "Expected an intention as str or int but got as {0}"
-                    .format(type(intention))
-                )
-        if not self.has_intention_classes(intention):
+    def get_response_sentence(self, intention: str) -> dict:
+        if not self.has_response_sentence(intention):
             raise ValueError(\
                     "Unknown this class {0}"
                     .format(intention)
                 )
         return self.response_sentence[intention]
+    
     def has_response_sentence(self, class_name: str) -> bool:
         return class_name in self.response_sentence
 

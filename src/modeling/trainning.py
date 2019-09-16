@@ -7,7 +7,6 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import Adam
 import src.bag_of_words as bag_of_words
-import math
 
 def train():
     bag = None
@@ -43,8 +42,8 @@ def train():
         
     random.shuffle(trainning_data)
     trainning_data = numpy.array(trainning_data)
-    features = list(trainning_data[:, 0])
-    destination_class = list(trainning_data[:, 1])
+    features = list(trainning_data[:,0])
+    destination_class = list(trainning_data[:,1])
     
     model = Sequential()
     model.add(
@@ -81,33 +80,19 @@ def train():
     for table in contextual:
         class_name = table[0]
         context = table[1]
-        context = bag.get_intention_contextual(context)
         state = table[2]
-        state = bag.get_state_contextual(state)
         hot_coding_pattern = []
         hot_coding_class = []
-        length = math.ceil(\
-            math.log2(\
-                        bag.get_state_contextual_length()
-                    )
-                )
-        for _ in range(length):
-            hot_coding_pattern.append(False if state % 2 == 0 else True)
-            state = state // 2
 
-        length = math.ceil(\
-            math.log2(\
-                        bag.get_intention_contextual_length()
-                    )
-                )
-        for _ in range(length):
-            hot_coding_pattern.append(False if context % 2 == 0 else True)
-            context = context // 2
+        for state_list in bag.get_entired_state_contextual():
+            hot_coding_pattern.append(state == state_list)
+
+        for context_list in bag.get_entired_intention_contextual():
+            hot_coding_pattern.append(context == context_list)
 
         for response_class in bag.get_entired_response_classes():
             hot_coding_class.append(class_name == response_class)
         
-        hot_coding_pattern.reverse()
         trainning_data.append([hot_coding_pattern, hot_coding_class])
 
     random.shuffle(trainning_data)
