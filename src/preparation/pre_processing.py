@@ -44,11 +44,11 @@ def pre_processing():
             cleaned_word_in_sentence = \
                 [typo_checking(word) \
                     for word in word_in_sentence \
-                        if word not in stop_word or excluded_stop_words]
+                        if word not in stop_word or word in excluded_stop_words]
             for word in cleaned_word_in_sentence:
                 bag.add_word(word)
                 sentence_cleaned = sentence_cleaned + word + " "
-            sentence_cleaned.strip()
+            sentence_cleaned = sentence_cleaned.strip()
             writer.writerow(\
                     [intention, sentence_cleaned, sentence]
                 )
