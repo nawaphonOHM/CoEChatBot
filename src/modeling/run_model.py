@@ -35,7 +35,9 @@ def response(sentence: str, state: str) -> list:
         as model_read:
             bag = pickle.load(model_read)
     sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
-    sentence = [typo_checking(word) for word in sentence if word not in stop_word]
+    sentence = \
+        [typo_checking(word) for word in sentence \
+            if word not in stop_word or bag.has_in_excluded_stop_words(word)]
 
     for word in bag.get_entried_words():
         hot_coding_word.append(word in sentence)

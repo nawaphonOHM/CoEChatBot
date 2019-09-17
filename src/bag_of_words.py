@@ -17,6 +17,7 @@ class Bag:
         self.amount_intention_contextual = 0
         self.state_contextual = []
         self.amount_state_contextual = 0
+        self.excluded_stop_words = None
 
 
     def get_word(self, token: int) -> str:
@@ -24,6 +25,12 @@ class Bag:
             raise ValueError("Unknown this token {0}.".format(token))
 
         return self.token_word[token]
+
+    def set_excluded_stop_words(self, stop_words_dict: list) -> None:
+        self.excluded_stop_words = stop_words_dict
+    
+    def has_in_excluded_stop_words(self, word: str):
+        return word in self.excluded_stop_words
 
     def add_word(self, word: str) -> None:
         if not self.has_word(word):
