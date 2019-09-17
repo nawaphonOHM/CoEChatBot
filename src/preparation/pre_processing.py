@@ -12,7 +12,6 @@ def pre_processing():
     raw_input = None
     fomatted_data = []
     stop_word = corpus.thai_stopwords()
-    excluded_stop_words = None
     bag = bag_of_words.Bag()
     work_directory = os.getcwd()
     cleaned_data = \
@@ -25,7 +24,8 @@ def pre_processing():
             raw_input = json.load(raw)
     with open(os.path.join(work_directory, "data/raw/excluded_stop_words.json"), "r") \
         as excluded_stop_words_json:
-            excluded_stop_words = json.load(excluded_stop_words_json)
+            bag.set_excluded_stop_words(json.load(excluded_stop_words_json))
+
 
     len_data = len(raw_input)
     counter = 1
@@ -44,11 +44,11 @@ def pre_processing():
             cleaned_word_in_sentence = \
                 [typo_checking(word) \
                     for word in word_in_sentence \
-                        if word not in stop_word or excluded_stop_words]
+                        if word not in stop_word or bag.has_in_excluded_stop_words(word)]
             for word in cleaned_word_in_sentence:
                 bag.add_word(word)
                 sentence_cleaned = sentence_cleaned + word + " "
-            sentence_cleaned.strip()
+            sentence_cleaned = sentence_cleaned.strip()
             writer.writerow(\
                     [intention, sentence_cleaned, sentence]
                 )
