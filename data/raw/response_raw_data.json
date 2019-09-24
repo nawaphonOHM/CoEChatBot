@@ -171,7 +171,7 @@
     }, 
     {
         "response_class": "ความสามารถบอท_ตอบ", 
-        "response_sentence": "ตอนนี้สามารถสอบถามเรื่องการฝึกงาน วิชาที่เปิดในแต่ละเทอมและอาจารย์ผู้สอนของวิชานั้นๆ ครับ", 
+        "response_sentence": "ตอนนี้สามารถสอบถามเรื่องการฝึกงานได้ครับ", 
         "intention_set": null
     }, 
     {
@@ -180,9 +180,14 @@
         "intention_set": false
     }, 
     {
-        "response_class": "ตอบปฎิเสธ_ตอบ", 
+        "response_class": "ตอบปฎิเสธ_ตอบ_false_state", 
         "response_sentence": "ไม่ได้ครับ", 
         "intention_set": false
+    }, 
+    {
+        "response_class": "ตอบปฎิเสธ_ตอบ_ฝึกงาน_state", 
+        "response_sentence": "ไม่ได้ครับ", 
+        "intention_set": "สอบถามการฝึกงาน"
     }, 
     {
         "response_class": "การฝึกงาน_การบังคับ_ตอบ", 
@@ -205,9 +210,14 @@
         "intention_set": false
     }, 
     {
-        "response_class": "ตอบได้_ตอบ", 
+        "response_class": "ตอบได้_ตอบ_false_state", 
         "response_sentence": "ได้ครับ", 
         "intention_set": false
+    }, 
+    {
+        "response_class": "ตอบได้_ตอบ_ฝึกงาน_state", 
+        "response_sentence": "ได้ครับ", 
+        "intention_set": "สอบถามการฝึกงาน"
     }, 
     {
         "response_class": "การฝึกงานบอกสถานที่ติดต่อ_ตอบ", 
