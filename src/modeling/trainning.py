@@ -52,6 +52,9 @@ def train():
             activation='relu')
         )
     model.add(Dense(len(destination_class[0]), activation='relu'))
+    model.add(
+        Dropout(0.2)
+    )
     model.add(Dense(len(destination_class[0]), activation='softmax'))
 
     model.compile(\
@@ -107,7 +110,13 @@ def train():
             activation='relu')
         )
     model.add(Dense(len(destination_class[0]), activation='relu'))
+    model.add(
+        Dropout(0.2)
+    )
     model.add(Dense(len(destination_class[0]), activation='relu'))
+    model.add(
+        Dropout(0.2)
+    )
     model.add(Dense(len(destination_class[0]), activation='softmax'))
 
     model.compile(\
