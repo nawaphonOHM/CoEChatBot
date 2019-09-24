@@ -14,7 +14,6 @@ import json
 import keras
 import re
 
-from pythainlp.spell import correct as typo_checking
 from flask_restful import request
 
 def response(sentence: str, state: str) -> list:
@@ -36,7 +35,7 @@ def response(sentence: str, state: str) -> list:
             bag = pickle.load(model_read)
     sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
     sentence = \
-        [typo_checking(word) for word in sentence \
+        [word for word in sentence \
             if word not in stop_word or bag.has_in_excluded_stop_words(word)]
 
     for word in bag.get_entried_words():
