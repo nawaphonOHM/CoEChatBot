@@ -78,7 +78,7 @@ def response(sentence: str, state: str) -> list:
 
 
 class ChatWithBot(flask_restful.Resource):
-    def post(self):
+    def post(self) -> list:
         data_message = json.loads(request.data)
         response_json = {}
 
