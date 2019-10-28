@@ -5,10 +5,15 @@
         "intention_set": "ต้องการสอบถาม"
     }, 
     {
-        "response_class": "สอบถามการฝึกงาน_ตอบ", 
-        "response_sentence": "ต้องการสอบถามอะไรของการฝึกงานเหรอครับ", 
-        "intention_set": "สอบถามการฝึกงาน"
-    }, 
+        "response_class": "สอบถามสิ่งที่อยากรู้_ตอบ_ฝึกงานปกติ", 
+        "response_sentence": "ต้องการสอบถามอะไรเหรอครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    },
+    {
+        "response_class": "สอบถามสิ่งที่อยากรู้_ตอบ_ฝึกงานสหกิจ", 
+        "response_sentence": "ต้องการสอบถามอะไรเหรอครับ", 
+        "intention_set": "ฝึกงานสหกิจ"
+    },
     {
         "response_class": "การจากลา_ตอบ", 
         "response_sentence": "ครับ ยินดีครับ", 
@@ -17,152 +22,7 @@
     {
         "response_class": "การฝึกงาน_หน่วยกิตขั้นต่ำ_ตอบ",
         "response_sentence": "ต้องผ่านรายวิชาของทางภาควิชาที่เป็นของปี 1 , ปี 2 และ ปี 3 เทอม 1 จำนวน 48 หน่วยกิตก่อนครับ ถึงจะมีสิทธิ์ฝึกงานได้ครับ", 
-        "intention_set": "สอบถามการฝึกงาน"
-    }, 
-    {
-        "response_class": "วิชาเปิดสอน_เทอม_1_ตอบ", 
-        "response_sentence": "ก็จะมีวิชา อินโทรคอม แล้วก็ แล็ปซอฟแวร์ ตัวที่ 1 ของปี 2, ปี 3 แล้วก็ แล็ปฮาร์ดแวร์ ตัวที่ 1 ของปี 2 แล้วก็ แล็ปปี 3 ตัวที่ 1 แล้วก็ เซอร์กิต แล้วก็ อินโทร เน็ตเวิร์ก แล้วก็ การเขียนโปรแกรมตัวที่ 1 แล้วก็ ดิจิตอลโลจิก แล้วก็ คอม อินจิเนียร์ แมท แล้วก็ อิติก แล้วก็ โอเอส แล้วก็ ดาต้าเบส แล้วก็ ไวร์เลส แล้วก็ คอม อาคิเทค แล้วก็ โปรเจคตัวที่ 1 ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "วิชาเปิดสอน_เทอม_2_ตอบ", 
-        "response_sentence": "ก็จะมีวิชา อินโทรคอม แล้วก็ แล็ปซอฟแวร์ ตัวที่ 2 ของปี 2, ปี 3 แล้วก็ แล็ปฮาร์ดแวร์ ตัวที่ 2 ของปี 2, แล้วก็ แล็ปปี 3 ตัวที่ 2 แล้วก็ การเขียนโปรแกรมตัวที่ 1 และ การเขียนโปรแกรมตัวที่ 2 แล้วก็ ซอฟเอน แล้วก็ แสตท แล้วก็ ดิสครีตแมท แล้วก็ ดาต้า แล้วก็ เตรียมพร้อมการทำโปรเจค แล้วก็ ไมโคร แล้วก็ อัลกอ แล้วก็ เซอร์ฟเวอร์-ไคล์แอนด์ แล้วก็ ซีเคียว แล้วก็ โปรเจคตัวที่ 2 ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_introcom_ตอบ",
-        "response_sentence": "มี อาจารย์นิคม อาจารย์อนันท์ อาจารย์อารีย์ อาจารย์สกุณา อาจารย์แสงสุรีย์ อาจารย์ธนาธิป อาจารย์เสกสรรค์ และก็ อาจารย์ทวีศักดิ์ ครับ", 
-        "intention_set": null 
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_LabSoft1_2_ตอบ", 
-        "response_sentence": "มี อาจารย์ทศพร อาจารย์สุนทร อาจารย์ธัชชัย อาจารย์สมชัย อาจารย์ไพจิตร อาจารย์อารีย์ และ อาจารย์อนันท์ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_LabSoft2_2_ตอบ", 
-        "response_sentence": "มี อาจารย์เพ็ชรัตน์ อาจารย์อารีย์ อาจารย์สมชัย อาจารย์ANDREW อาจารย์นิคม อาจารย์พิชญา อาจารย์อนันท์ และ อาจารย์แสงสุรีย์ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_LabHard2_1_ตอบ", 
-        "response_sentence": "มี อาจารย์วชรินทร์ อาจารย์ปัญญยศ อาจารย์ดำรงค์ อาจารย์ธเนศ และ อาจารย์มนตรี ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_LabHard2_2_ตอบ",
-        "response_sentence": "มี อาจารย์วชรินทร์ อาจารย์ปัญญยศ อาจารย์มนตรี อาจารย์ธเนศ และ อาจารย์ดำรงค์ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Circuit_ตอบ", 
-        "response_sentence": "มี อาจารย์ดำรง และ อาจารย์มนตรี ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_IntroNetwork_ตอบ", 
-        "response_sentence": "มี อาจารย์ธัชชัย ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Programming1_เทอม_1_ตอบ", 
-        "response_sentence": "มี อาจารย์สุธน และ อาจารย์ธนาธิป ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_DigitalLogic_ตอบ", 
-        "response_sentence": "มี อาจารย์ทวีศักดิ์ และ อาจารย์ปัญญยศ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Math_3_ตอบ", 
-        "response_sentence": "มี อาจารย์ธเนศ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Programming1_เทอม_2_ตอบ", 
-        "response_sentence": "มี อาจารย์นิคม ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Programming2_ตอบ", 
-        "response_sentence": "มี อาจารย์ธนาธิป ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_SoftEng_ตอบ", 
-        "response_sentence": "มี อาจารย์สมชัย ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Stats_ตอบ", 
-        "response_sentence": "มี อาจารย์ทศพร ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Discrete_ตอบ", 
-        "response_sentence": "มี อาจารย์Andrew ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_DataComu_ตอบ", 
-        "response_sentence": "มี อาจารย์สินชัย อาจารย์เพ็ชรัตน์ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Lab3_1_ตอบ", 
-        "response_sentence": "มี อาจารย์ทวีศักดิ์ อาจารย์เสกสรรค์ อาจารย์สุธน อาจารย์ปัญญยศ อาจารย์วรรณรัช อาจารย์สุนทร อาจารย์วชรินทร์ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Ethical_ตอบ", 
-        "response_sentence": "มี อาจารย์ไพจิตร อาจารย์พิชญา ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_OS_ตอบ", 
-        "response_sentence": "มี อาจารย์แสงสุรีย์ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Database_ตอบ", 
-        "response_sentence": "มี อาจารย์ไพจิตร ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Wireless_ตอบ", 
-        "response_sentence": "มี อาจารย์เพ็ชรัตน์ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_ComArch_ตอบ", 
-        "response_sentence": "มี อาจารย์วชรินทร์ อาจารย์ปัญญยศ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Lab3_2_ตอบ", 
-        "response_sentence": "มี อาจารย์ทวีศักดิ์  อาจารย์สุนทร อาจารย์ธนาธิป อาจารย์เสกสรรค์ อาจารย์อนันท์ อาจารย์ปัญญยศ อาจารย์วรินทร์ ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Micro_ตอบ", 
-        "response_sentence": "มี อาจารย์ทวีศักดิ์ อาจารย์ปัญญยศ ครับ" ,
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Algro_ตอบ", 
-        "response_sentence": "มี อาจารย์Andrew ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Server_Client_ตอบ", 
-        "response_sentence": "มี อาจารย์สุธน ครับ", 
-        "intention_set": null
-    }, 
-    {
-        "response_class": "อาจารย์ผู้สอน_Security_ตอบ", 
-        "response_sentence": "มี อาจารย์แสงสุรีย์ ครับ", 
-        "intention_set": null
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "ยืนยันคำถาม_ฝึกงาน_ตอบ", 
@@ -177,71 +37,86 @@
     {
         "response_class": "เทอมที่สามารถลงได้_การฝึกงาน_ตอบ", 
         "response_sentence": "ลงได้เฉพาะเทอมซัมเมอร์ครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "ตอบปฎิเสธ_ตอบ_false_state", 
         "response_sentence": "ไม่ได้ครับ", 
-        "intention_set": false
-    }, 
-    {
-        "response_class": "ตอบปฎิเสธ_ตอบ_ฝึกงาน_state", 
-        "response_sentence": "ไม่ได้ครับ", 
-        "intention_set": "สอบถามการฝึกงาน"
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "การฝึกงาน_การบังคับ_ตอบ", 
         "response_sentence": "บังคับครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "ไม่จบ_ตอบ", 
         "response_sentence": "ไม่จบครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "การฝึกงาน_เอกสาร_ตอบ", 
         "response_sentence": "ก็จะมีแบบฟอร์มการหาสถานที่ฝึกงานด้วยตัวนักศึกษาเอง แล้วก็กรณีที่จะสมัครผ่านโค้วต้าของคณะ สุดท้ายแบบประเมินจากทางสถานที่ประกอบการครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "การฝึกงาน_สถานที่_ตอบ", 
         "response_sentence": "สามารถฝึกงานได้ทุกที่เลยครับ หรือว่าต้องการดูโค้วต้าที่คณะมีให้โปรดติดต่อคณะครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "ตอบได้_ตอบ_false_state", 
         "response_sentence": "ได้ครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "ตอบได้_ตอบ_ฝึกงาน_state", 
         "response_sentence": "ได้ครับ", 
-        "intention_set": "สอบถามการฝึกงาน"
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "การฝึกงานบอกสถานที่ติดต่อ_ตอบ", 
         "response_sentence": "ติดต่อทางคณะได้เลยครับ เบอร์โทร 074-287-111 ครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "การฝึกงานบอกเวลาติดต่อ_ตอบ", 
         "response_sentence": "เวลา 08:00-16:00 วันจันทร์ ถึง ศุกร์ครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "การฝึกงาน_ตอบเจ้าหน้าที่รับผิดชอบ_ตอบ", 
         "response_sentence": "เนื่องจากมีความไม่แน่นอนของเจ้าหน้าที่รับผิดชอบ โปรดติดต่อที่คณะเพื่อความถูกต้องครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "การฝึกงาน_เจ้าหน้าที่รับผิดชอบ_ไม่อยู่_ตอบ", 
         "response_sentence": "ติดต่อคณะทางเดียวเลยครับ", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
     }, 
     {
         "response_class": "การฝึกงาน_หน้าเว็บ_ตอบ", 
         "response_sentence": "http://academic.eng.psu.ac.th/internship", 
-        "intention_set": false
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ฝึกงาน_รูปแบบ_ตอบ", 
+        "response_sentence": "มีทั้งรูปแบบฝึกงานปกติกับฝึกงานสหกิจครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ฝึกงาน_สหกิจ_ช่วงเวลา_ตอบ", 
+        "response_sentence": "จะเป็นช่วงเทอม 2 ครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ถามประเภท_ฝึกงานปกติ_ฝึกงานสหกิจ", 
+        "response_sentence": "ฝึกงานปกติ หรือ สหกิจครับ", 
+        "intention_set": "ไม่แน่ใจปกติหรือสหกิจ"
+    }, 
+    {
+        "response_class": "ฝึกงาน_ปกติ_ช่วงเวลา_ตอบ", 
+        "response_sentence": "จะเป็นช่วงซัมเมอร์ครับ", 
+        "intention_set": "ฝึกงานปกติ_ช่วงเวลา"
     }
 ] 

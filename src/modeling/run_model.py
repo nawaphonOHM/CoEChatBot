@@ -105,7 +105,10 @@ class ChatWithBot(flask_restful.Resource):
         finally:
             keras.backend.clear_session()
         
-        return response_json
+        return flask.Response(\
+                json.dumps(response_json), 
+                mimetype='application/json; utf-8'
+            )
 
 app = flask.Flask(__name__)
 api = flask_restful.Api(app)
