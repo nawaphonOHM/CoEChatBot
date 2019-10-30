@@ -6,7 +6,7 @@ import pythainlp.tokenize as tokenization
 import pythainlp.corpus.common as corpus
 import src.bag_of_words as bag_of_words
 
-def pre_processing():
+def pre_processing() -> None:
     print("Pre-Processing is starting")
     raw_input = None
     fomatted_data = []

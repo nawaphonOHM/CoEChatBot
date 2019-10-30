@@ -8,7 +8,7 @@ from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import Adam
 import src.bag_of_words as bag_of_words
 
-def train():
+def train() -> None:
     bag = None
     work_directory = os.getcwd()
     trainning_data = []
