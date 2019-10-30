@@ -3,3 +3,5 @@ build
 coe-chat-bot
 dist
 data/processed/bag_of_word_.pkl
+coe
+*.pkl
