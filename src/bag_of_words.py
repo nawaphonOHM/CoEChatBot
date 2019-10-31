@@ -40,8 +40,11 @@ class Bag:
             self.token_word[self.next_token] = word
             self.next_token += 1
 
-    def has_intent_context_number(self, sentence: int) -> bool:
-        return sentence in self.intention_contextual
+    def has_intent_context_number(self, class_number: int) -> bool:
+        return class_number in self.intention_contextual
+
+    def has_intention(self, sentence: str) -> bool:
+        return sentence in self.intention_classes_reverse
 
     def add_intention_contextual(self, sentence: str) -> None:
         if not self.has_intent_context_number(sentence):
@@ -111,9 +114,6 @@ class Bag:
     def has_word(self, word: str) -> bool:
         return word in self.word_token
 
-    def has_intention(self, intention_name: str) -> bool:
-        return intention_name in self.intention_classes_reverse
-
     def get_entried_words(self) -> dict:
         return self.word_token.keys()
     
@@ -132,8 +132,8 @@ class Bag:
         else:
             return self.intention_classes[sentence_class]
     
-    def get_intention_number(self, sentence: str) -> int:
-        if not self.has_intent_context_number(sentence):
+    def get_intention_class_number(self, sentence: str) -> int:
+        if not self.has_intention(sentence):
             raise KeyError("None of this sentence -> {0}".format(sentence))
         else:
             return self.intention_classes_reverse[sentence]
