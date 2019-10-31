@@ -18,11 +18,13 @@ def contextual_model_testing(data_set_probability_random=1.0) -> None:
                 "data_set_probability_random should be [0, 1], but got {0}"\
                     .format(data_set_probability_random)
             )
-    model_name = "model/CoeChatBot_processed_type_input.ckpt"
-    test_data_file_name = "data/processed/inquery_cleaned_data.csv"
+    
+    model_name = "model/CoeChatBot_processed_response_type.ckpt"
+    test_data_file_name = "data/processed/responsing_cleaned_data.csv"
     test_data_object = None
     work_directory = os.getcwd()
-    cadidated_test_data_sets = []
+    cadidated_intention_test_data_sets = []
+    cadidated_state_test_data_sets = []
     real_classes_number = []
     predicted_classes_number = []
     bag = None
@@ -33,10 +35,54 @@ def contextual_model_testing(data_set_probability_random=1.0) -> None:
     with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "rb") \
         as bag_file:
             bag = pickle.load(bag_file)
+    file_obj = open(\
+        os.path.join(work_directory, test_data_file_name), 'r')
+    file_obj.__next__()
+
+    model = keras_module_manipulation.load_model(\
+                os.path.join(work_directory, "model/CoeChatBot_processed_response_type.ckpt")
+            )
+    test_data_object = csv.reader(file_obj)
+
+    print(\
+                "Operating random data set with probability -> {0}% ... "\
+                    .format(data_set_probability_random * 100), end=""
+            )
+    # for line in test_data_object:
+    #     if random.random() >= 1 - data_set_probability_random:
+    #         # cadidated_intention_test_data_sets.append(\
+    #         #         [intention in line[1] for intention in bag.]
+    #         #     )
+    #         #cadidated_test_data_sets.append(line[1].split(" "))
+    
+
+def intension_model_testing(data_set_probability_random=1.0) -> None:
+    if data_set_probability_random > 1:
+        raise ValueError(\
+                "data_set_probability_random should be [0, 1], but got {0}"\
+                    .format(data_set_probability_random)
+            )
+
+    model_name = "model/CoeChatBot_processed_type_input.ckpt"
+    test_data_file_name = "data/processed/inquery_cleaned_data.csv"
+    test_data_object = None
+    work_directory = os.getcwd()
+    cadidated_test_data_sets = []
+    real_classes_number = []
+    predicted_classes_number = []
+    bag = None
+    model = None
+
+    print("being test intention model ...")
+
+    with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "rb") \
+        as bag_file:
+            bag = pickle.load(bag_file)
 
     model = keras_module_manipulation.load_model(\
                 os.path.join(work_directory, "model/CoeChatBot_processed_type_input.ckpt")
             )
+
 
     file_obj = open(\
         os.path.join(work_directory, test_data_file_name), 'r')
@@ -100,4 +146,4 @@ def contextual_model_testing(data_set_probability_random=1.0) -> None:
 
     file_obj.close()
 
-contextual_model_testing(data_set_probability_random=0.8)
+intension_model_testing(data_set_probability_random=0.8)

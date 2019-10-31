@@ -17,7 +17,8 @@ class Bag:
         self.intention_contextual = {}
         self.intention_contextual_reverse = {}
         self.amount_intention_contextual = 0
-        self.state_contextual = []
+        self.state_contextual = {}
+        self.state_contextual_reverse = {}
         self.amount_state_contextual = 0
         self.excluded_stop_words = None
 
@@ -39,39 +40,45 @@ class Bag:
             self.word_token[word] = self.next_token
             self.token_word[self.next_token] = word
             self.next_token += 1
+    
+    def has_intent_context_name(self, class_number: str) -> bool:
+        return class_number in self.intention_contextual_reverse
 
-    def has_intent_context_number(self, class_number: int) -> bool:
-        return class_number in self.intention_contextual
-
-    def has_intention(self, sentence: str) -> bool:
-        return sentence in self.intention_classes_reverse
+    def has_intention_name(self, intention_name: str) -> bool:
+        return intention_name in self.intention_classes_reverse
 
     def add_intention_contextual(self, sentence: str) -> None:
-        if not self.has_intent_context_number(sentence):
+        if not self.has_intent_context_name(sentence):
             self.intention_contextual[self.amount_intention_contextual] = sentence
             self.intention_contextual_reverse[sentence] = self.amount_intention_contextual
             self.amount_intention_contextual += 1
     
-    def get_intention_contextual_class_number(self, sentence: str) -> int:
-        if not self.has_intent_context_number(sentence):
-            raise KeyError("None of this sentence -> {0}".format(sentence))
+    def get_intention_contextual_class_number(self, intent_context_name: str) -> int:
+        if not self.has_intent_context_name(intent_context_name):
+            raise KeyError("Not found in this id -> {0}".format(intent_context_name))
         else:
-            return self.intention_contextual_reverse[sentence]
-    
-    def get_state_contextual(self, sentence: str) -> int:
-        if not self.has_state_context(sentence):
-            raise KeyError("None of this sentence -> {0}".format(sentence))
+            return self.intention_contextual_reverse[intent_context_name]
+
+    def get_intention_contextual_class_name(self, intent_context_id: int) -> int:
+        if not self.has_intent_context_name(intent_context_id):
+            raise KeyError("Unknown in this name -> {0}".format(intent_context_id))
         else:
-            return self.state_contextual[sentence]
+            return self.intention_contextual_reverse[intent_context_id]
     
-    def get_entired_state_contextual(self) -> list:
-        return self.state_contextual
+    def get_state_contextual_class_number(self, state_name: str) -> int:
+        if not self.has_state_context(state_name):
+            raise KeyError("Unknown in this name -> {0}".format(state_name))
+        else:
+            return self.state_contextual_reverse[state_name]
     
-    def get_entired_intention_contextual_class_number(self) -> dict:
-        return self.intention_contextual
+    def get_entired_state_contextual_class_number(self) -> list:
+        return sorted(self.state_contextual.keys())
+    
+    def get_entired_intention_contextual_class_number(self) -> list:
+        return sorted(self.intention_contextual.keys())
 
     def get_entired_intention_contextual_class_name(self) -> dict:
-        return self.intention_contextual_reverse
+        return self.intention_contextual_reverse.keys()
 
     def get_intention_contextual_length(self) -> int:
         return self.amount_intention_contextual
@@ -79,12 +86,13 @@ class Bag:
     def get_state_contextual_length(self) -> int:
         return self.amount_state_contextual
     
-    def has_state_context(self, sentence: str) -> bool:
-        return sentence in self.state_contextual
+    def has_state_context(self, state_name: str) -> bool:
+        return state_name in self.state_contextual_reverse
 
     def add_state_contextual(self, sentence: str) -> None:
         if not self.has_state_context(sentence):
-            self.state_contextual.append(sentence)
+            self.state_contextual_reverse[sentence] = self.amount_state_contextual
+            self.state_contextual[self.amount_state_contextual] = sentence
             self.amount_state_contextual += 1
     
     def get_token(self, word: str) -> int:
@@ -98,10 +106,10 @@ class Bag:
     def length(self) -> int:
         return self.next_token
 
-    def add_intention(self, intention: str) -> None:
-        if not self.has_intention(intention):
-            self.intention_classes[self.amount_intention_classes] = intention
-            self.intention_classes_reverse[intention] = self.amount_intention_classes
+    def add_intention(self, intention_name: str) -> None:
+        if not self.has_intention_name(intention_name):
+            self.intention_classes[self.amount_intention_classes] = intention_name
+            self.intention_classes_reverse[intention_name] = self.amount_intention_classes
             self.amount_intention_classes += 1
     
     def add_response_class(self, response_class_name: str) -> None:
@@ -121,22 +129,22 @@ class Bag:
         return self.amount_intention_classes
 
     def get_entired_intention_class_name(self) -> dict:
-        return self.intention_classes_reverse
+        return self.intention_classes_reverse.keys()
 
-    def get_entired_intention_class_number(self) -> dict:
-        return self.intention_classes
+    def get_entired_intention_class_number(self) -> list:
+        return sorted(self.intention_classes.keys())
 
-    def get_intention_name(self, sentence_class: int) -> str:
-        if not self.has_intent_context_number(sentence_class):
-            raise KeyError("None of this sentence -> {0}".format(sentence_class))
+    def get_intention_name(self, intention_id: int) -> str:
+        if intention_id not in self.intention_classes:
+            raise KeyError("Not found in this id -> {0}".format(intention_id))
         else:
-            return self.intention_classes[sentence_class]
+            return self.intention_classes[intention_id]
     
-    def get_intention_class_number(self, sentence: str) -> int:
-        if not self.has_intention(sentence):
-            raise KeyError("None of this sentence -> {0}".format(sentence))
+    def get_intention_class_number(self, sentence_name: str) -> int:
+        if not self.has_intention_name(sentence_name):
+            raise KeyError("Unknown in this name -> {0}".format(sentence_name))
         else:
-            return self.intention_classes_reverse[sentence]
+            return self.intention_classes_reverse[sentence_name]
 
     def get_response_sentence(self, intention: str) -> dict:
         if not self.has_response_sentence(intention):

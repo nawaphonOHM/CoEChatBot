@@ -33,8 +33,10 @@ def train() -> None:
         for word in bag.get_entried_words():
             hot_coding_pattern.append(word in query_data)
                 
-        for class_name in bag.get_entired_intention_class_name():
-            hot_coding_class.append(class_name == class_name_data)
+        for class_id in bag.get_entired_intention_class_number():
+            hot_coding_class.append(\
+                    bag.get_intention_class_number(class_name_data) == class_id
+                )
             
         trainning_data.append([hot_coding_pattern, hot_coding_class])
 
@@ -86,11 +88,15 @@ def train() -> None:
         hot_coding_pattern = []
         hot_coding_class = []
 
-        for state_list in bag.get_entired_state_contextual():
-            hot_coding_pattern.append(state == state_list)
+        for states in bag.get_entired_state_contextual_class_number():
+            hot_coding_pattern.append(\
+                    bag.get_state_contextual_class_number(state) == states
+                )
 
-        for context_list in bag.get_entired_intention_contextual_class_name():
-            hot_coding_pattern.append(context == context_list)
+        for contextes in bag.get_entired_intention_contextual_class_number():
+            hot_coding_pattern.append(\
+                    bag.get_intention_contextual_class_number(context) == contextes
+                )
 
         for response_class in bag.get_entired_response_classes():
             hot_coding_class.append(class_name == response_class)
