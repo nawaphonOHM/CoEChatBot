@@ -6,18 +6,12 @@ import pythainlp.tokenize as tokenization
 import pythainlp.corpus.common as corpus
 import src.bag_of_words as bag_of_words
 import keras.models as keras_module_manipulation
-import flask
-import flask_restful
-import flask_cors
 import parser
 import json
 import keras
 import re
 
-from flask_restful import request
-
 def response(sentence: str, state: str) -> list:
-
     work_directory = os.getcwd()
     stop_word = corpus.thai_stopwords()
     inquery_model = \
@@ -49,7 +43,7 @@ def response(sentence: str, state: str) -> list:
         for class_name, probability in enumerate(sentence)]
 
     sentence.sort(key=lambda x: x[1], reverse=True)
-    input_type = bag.get_intention(sentence[0][0])
+    input_type = bag.get_intention_name(sentence[0][0])
     hot_code = []
 
     if state == None:
@@ -57,7 +51,7 @@ def response(sentence: str, state: str) -> list:
     
     for state_list in bag.get_entired_state_contextual():
         hot_code.append(state == state_list)
-    for intention_list in bag.get_entired_intention_contextual():
+    for intention_list in bag.get_entired_intention_contextual_class_name():
         hot_code.append(input_type == intention_list)
 
     sentence = numpy.array(hot_code)
@@ -72,48 +66,8 @@ def response(sentence: str, state: str) -> list:
         bag.get_response_sentence(\
                 bag.get_response_class(sentence[0][0])
             )
+
+    keras.backend.clear_session()
     
 
     return [response, input_type]
-
-
-class ChatWithBot(flask_restful.Resource):
-    def post(self) -> list:
-        data_message = json.loads(request.data)
-        response_json = {}
-
-        try:
-            if not data_message["sender"] or len(data_message) == 0:
-                raise AttributeError()
-            response_message = response(data_message["msg"], data_message["state"])
-            state = None
-            
-            if response_message[0]["intention_set"] == False:
-                state = data_message["state"]
-            else:
-                state = response_message[0]["intention_set"]
-
-            response_json["msg"] = response_message[0]["response_sentence"]
-            response_json["state"] = state
-            response_json["sender"] = False
-            response_json["input_type"] = response_message[1]
-
-        except Exception:
-            response_json["msg"] = None
-            response_json["state"] = None
-            response_json["sender"] = None
-        finally:
-            keras.backend.clear_session()
-        
-        return flask.Response(\
-                json.dumps(response_json), 
-                mimetype='application/json; utf-8'
-            )
-
-app = flask.Flask(__name__)
-api = flask_restful.Api(app)
-flask_cors.CORS(app)
-api.add_resource(ChatWithBot, "/chatwithbot")
-
-if __name__ == "__main__":
-    app.run(port=1996)  

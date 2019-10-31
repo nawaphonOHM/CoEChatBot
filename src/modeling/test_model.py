@@ -1,67 +1,38 @@
-import pickle
+import sklearn
 import os
-import numpy
-import pandas
-import pythainlp.tokenize as tokenization
-import pythainlp.corpus.common as corpus
-import src.bag_of_words as bag_of_words
-import keras.models as keras_module_manipulation
-import flask
-import flask_restful
-import flask_cors
-import parser
-import json
-import keras
+import csv
+import random
+import scipy
+import bag_of_words as bag_of_words
+import pickle
 
-from pythainlp.spell import correct as typo_checking
-from flask_restful import request
-
-def response(sentence):
-    CONFIDENT = 0.80
-
+def contextual_model_testing() -> None:
+    test_data_file_name = "data/processed/inquery_cleaned_data.csv"
+    test_data_object = None
     work_directory = os.getcwd()
-    stop_word = corpus.thai_stopwords()
-    model = \
-        keras_module_manipulation.load_model(os.path.join(work_directory, "model/CoeChatBot.ckpt"))
+    cadidated_test_data_sets = []
+    real_classes = []
     bag = None
-    hot_coding_word = []
-    with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "rb") \
-        as model_read:
-            bag = pickle.load(model_read)
-    sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
-    sentence = [typo_checking(word) for word in sentence if word not in stop_word]
 
-    for word in bag.getEntriedWords():
-        hot_coding_word.append(word in sentence)
+    print("being test contextual model ...")
 
-    sentence = numpy.array(hot_coding_word)
-    sentence = pandas.DataFrame([sentence], dtype=float, index=["input"])
-    sentence = model.predict(sentence)[0]
+    with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "rb") \
+        as bag_file:
+            bag = pickle.load(bag_file)
 
-    sentence = [[class_name, probability] \
-        for class_name, probability in enumerate(sentence) \
-            if probability >= CONFIDENT]
+    file_obj = open(\
+        os.path.join(work_directory, test_data_file_name), 'r')
+    file_obj.__next__()
     
-    if len(sentence) > 0:
-        sentence.sort(key=lambda x: x[1], reverse=True)
-        intentions = bag.getEntiredItemsIntention()
-        named_intention = intentions[sentence[0][0]]
-        return [named_intention, bag.getResponseSentence(named_intention)]
-    else:
-        return None
+    test_data_object = csv.reader(file_obj)
 
+    
+    for line in test_data_object:
+        if random.random() >= 0.5:
+            print(line)
+            real_classes.append(bag.get_intention_class_name(line[0]))
+            cadidated_test_data_sets.append(line)
 
-intention = None
-response_sentence = ""
+    file_obj.close()
 
-while intention != "การจากลา":
-    response_message = None
-    query_sentence = input("นักศึกษา: ")
-    response_message = response(query_sentence)
-    if response_message == None:
-        print("<ในใจเจ้าหน้าที่> -> [ไม่เข้าใจ]")
-        print("เจ้าหน้าที่: ขอโทษครับ ผมไม่เข้าใจที่พิมพ์มาครับ")
-    else:
-        intention, response_sentence = response_message
-        print("<ในใจเจ้าหน้าที่> -> [{0}]".format(intention))
-        print("เจ้าหน้าที่: {0}".format(response_sentence))
+#contextual_model_testing()

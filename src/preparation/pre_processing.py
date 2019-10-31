@@ -24,6 +24,7 @@ def pre_processing() -> None:
     with open(os.path.join(work_directory, "data/raw/excluded_stop_words.json"), "r") \
         as excluded_stop_words_json:
             bag.set_excluded_stop_words(json.load(excluded_stop_words_json))
+    
 
 
     len_data = len(raw_input)
@@ -108,7 +109,6 @@ def pre_processing() -> None:
         counter += 1
 
     cleaned_data.close()
-    bag.sort_items()
 
     print("\nsaving data...", end="")
     with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "wb")\

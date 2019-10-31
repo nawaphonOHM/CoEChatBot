@@ -33,7 +33,7 @@ def train() -> None:
         for word in bag.get_entried_words():
             hot_coding_pattern.append(word in query_data)
                 
-        for class_name in bag.get_entired_items_intention():
+        for class_name in bag.get_entired_intention_class_name():
             hot_coding_class.append(class_name == class_name_data)
             
         trainning_data.append([hot_coding_pattern, hot_coding_class])
@@ -66,8 +66,7 @@ def train() -> None:
         numpy.array(features), 
         numpy.array(destination_class), 
         epochs=1024, 
-        batch_size=int(len(features) * 0.2), 
-        verbose=1
+        batch_size=int(len(features) * 0.2)
     )
     
     model.save(os.path.join(work_directory, "model/CoeChatBot_processed_type_input.ckpt"))
@@ -90,7 +89,7 @@ def train() -> None:
         for state_list in bag.get_entired_state_contextual():
             hot_coding_pattern.append(state == state_list)
 
-        for context_list in bag.get_entired_intention_contextual():
+        for context_list in bag.get_entired_intention_contextual_class_name():
             hot_coding_pattern.append(context == context_list)
 
         for response_class in bag.get_entired_response_classes():
@@ -111,17 +110,26 @@ def train() -> None:
         )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.2)
+        Dropout(0.05)
     )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.2)
+        Dropout(0.05)
     )
+    model.add(Dense(len(destination_class[0]), activation='relu'))
+    model.add(
+        Dropout(0.05)
+    )
+    model.add(Dense(len(destination_class[0]), activation='relu'))
+    model.add(
+        Dropout(0.05)
+    )
+    
     model.add(Dense(len(destination_class[0]), activation='softmax'))
 
     model.compile(\
         loss='categorical_crossentropy', 
-        optimizer=Adam(), 
+        optimizer=Adam(learning_rate=0.000157), 
         metrics=['accuracy']
     )
 
@@ -129,8 +137,7 @@ def train() -> None:
         numpy.array(features), 
         numpy.array(destination_class), 
         epochs=1024, 
-        batch_size=int(len(features) * 0.2), 
-        verbose=1
+        batch_size=int(len(features) * 0.2)
     )
     
     model.save(os.path.join(work_directory, "model/CoeChatBot_processed_response_type.ckpt"))
