@@ -12,7 +12,8 @@ class Bag:
         self.amount_intention_classes = 0
         self.response_sentence = {}
         self.amount_response_sentence = 0
-        self.response_classes = []
+        self.response_classes = {}
+        self.response_classes_reverse = {}
         self.amount_response_classes = 0
         self.intention_contextual = {}
         self.intention_contextual_reverse = {}
@@ -25,14 +26,14 @@ class Bag:
 
     def get_word(self, token: int) -> str:
         if token not in self.token_word:
-            raise ValueError("Unknown this token {0}.".format(token))
+            raise KeyError("Unknown this token {0}.".format(token))
 
         return self.token_word[token]
 
     def set_excluded_stop_words(self, stop_words_dict: list) -> None:
         self.excluded_stop_words = stop_words_dict
     
-    def has_in_excluded_stop_words(self, word: str):
+    def has_in_excluded_stop_words(self, word: str) -> bool:
         return word in self.excluded_stop_words
 
     def add_word(self, word: str) -> None:
@@ -97,11 +98,14 @@ class Bag:
     
     def get_token(self, word: str) -> int:
         if not self.has_word(word):
-            raise ValueError("Unknown this word {0}.".format(word))
+            raise KeyError("Unknown this word {0}.".format(word))
         return self.word_token[word]
 
-    def get_entired_response_classes(self) -> list:
-        return self.response_classes
+    def get_entired_response_classes_class_name(self) -> dict:
+        return self.response_classes_reverse.keys()
+    
+    def get_entired_response_classes_class_number(self) -> list:
+        return sorted(self.response_classes.keys())
 
     def length(self) -> int:
         return self.next_token
@@ -113,17 +117,32 @@ class Bag:
             self.amount_intention_classes += 1
     
     def add_response_class(self, response_class_name: str) -> None:
-        self.response_classes.append(response_class_name)
-        self.amount_response_classes += 1
+        if not self.has_response_class(response_class_name):
+            self.response_classes[self.amount_response_classes] = response_class_name
+            self.response_classes_reverse[response_class_name] = self.amount_response_classes
+            self.amount_response_classes += 1
     
-    def get_response_class(self, response_id: int) -> str:
+    def get_response_class_name(self, response_id: int) -> str:
+        if response_id not in self.response_classes:
+            raise KeyError("Not found this id {0}.".format(response_id))
         return self.response_classes[response_id]
+    
+    def get_response_class_number(self, response_name: str) -> int:
+        if not self.has_response_class(response_name):
+           raise KeyError("Unknown this name -> {0}.".format(response_name)) 
+        return self.response_classes_reverse[response_name]
+
+    def has_response_class(self, response_name: str) -> bool:
+        return response_name in self.response_classes_reverse
 
     def has_word(self, word: str) -> bool:
         return word in self.word_token
 
     def get_entried_words(self) -> dict:
         return self.word_token.keys()
+
+    def get_entried_tokens(self) -> list:
+        return sorted(self.token_word.keys())
     
     def amount_of_intention(self) -> int:
         return self.amount_intention_classes
@@ -148,7 +167,7 @@ class Bag:
 
     def get_response_sentence(self, intention: str) -> dict:
         if not self.has_response_sentence(intention):
-            raise ValueError(\
+            raise KeyError(\
                     "Unknown this class {0}"
                     .format(intention)
                 )
@@ -159,6 +178,6 @@ class Bag:
 
     def set_response_sentence(self, class_name: str, response_sentence: dict) -> None:
         if self.has_response_sentence(class_name):
-            raise ValueError("Already has this name -> {0}".format(class_name))
+            raise KeyError("Already has this name -> {0}".format(class_name))
         self.response_sentence[class_name] = response_sentence
         self.amount_response_sentence += 1

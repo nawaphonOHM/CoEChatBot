@@ -27,16 +27,14 @@ def train() -> None:
     for table in inquery:
         hot_coding_pattern = []
         hot_coding_class = []
-        class_name_data = table[0]
+        class_name_data = bag.get_intention_class_number(table[0])
         query_data = table[1].split(" ")
                 
-        for word in bag.get_entried_words():
-            hot_coding_pattern.append(word in query_data)
+        for word in bag.get_entried_tokens():
+            hot_coding_pattern.append(bag.get_word(word) in query_data)
                 
         for class_id in bag.get_entired_intention_class_number():
-            hot_coding_class.append(\
-                    bag.get_intention_class_number(class_name_data) == class_id
-                )
+            hot_coding_class.append(class_name_data == class_id)
             
         trainning_data.append([hot_coding_pattern, hot_coding_class])
 
@@ -82,23 +80,19 @@ def train() -> None:
     trainning_data = []
 
     for table in contextual:
-        class_name = table[0]
-        context = table[1]
-        state = table[2]
+        class_name = bag.get_response_class_number(table[0])
+        context = bag.get_intention_contextual_class_number(table[1])
+        state = bag.get_state_contextual_class_number(table[2])
         hot_coding_pattern = []
         hot_coding_class = []
 
-        for states in bag.get_entired_state_contextual_class_number():
-            hot_coding_pattern.append(\
-                    bag.get_state_contextual_class_number(state) == states
-                )
+        for state_id in bag.get_entired_state_contextual_class_number():
+            hot_coding_pattern.append(state == state_id)
 
-        for contextes in bag.get_entired_intention_contextual_class_number():
-            hot_coding_pattern.append(\
-                    bag.get_intention_contextual_class_number(context) == contextes
-                )
+        for context_id in bag.get_entired_intention_contextual_class_number():
+            hot_coding_pattern.append(context == context_id)
 
-        for response_class in bag.get_entired_response_classes():
+        for response_class in bag.get_entired_response_classes_class_number():
             hot_coding_class.append(class_name == response_class)
         
         trainning_data.append([hot_coding_pattern, hot_coding_class])
@@ -135,7 +129,7 @@ def train() -> None:
 
     model.compile(\
         loss='categorical_crossentropy', 
-        optimizer=Adam(learning_rate=0.000157), 
+        optimizer=Adam(), 
         metrics=['accuracy']
     )
 

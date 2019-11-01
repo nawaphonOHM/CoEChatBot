@@ -49,10 +49,10 @@ def response(sentence: str, state: str) -> list:
     if state == None:
         state = "null"
     
-    for state_list in bag.get_entired_state_contextual():
-        hot_code.append(state == state_list)
-    for intention_list in bag.get_entired_intention_contextual_class_name():
-        hot_code.append(input_type == intention_list)
+    for states in bag.get_entired_state_contextual_class_number():
+        hot_code.append(bag.get_state_contextual_class_number(state) == states)
+    for intentions in bag.get_entired_intention_class_number():
+        hot_code.append(sentence[0][0] == intentions)
 
     sentence = numpy.array(hot_code)
     sentence = pandas.DataFrame([sentence], dtype=float, index=["input"])

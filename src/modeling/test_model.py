@@ -48,12 +48,64 @@ def contextual_model_testing(data_set_probability_random=1.0) -> None:
                 "Operating random data set with probability -> {0}% ... "\
                     .format(data_set_probability_random * 100), end=""
             )
-    # for line in test_data_object:
-    #     if random.random() >= 1 - data_set_probability_random:
-    #         # cadidated_intention_test_data_sets.append(\
-    #         #         [intention in line[1] for intention in bag.]
-    #         #     )
-    #         #cadidated_test_data_sets.append(line[1].split(" "))
+    for line in test_data_object:
+        if random.random() >= 1 - data_set_probability_random:
+            real_classes_number.append(bag.get_response_class_number(line[0]))
+            cadidated_intention_test_data_sets.append(\
+                    bag.get_intention_contextual_class_number(line[1])
+                )
+            cadidated_state_test_data_sets.append(\
+                    bag.get_state_contextual_class_number(line[2])
+                )
+
+    for i in range(len(cadidated_intention_test_data_sets)):
+        state_test = cadidated_state_test_data_sets[i]
+        context_test = cadidated_intention_test_data_sets[i]
+        hotcoding_test_data = []
+
+        for state_id in bag.get_entired_state_contextual_class_number():
+            hotcoding_test_data.append(state_test == state_id)
+        for context_id in bag.get_entired_intention_contextual_class_number():
+            hotcoding_test_data.append(context_test == context_id)
+
+        hotcoding_test_data = numpy.array(hotcoding_test_data)
+        hotcoding_test_data = \
+            pandas.DataFrame(\
+                    [hotcoding_test_data], 
+                    dtype=float, 
+                    index=["input"]
+                )
+        predicted_classes_number.append(\
+                numpy.argmax(model.predict(hotcoding_test_data)[0])
+            )
+    print("done")
+
+    print("accuracy = {0}".format(\
+                accuracy_score(\
+                        real_classes_number, predicted_classes_number
+                    )
+            )
+        )
+    print("recall = {0}".format(\
+                recall_score(\
+                        real_classes_number, predicted_classes_number, average="micro"
+                    )
+            )
+        )
+    print("precision = {0}".format(\
+                precision_score(\
+                        real_classes_number, predicted_classes_number, average="micro"
+                    )
+            )
+        )
+    print("f1 = {0}".format(\
+                f1_score(\
+                        real_classes_number, predicted_classes_number, average="micro"
+                    )
+            )
+        )
+
+    file_obj.close()
     
 
 def intension_model_testing(data_set_probability_random=1.0) -> None:
@@ -82,7 +134,6 @@ def intension_model_testing(data_set_probability_random=1.0) -> None:
     model = keras_module_manipulation.load_model(\
                 os.path.join(work_directory, "model/CoeChatBot_processed_type_input.ckpt")
             )
-
 
     file_obj = open(\
         os.path.join(work_directory, test_data_file_name), 'r')
@@ -147,3 +198,4 @@ def intension_model_testing(data_set_probability_random=1.0) -> None:
     file_obj.close()
 
 intension_model_testing(data_set_probability_random=0.8)
+contextual_model_testing(data_set_probability_random=0.8)
