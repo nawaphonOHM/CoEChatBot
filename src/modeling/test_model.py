@@ -12,15 +12,10 @@ import keras.models as keras_module_manipulation
 import numpy
 import pandas
 
-def contextual_model_testing(data_set_probability_random=1.0) -> None:
-    if data_set_probability_random > 1:
-        raise ValueError(\
-                "data_set_probability_random should be [0, 1], but got {0}"\
-                    .format(data_set_probability_random)
-            )
-    
+def contextual_model_testing() -> None:
+
     model_name = "model/CoeChatBot_processed_response_type.ckpt"
-    test_data_file_name = "data/processed/responsing_cleaned_data.csv"
+    test_data_file_name = "data/processed/responsing_cleaned_data_test.csv"
     test_data_object = None
     work_directory = os.getcwd()
     cadidated_intention_test_data_sets = []
@@ -44,19 +39,14 @@ def contextual_model_testing(data_set_probability_random=1.0) -> None:
             )
     test_data_object = csv.reader(file_obj)
 
-    print(\
-                "Operating random data set with probability -> {0}% ... "\
-                    .format(data_set_probability_random * 100), end=""
-            )
     for line in test_data_object:
-        if random.random() >= 1 - data_set_probability_random:
-            real_classes_number.append(bag.get_response_class_number(line[0]))
-            cadidated_intention_test_data_sets.append(\
-                    bag.get_intention_contextual_class_number(line[1])
-                )
-            cadidated_state_test_data_sets.append(\
-                    bag.get_state_contextual_class_number(line[2])
-                )
+        real_classes_number.append(bag.get_response_class_number(line[0]))
+        cadidated_intention_test_data_sets.append(\
+                bag.get_intention_contextual_class_number(line[1])
+            )
+        cadidated_state_test_data_sets.append(\
+                bag.get_state_contextual_class_number(line[2])
+            )
 
     for i in range(len(cadidated_intention_test_data_sets)):
         state_test = cadidated_state_test_data_sets[i]
@@ -108,15 +98,9 @@ def contextual_model_testing(data_set_probability_random=1.0) -> None:
     file_obj.close()
     
 
-def intension_model_testing(data_set_probability_random=1.0) -> None:
-    if data_set_probability_random > 1:
-        raise ValueError(\
-                "data_set_probability_random should be [0, 1], but got {0}"\
-                    .format(data_set_probability_random)
-            )
-
+def intension_model_testing() -> None:
     model_name = "model/CoeChatBot_processed_type_input.ckpt"
-    test_data_file_name = "data/processed/inquery_cleaned_data.csv"
+    test_data_file_name = "data/processed/inquery_cleaned_data_test.csv"
     test_data_object = None
     work_directory = os.getcwd()
     cadidated_test_data_sets = []
@@ -141,14 +125,9 @@ def intension_model_testing(data_set_probability_random=1.0) -> None:
     
     test_data_object = csv.reader(file_obj)
 
-    print(\
-                "Operating random data set with probability -> {0}% ... "\
-                    .format(data_set_probability_random * 100), end=""
-            )
     for line in test_data_object:
-        if random.random() >= 1 - data_set_probability_random:
-            real_classes_number.append(bag.get_intention_class_number(line[0]))
-            cadidated_test_data_sets.append(line[1].split(" "))
+        real_classes_number.append(bag.get_intention_class_number(line[0]))
+        cadidated_test_data_sets.append(line[1].split(" "))
 
     for test_data in cadidated_test_data_sets:
         hot_coding_pattern = []
@@ -197,5 +176,5 @@ def intension_model_testing(data_set_probability_random=1.0) -> None:
 
     file_obj.close()
 
-intension_model_testing(data_set_probability_random=0.8)
-contextual_model_testing(data_set_probability_random=0.8)
+intension_model_testing()
+contextual_model_testing()
