@@ -4,7 +4,7 @@ import numpy
 import pandas
 import pythainlp.tokenize as tokenization
 import pythainlp.corpus.common as corpus
-import src.bag_of_words as bag_of_words
+import bag_of_words as bag_of_words
 import keras.models as keras_module_manipulation
 import parser
 import json
@@ -16,15 +16,15 @@ def response(sentence: str, state: str) -> list:
     stop_word = corpus.thai_stopwords()
     inquery_model = \
         keras_module_manipulation.load_model(\
-                os.path.join(work_directory, "model/CoeChatBot_processed_type_input.ckpt")
+                os.path.join(work_directory, "../model/CoeChatBot_processed_type_input.ckpt")
             )
     contextual_model = \
         keras_module_manipulation.load_model(\
-                os.path.join(work_directory, "model/CoeChatBot_processed_response_type.ckpt")
+                os.path.join(work_directory, "../model/CoeChatBot_processed_response_type.ckpt")
             )
     bag = None
     hot_coding_word = []
-    with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "rb") \
+    with open(os.path.join(work_directory, "../model/bag_of_word_.pkl"), "rb") \
         as model_read:
             bag = pickle.load(model_read)
     sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
@@ -50,9 +50,9 @@ def response(sentence: str, state: str) -> list:
         state = "null"
     
     for states in bag.get_entired_state_contextual_class_number():
-        hot_code.append(bag.get_state_contextual_class_number(state) == states)
-    for intentions in bag.get_entired_intention_class_number():
-        hot_code.append(sentence[0][0] == intentions)
+        hot_code.append(state == bag.get_state_contextual_class_name(states))
+    for intentions in bag.get_entired_intention_contextual_class_number():
+        hot_code.append(input_type == bag.get_intention_name(intentions))
 
     sentence = numpy.array(hot_code)
     sentence = pandas.DataFrame([sentence], dtype=float, index=["input"])
@@ -64,7 +64,7 @@ def response(sentence: str, state: str) -> list:
 
     response = \
         bag.get_response_sentence(\
-                bag.get_response_class(sentence[0][0])
+                bag.get_response_class_name(sentence[0][0])
             )
 
     keras.backend.clear_session()

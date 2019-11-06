@@ -64,13 +64,16 @@ class Bag:
         if not self.has_intent_context_name(intent_context_id):
             raise KeyError("Unknown in this name -> {0}".format(intent_context_id))
         else:
-            return self.intention_contextual_reverse[intent_context_id]
+            return self.intention_contextual[intent_context_id]
     
     def get_state_contextual_class_number(self, state_name: str) -> int:
         if not self.has_state_context(state_name):
             raise KeyError("Unknown in this name -> {0}".format(state_name))
         else:
             return self.state_contextual_reverse[state_name]
+    
+    def get_state_contextual_class_name(self, state_id: int) -> str:
+        return self.state_contextual[state_id]
     
     def get_entired_state_contextual_class_number(self) -> list:
         return sorted(self.state_contextual.keys())

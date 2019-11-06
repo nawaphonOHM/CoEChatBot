@@ -6,7 +6,7 @@ import csv
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import Adam
-import src.bag_of_words as bag_of_words
+import bag_of_words as bag_of_words
 import math
 
 def train(train_split_ratio=0.8) -> None:
@@ -22,15 +22,15 @@ def train(train_split_ratio=0.8) -> None:
     inquery = None
     contextual = None
     inquery_processed_data = \
-        open(os.path.join(work_directory, "data/processed/inquery_cleaned_data.csv"), "r")
+        open(os.path.join(work_directory, "../data/processed/inquery_cleaned_data.csv"), "r")
     inquery = csv.reader(inquery_processed_data, delimiter=",")
     test_data = \
-        open(os.path.join(work_directory, "data/processed/inquery_cleaned_data_test.csv"), "w")
+        open(os.path.join(work_directory, "../data/processed/inquery_cleaned_data_test.csv"), "w")
     writer = csv.writer(test_data)
     writer.writerow(["Intention", "Query_Sentence_Pattern_Cleaned", "Query_Sentence_Pattern"])
     inquery.__next__()
 
-    with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "rb") \
+    with open(os.path.join(work_directory, "../model/bag_of_word_.pkl"), "rb") \
         as bag_file:
             bag = pickle.load(bag_file)
     
@@ -38,14 +38,14 @@ def train(train_split_ratio=0.8) -> None:
         if random.random() > 1 - train_split_ratio:
             hot_coding_pattern = []
             hot_coding_class = []
-            class_name_data = bag.get_intention_class_number(table[0])
+            class_name_data = table[0]
             query_data = table[1].split(" ")
             
             for word in bag.get_entried_tokens():
                 hot_coding_pattern.append(bag.get_word(word) in query_data)
             
             for class_id in bag.get_entired_intention_class_number():
-                hot_coding_class.append(class_name_data == class_id)
+                hot_coding_class.append(class_name_data == bag.get_intention_name(class_id))
                 
             trainning_data.append([hot_coding_pattern, hot_coding_class])
         else:
@@ -82,14 +82,14 @@ def train(train_split_ratio=0.8) -> None:
         batch_size=(2 ** (int(math.log2(len(features)))))
     )
     
-    model.save(os.path.join(work_directory, "model/CoeChatBot_processed_type_input.ckpt"))
+    model.save(os.path.join(work_directory, "../model/CoeChatBot_processed_type_input.ckpt"))
     inquery_processed_data.close()
 
     contextual_processed_data = \
-        open(os.path.join(work_directory, "data/processed/responsing_cleaned_data.csv"), "r")
+        open(os.path.join(work_directory, "../data/processed/responsing_cleaned_data.csv"), "r")
 
     test_data = \
-        open(os.path.join(work_directory, "data/processed/responsing_cleaned_data_test.csv"), "w")
+        open(os.path.join(work_directory, "../data/processed/responsing_cleaned_data_test.csv"), "w")
     writer = csv.writer(test_data)
     writer.writerow(["response_classes", "intention", "state"])
     contextual = csv.reader(contextual_processed_data, delimiter=",")
@@ -98,20 +98,20 @@ def train(train_split_ratio=0.8) -> None:
 
     for table in contextual:
         if random.random() > 1 - train_split_ratio:
-            class_name = bag.get_response_class_number(table[0])
-            context = bag.get_intention_contextual_class_number(table[1])
-            state = bag.get_state_contextual_class_number(table[2])
+            class_name = table[0]
+            context = table[1]
+            state = table[2]
             hot_coding_pattern = []
             hot_coding_class = []
             
             for state_id in bag.get_entired_state_contextual_class_number():
-                hot_coding_pattern.append(state == state_id)
+                hot_coding_pattern.append(state == bag.get_state_contextual_class_name(state_id))
                 
             for context_id in bag.get_entired_intention_contextual_class_number():
-                hot_coding_pattern.append(context == context_id)
+                hot_coding_pattern.append(context == bag.get_intention_name(context_id))
                 
             for response_class in bag.get_entired_response_classes_class_number():
-                hot_coding_class.append(class_name == response_class)
+                hot_coding_class.append(class_name == bag.get_response_class_name(response_class))
             
             trainning_data.append([hot_coding_pattern, hot_coding_class])
         else:
@@ -161,14 +161,12 @@ def train(train_split_ratio=0.8) -> None:
         batch_size=(2 ** (int(math.log2(len(features)))))
     )
     
-    model.save(os.path.join(work_directory, "model/CoeChatBot_processed_response_type.ckpt"))
+    model.save(os.path.join(work_directory, "../model/CoeChatBot_processed_response_type.ckpt"))
     contextual_processed_data.close()
 
-    with open(os.path.join(work_directory, "model/bag_of_word_.pkl"), "wb") \
+    with open(os.path.join(work_directory, "../model/bag_of_word_.pkl"), "wb") \
         as model_write:
             pickle.dump(bag, 
                 model_write, 
                 protocol=pickle.HIGHEST_PROTOCOL
             )
-
-train()

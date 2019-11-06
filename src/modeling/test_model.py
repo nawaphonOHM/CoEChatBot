@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import f1_score
-import src.bag_of_words as bag_of_words
+import bag_of_words as bag_of_words
 import pickle
 import keras.models as keras_module_manipulation
 import numpy
@@ -14,8 +14,8 @@ import pandas
 
 def contextual_model_testing() -> None:
 
-    model_name = "model/CoeChatBot_processed_response_type.ckpt"
-    test_data_file_name = "data/processed/responsing_cleaned_data_test.csv"
+    model_name = "../model/CoeChatBot_processed_response_type.ckpt"
+    test_data_file_name = "../data/processed/responsing_cleaned_data_test.csv"
     test_data_object = None
     work_directory = os.getcwd()
     cadidated_intention_test_data_sets = []
@@ -27,7 +27,7 @@ def contextual_model_testing() -> None:
 
     print("being test contextual model ...")
 
-    with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "rb") \
+    with open(os.path.join(work_directory, "../model/bag_of_word_.pkl"), "rb") \
         as bag_file:
             bag = pickle.load(bag_file)
     file_obj = open(\
@@ -35,7 +35,7 @@ def contextual_model_testing() -> None:
     file_obj.__next__()
 
     model = keras_module_manipulation.load_model(\
-                os.path.join(work_directory, "model/CoeChatBot_processed_response_type.ckpt")
+                os.path.join(work_directory, "../model/CoeChatBot_processed_response_type.ckpt")
             )
     test_data_object = csv.reader(file_obj)
 
@@ -99,8 +99,8 @@ def contextual_model_testing() -> None:
     
 
 def intension_model_testing() -> None:
-    model_name = "model/CoeChatBot_processed_type_input.ckpt"
-    test_data_file_name = "data/processed/inquery_cleaned_data_test.csv"
+    model_name = "../model/CoeChatBot_processed_type_input.ckpt"
+    test_data_file_name = "../data/processed/inquery_cleaned_data_test.csv"
     test_data_object = None
     work_directory = os.getcwd()
     cadidated_test_data_sets = []
@@ -111,12 +111,12 @@ def intension_model_testing() -> None:
 
     print("being test intention model ...")
 
-    with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "rb") \
+    with open(os.path.join(work_directory, "../model/bag_of_word_.pkl"), "rb") \
         as bag_file:
             bag = pickle.load(bag_file)
 
     model = keras_module_manipulation.load_model(\
-                os.path.join(work_directory, "model/CoeChatBot_processed_type_input.ckpt")
+                os.path.join(work_directory, "../model/CoeChatBot_processed_type_input.ckpt")
             )
 
     file_obj = open(\
@@ -175,6 +175,3 @@ def intension_model_testing() -> None:
 
 
     file_obj.close()
-
-intension_model_testing()
-contextual_model_testing()

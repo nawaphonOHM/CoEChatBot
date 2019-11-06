@@ -1,0 +1,4 @@
+{
+    "train_split_ratio": 1, 
+    "validation": false
+}

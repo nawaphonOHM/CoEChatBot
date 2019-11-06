@@ -4,7 +4,7 @@ import csv
 import pickle
 import pythainlp.tokenize as tokenization
 import pythainlp.corpus.common as corpus
-import src.bag_of_words as bag_of_words
+import bag_of_words as bag_of_words
 
 def pre_processing() -> None:
     print("Pre-Processing is starting")
@@ -14,14 +14,14 @@ def pre_processing() -> None:
     bag = bag_of_words.Bag()
     work_directory = os.getcwd()
     cleaned_data = \
-        open(os.path.join(work_directory, "data/processed/inquery_cleaned_data.csv"), "w")
+        open(os.path.join(work_directory, "../data/processed/inquery_cleaned_data.csv"), "w")
     writer = csv.writer(cleaned_data)
     writer.writerow(["Intention", "Query_Sentence_Pattern_Cleaned", "Query_Sentence_Pattern"])
 
-    with open(os.path.join(work_directory, "data/raw/inquery_raw_data.json"), "r") \
+    with open(os.path.join(work_directory, "../data/raw/inquery_raw_data.json"), "r") \
         as raw:
             raw_input = json.load(raw)
-    with open(os.path.join(work_directory, "data/raw/excluded_stop_words.json"), "r") \
+    with open(os.path.join(work_directory, "../data/raw/excluded_stop_words.json"), "r") \
         as excluded_stop_words_json:
             bag.set_excluded_stop_words(json.load(excluded_stop_words_json))
     
@@ -42,8 +42,7 @@ def pre_processing() -> None:
             sentence_cleaned = ""
             word_in_sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
             cleaned_word_in_sentence = \
-                [word for word in word_in_sentence \
-                        if word not in stop_word or bag.has_in_excluded_stop_words(word)]
+                [word for word in word_in_sentence]
             for word in cleaned_word_in_sentence:
                 bag.add_word(word)
                 sentence_cleaned = sentence_cleaned + word + " "
@@ -56,10 +55,10 @@ def pre_processing() -> None:
     cleaned_data.close()
 
     cleaned_data = \
-        open(os.path.join(work_directory, "data/processed/responsing_cleaned_data.csv"), 'w')
+        open(os.path.join(work_directory, "../data/processed/responsing_cleaned_data.csv"), 'w')
     writer = csv.writer(cleaned_data)
     writer.writerow(["response_classes", "intention", "state"])
-    with open(os.path.join(work_directory, "data/raw/contextual_raw_data.json"), "r") \
+    with open(os.path.join(work_directory, "../data/raw/contextual_raw_data.json"), "r") \
         as raw:
             raw_input = json.load(raw)
 
@@ -83,10 +82,10 @@ def pre_processing() -> None:
 
     cleaned_data = \
         open(os.path.join(work_directory, \
-            "data/processed/responsing_details_cleaned_data.csv"), 'w')
+            "../data/processed/responsing_details_cleaned_data.csv"), 'w')
     writer = csv.writer(cleaned_data)
     writer.writerow(["response_classes", "response_messages", "state_setting"])
-    with open(os.path.join(work_directory, "data/raw/response_raw_data.json")) \
+    with open(os.path.join(work_directory, "../data/raw/response_raw_data.json")) \
         as raw:
             raw_input = json.load(raw)
     
@@ -111,10 +110,8 @@ def pre_processing() -> None:
     cleaned_data.close()
 
     print("\nsaving data...", end="")
-    with open(os.path.join(work_directory, "data/processed/bag_of_word_.pkl"), "wb")\
+    with open(os.path.join(work_directory, "../model/bag_of_word_.pkl"), "wb")\
         as bag_saved_file:
             pickle.dump(bag, bag_saved_file, protocol=pickle.HIGHEST_PROTOCOL)
 
     print("\rsaving cleaned data...done")
-
-pre_processing()
