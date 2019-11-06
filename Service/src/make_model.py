@@ -2,7 +2,6 @@ import os
 import json
 
 setting = None
-os.environ["PYTHONPATH"] = os.path.dirname(os.path.realpath(__file__))
 os.chdir(os.getenv("PYTHONPATH"))
 
 with open("./setting.json", "r") as setting_json:

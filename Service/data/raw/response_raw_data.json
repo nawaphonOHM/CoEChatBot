@@ -1,0 +1,132 @@
+[
+    {
+        "response_class": "ต้องการสอบถาม_ตอบ", 
+        "response_sentence": "สวัสดีครับ ต้องการสอบถามเรื่องอะไรครับ", 
+        "intention_set": "ต้องการสอบถาม"
+    }, 
+    {
+        "response_class": "สอบถามสิ่งที่อยากรู้_ตอบ_ฝึกงานปกติ", 
+        "response_sentence": "ต้องการสอบถามอะไรเหรอครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    },
+    {
+        "response_class": "สอบถามสิ่งที่อยากรู้_ตอบ_ฝึกงานสหกิจ", 
+        "response_sentence": "ต้องการสอบถามอะไรเหรอครับ", 
+        "intention_set": "ฝึกงานสหกิจ"
+    },
+    {
+        "response_class": "การจากลา_ตอบ", 
+        "response_sentence": "ครับ ยินดีครับ", 
+        "intention_set": null
+    }, 
+    {
+        "response_class": "การฝึกงาน_หน่วยกิตขั้นต่ำ_ตอบ",
+        "response_sentence": "ต้องผ่านรายวิชาของทางภาควิชาที่เป็นของปี 1 , ปี 2 และ ปี 3 เทอม 1 จำนวน 48 หน่วยกิตก่อนครับ ถึงจะมีสิทธิ์ฝึกงานได้ครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ยืนยันคำถาม_ฝึกงาน_ตอบ", 
+        "response_sentence": "หมายถึงเรื่องการฝึกงานใช่ไหมครับ", 
+        "intention_set": "ยืนยันคำถาม_ฝึกงาน"
+    }, 
+    {
+        "response_class": "ความสามารถบอท_ตอบ", 
+        "response_sentence": "ตอนนี้สามารถสอบถามเรื่องการฝึกงานได้ครับ", 
+        "intention_set": null
+    }, 
+    {
+        "response_class": "เทอมที่สามารถลงได้_การฝึกงาน_ตอบ", 
+        "response_sentence": "ลงได้เฉพาะเทอมซัมเมอร์ครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ตอบปฎิเสธ_ตอบ_false_state", 
+        "response_sentence": "ไม่ได้ครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ตอบปฎิเสธ_ตอบ_false_state_สหกิจ", 
+        "response_sentence": "ไม่ได้ครับ", 
+        "intention_set": "ฝึกงานสหกิจ"
+    }, 
+    {
+        "response_class": "การฝึกงาน_การบังคับ_ตอบ", 
+        "response_sentence": "บังคับครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ไม่จบ_ตอบ", 
+        "response_sentence": "ไม่จบครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "การฝึกงาน_เอกสาร_ตอบ", 
+        "response_sentence": "ก็จะมีแบบฟอร์มการหาสถานที่ฝึกงานด้วยตัวนักศึกษาเอง แล้วก็กรณีที่จะสมัครผ่านโค้วต้าของคณะ สุดท้ายแบบประเมินจากทางสถานที่ประกอบการครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "การฝึกงาน_สถานที่_ตอบ", 
+        "response_sentence": "สามารถฝึกงานได้ทุกที่เลยครับ หรือว่าต้องการดูโค้วต้าที่คณะมีให้โปรดติดต่อคณะครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ตอบได้_ตอบ_false_state", 
+        "response_sentence": "ได้ครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ตอบได้_ตอบ_ฝึกงาน_state", 
+        "response_sentence": "ได้ครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "การฝึกงานบอกสถานที่ติดต่อ_ตอบ", 
+        "response_sentence": "ติดต่อทางคณะได้เลยครับ เบอร์โทร 074-287-111 ครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "การฝึกงานบอกเวลาติดต่อ_ตอบ", 
+        "response_sentence": "เวลา 08:00-16:00 วันจันทร์ ถึง ศุกร์ครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "การฝึกงาน_ตอบเจ้าหน้าที่รับผิดชอบ_ตอบ", 
+        "response_sentence": "เนื่องจากมีความไม่แน่นอนของเจ้าหน้าที่รับผิดชอบ โปรดติดต่อที่คณะเพื่อความถูกต้องครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "การฝึกงาน_เจ้าหน้าที่รับผิดชอบ_ไม่อยู่_ตอบ", 
+        "response_sentence": "ติดต่อคณะทางเดียวเลยครับ", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "การฝึกงาน_หน้าเว็บ_ตอบ", 
+        "response_sentence": "http://academic.eng.psu.ac.th/internship", 
+        "intention_set": "ฝึกงานปกติ"
+    }, 
+    {
+        "response_class": "ฝึกงาน_รูปแบบ_ตอบ", 
+        "response_sentence": "มีทั้งรูปแบบฝึกงานปกติกับฝึกงานสหกิจครับ", 
+        "intention_set": "ต้องการสอบถาม"
+    }, 
+    {
+        "response_class": "ฝึกงาน_สหกิจ_ช่วงเวลา_ตอบ", 
+        "response_sentence": "จะเป็นช่วงเทอม 2 ครับ", 
+        "intention_set": "ฝึกงานสหกิจ"
+    }, 
+    {
+        "response_class": "ถามประเภท_ฝึกงานปกติ_ฝึกงานสหกิจ", 
+        "response_sentence": "ฝึกงานปกติ หรือ สหกิจครับ", 
+        "intention_set": "ไม่แน่ใจปกติหรือสหกิจ"
+    }, 
+    {
+        "response_class": "ฝึกงาน_ปกติ_ช่วงเวลา_ตอบ", 
+        "response_sentence": "จะเป็นช่วงซัมเมอร์ครับ", 
+        "intention_set": "ฝึกงานปกติ_ช่วงเวลา"
+    },     
+    {
+        "response_class": "การฝึกงาน_สหกิจ_หน่วยกิตขั้นต่ำ_ตอบ",
+        "response_sentence": "ต้องมีการเก็บชั่วโมงตามที่คณะกำหนด และต้องเรียนผ่านวิชาของหลักสูตรทั้งหมดครับ แต่ไม่ต้องลงวิชาโปรเจกครับ ให้ไปลงวิชาสหกิจแทนครับ", 
+        "intention_set": "ฝึกงานสหกิจ"
+    }
+] 

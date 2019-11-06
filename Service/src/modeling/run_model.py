@@ -13,6 +13,7 @@ import re
 
 def response(sentence: str, state: str) -> list:
     work_directory = os.getenv("PYTHONPATH")
+    print(work_directory)
     stop_word = corpus.thai_stopwords()
     inquery_model = \
         keras_module_manipulation.load_model(\
