@@ -19,3 +19,5 @@ train(train_split_ratio=setting["train_split_ratio"])
 if setting["validation"]:
     intension_model_testing()
     contextual_model_testing()
+
+    # "บอกว่าฝึกงานปกติ ไม่แน่ใจปกติหรือสหกิจ"
