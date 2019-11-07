@@ -131,19 +131,19 @@ def train(train_split_ratio=0.8) -> None:
         )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.2)
+        Dropout(0.05)
     )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.2)
+        Dropout(0.05)
     )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.2)
+        Dropout(0.05)
     )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.2)
+        Dropout(0.05)
     )
     
     model.add(Dense(len(destination_class[0]), activation='softmax'))
