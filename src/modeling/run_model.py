@@ -44,6 +44,8 @@ def response(sentence: str, state: str) -> list:
 
     sentence.sort(key=lambda x: x[1], reverse=True)
     input_type = bag.get_intention_name(sentence[0][0])
+    chooise_input_type = [[bag.get_intention_name(sentence[i][0]), str(sentence[i][1])] \
+        for i in range(0, 5)]
     hot_code = []
 
     if state == None:
@@ -61,6 +63,8 @@ def response(sentence: str, state: str) -> list:
     sentence = [[class_name, probability] \
         for class_name, probability in enumerate(sentence)]
     sentence.sort(key=lambda x: x[1], reverse=True)
+    response_choose = [[bag.get_response_class_name(sentence[i][0]), str(sentence[i][1])] \
+        for i in range(0, 5)]
 
     response = \
         bag.get_response_sentence(\
@@ -70,4 +74,4 @@ def response(sentence: str, state: str) -> list:
     keras.backend.clear_session()
     
 
-    return [response, input_type]
+    return [response, input_type, chooise_input_type, response_choose]

@@ -42,7 +42,8 @@ def pre_processing() -> None:
             sentence_cleaned = ""
             word_in_sentence = tokenization.word_tokenize(sentence, keep_whitespace=False)
             cleaned_word_in_sentence = \
-                [word for word in word_in_sentence]
+                [word for word in word_in_sentence \
+                        if word not in stop_word or bag.has_in_excluded_stop_words(word)]
             for word in cleaned_word_in_sentence:
                 bag.add_word(word)
                 sentence_cleaned = sentence_cleaned + word + " "

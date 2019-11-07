@@ -28,6 +28,8 @@ class ChatWithBot(flask_restful.Resource):
             response_json["state"] = state
             response_json["sender"] = False
             response_json["input_type"] = response_message[1]
+            response_json["input_type_chooise"] = response_message[2]
+            response_json["response_chooise"] = response_message[3]
 
         except Exception as error:
             print(error)
