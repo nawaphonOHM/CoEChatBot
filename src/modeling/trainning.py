@@ -63,9 +63,12 @@ def train(train_split_ratio=0.8) -> None:
             input_shape=(len(features[0]),), 
             activation='relu')
         )
+    model.add(
+        Dropout(0.1)
+    )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.2)
+        Dropout(0.1)
     )
     model.add(Dense(len(destination_class[0]), activation='softmax'))
 
@@ -129,23 +132,25 @@ def train(train_split_ratio=0.8) -> None:
             input_shape=(len(features[0]),), 
             activation='relu')
         )
-    model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.05)
+        Dropout(0.04)
     )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.05)
+        Dropout(0.04)
     )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.05)
+        Dropout(0.04)
     )
     model.add(Dense(len(destination_class[0]), activation='relu'))
     model.add(
-        Dropout(0.05)
+        Dropout(0.04)
     )
-    
+    model.add(Dense(len(destination_class[0]), activation='relu'))
+    model.add(
+        Dropout(0.04)
+    )
     model.add(Dense(len(destination_class[0]), activation='softmax'))
 
     model.compile(\
