@@ -43,7 +43,6 @@ class ChatWithBot(flask_restful.Resource):
 
 app = flask.Flask(__name__)
 api = flask_restful.Api(app)
-flask_cors.CORS(app)
 api.add_resource(ChatWithBot, "/chatwithbot")
 os.environ["PYTHONPATH"] = os.path.dirname(os.path.realpath(__file__))
 
