@@ -3,6 +3,7 @@ import numpy
 import pickle
 import os
 import csv
+import json
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import Adam
@@ -98,17 +99,21 @@ def train(train_split_ratio=0.8) -> None:
     contextual = csv.reader(contextual_processed_data, delimiter=",")
     contextual.__next__()
     trainning_data = []
+    setting = open(os.path.join(work_directory, "./setting.json"))
+    split_flag = json.load(setting)["split_state_flag"]
+    setting.close()
+    
 
     for table in contextual:
         if random.random() > 1 - train_split_ratio:
             class_name = table[0]
             context = table[1]
-            state = table[2]
+            state = table[2].split(split_flag)
             hot_coding_pattern = []
             hot_coding_class = []
             
             for state_id in bag.get_entired_state_contextual_class_number():
-                hot_coding_pattern.append(state == bag.get_state_contextual_class_name(state_id))
+                hot_coding_pattern.append(bag.get_state_contextual_class_name(state_id) in state)
                 
             for context_id in bag.get_entired_intention_contextual_class_number():
                 hot_coding_pattern.append(context == bag.get_intention_name(context_id))

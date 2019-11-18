@@ -65,6 +65,9 @@ def pre_processing() -> None:
 
     len_data = len(raw_input)
     counter = 1
+    setting = open("./setting.json", "r")
+    splited_flag = json.load(setting)["split_state_flag"]
+    setting.close()
     print("\nBeing on contextual raw data")
 
     for data_set in raw_input:
@@ -73,10 +76,13 @@ def pre_processing() -> None:
                 .format((counter / len_data) * 100, counter, len_data), end="")
         response_class = data_set["response_class"]
         for contextual in data_set["intention_state"]:
-            intention, state = contextual.split(" ")
+            contextual_splited = contextual.split(splited_flag)
+            intention = contextual_splited[0]
             bag.add_intention_contextual(intention)
-            bag.add_state_contextual(state)
-            writer.writerow([response_class, intention, state])
+            states = contextual_splited[1:]
+            for state in states:
+                bag.add_state_contextual(state)
+            writer.writerow([response_class, intention, splited_flag.join(states)])
         counter += 1
 
     cleaned_data.close()

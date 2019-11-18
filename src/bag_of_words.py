@@ -6,20 +6,25 @@ class Bag:
     def __init__(self):
         self.word_token = {}
         self.token_word = {}
+        self.token_word_keys = []
         self.next_token = 0
         self.intention_classes = {}
         self.intention_classes_reverse = {}
+        self.intention_classes_keys = []
         self.amount_intention_classes = 0
         self.response_sentence = {}
         self.amount_response_sentence = 0
         self.response_classes = {}
         self.response_classes_reverse = {}
+        self.response_classes_keys = []
         self.amount_response_classes = 0
         self.intention_contextual = {}
         self.intention_contextual_reverse = {}
+        self.intention_contextual_keys = []
         self.amount_intention_contextual = 0
         self.state_contextual = {}
         self.state_contextual_reverse = {}
+        self.state_contextual_keys = []
         self.amount_state_contextual = 0
         self.excluded_stop_words = None
 
@@ -40,6 +45,8 @@ class Bag:
         if not self.has_word(word):
             self.word_token[word] = self.next_token
             self.token_word[self.next_token] = word
+            self.token_word_keys.append(self.next_token)
+            self.token_word_keys.sort()
             self.next_token += 1
     
     def has_intent_context_name(self, class_number: str) -> bool:
@@ -52,6 +59,8 @@ class Bag:
         if not self.has_intent_context_name(sentence):
             self.intention_contextual[self.amount_intention_contextual] = sentence
             self.intention_contextual_reverse[sentence] = self.amount_intention_contextual
+            self.intention_contextual_keys.append(self.amount_intention_contextual)
+            self.intention_contextual_keys.sort()
             self.amount_intention_contextual += 1
     
     def get_intention_contextual_class_number(self, intent_context_name: str) -> int:
@@ -76,10 +85,10 @@ class Bag:
         return self.state_contextual[state_id]
     
     def get_entired_state_contextual_class_number(self) -> list:
-        return sorted(self.state_contextual.keys())
+        return self.state_contextual_keys
     
     def get_entired_intention_contextual_class_number(self) -> list:
-        return sorted(self.intention_contextual.keys())
+        return self.intention_contextual_keys
 
     def get_entired_intention_contextual_class_name(self) -> dict:
         return self.intention_contextual_reverse.keys()
@@ -97,6 +106,8 @@ class Bag:
         if not self.has_state_context(sentence):
             self.state_contextual_reverse[sentence] = self.amount_state_contextual
             self.state_contextual[self.amount_state_contextual] = sentence
+            self.state_contextual_keys.append(self.amount_state_contextual)
+            self.state_contextual_keys.sort()
             self.amount_state_contextual += 1
     
     def get_token(self, word: str) -> int:
@@ -108,7 +119,7 @@ class Bag:
         return self.response_classes_reverse.keys()
     
     def get_entired_response_classes_class_number(self) -> list:
-        return sorted(self.response_classes.keys())
+        return self.response_classes_keys
 
     def length(self) -> int:
         return self.next_token
@@ -117,12 +128,16 @@ class Bag:
         if not self.has_intention_name(intention_name):
             self.intention_classes[self.amount_intention_classes] = intention_name
             self.intention_classes_reverse[intention_name] = self.amount_intention_classes
+            self.intention_classes_keys.append(self.amount_intention_classes)
+            self.intention_classes_keys.sort()
             self.amount_intention_classes += 1
     
     def add_response_class(self, response_class_name: str) -> None:
         if not self.has_response_class(response_class_name):
             self.response_classes[self.amount_response_classes] = response_class_name
             self.response_classes_reverse[response_class_name] = self.amount_response_classes
+            self.response_classes_keys.append(self.amount_response_classes)
+            self.response_classes_keys.sort()
             self.amount_response_classes += 1
     
     def get_response_class_name(self, response_id: int) -> str:
@@ -145,7 +160,7 @@ class Bag:
         return self.word_token.keys()
 
     def get_entried_tokens(self) -> list:
-        return sorted(self.token_word.keys())
+        return self.token_word_keys
     
     def amount_of_intention(self) -> int:
         return self.amount_intention_classes
@@ -154,7 +169,7 @@ class Bag:
         return self.intention_classes_reverse.keys()
 
     def get_entired_intention_class_number(self) -> list:
-        return sorted(self.intention_classes.keys())
+        return self.intention_classes_keys
 
     def get_intention_name(self, intention_id: int) -> str:
         if intention_id not in self.intention_classes:
